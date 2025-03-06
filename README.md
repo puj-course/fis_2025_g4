@@ -3,6 +3,7 @@
 # T.O.P App - G4
 Systematize your improvement
 
+## Información del Proyecto
 Para encontrar información respecto a la idea, historia de esta, visión y funcionalidades principales, por favor referirse a la [Wiki](https://github.com/puj-course/fis_2025_g4/wiki) del proyecto.
 
 
