@@ -10,6 +10,9 @@ Para encontrar información respecto a la idea, historia de esta, visión y func
 ## Diseños
 Para visualizar los diseños Hi-Fi del proyecto dirigirse a la carpeta `designs/` donde encontrarán capturas de los diseños y un archivo *.fig* para abrir en Figma.
 
+## Requerimientos
+Para leer los requerimientos funcionales y no funcionales del proyecto, dirigirse a `requirements/Requisitos T.O.P.pdf`.
+
 ## Documentación
 Para leer la documentación del proyecto dirigirse a la carpeta `docs/`, donde se va a encontrar información respecto a la arquitectura y documentación de la API (`docs/architecture/` y `docs/api/` respectivamente)
 
