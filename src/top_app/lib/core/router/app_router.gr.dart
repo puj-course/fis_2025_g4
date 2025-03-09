@@ -14,7 +14,7 @@ part of 'app_router.dart';
 /// [WelcomeScreen]
 class WelcomeRoute extends PageRouteInfo<void> {
   const WelcomeRoute({List<PageRouteInfo>? children})
-      : super(WelcomeRoute.name, initialChildren: children);
+    : super(WelcomeRoute.name, initialChildren: children);
 
   static const String name = 'WelcomeRoute';
 

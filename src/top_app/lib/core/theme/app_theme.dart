@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'app_colors.dart';
+
 class AppTheme {
   static ThemeData get darkTheme => ThemeData(
         fontFamily: 'Roboto',
@@ -7,5 +9,6 @@ class AppTheme {
           cursorColor: Colors.white,
           selectionColor: Colors.white,
         ),
+        scaffoldBackgroundColor: AppColors.blackPrimary,
       );
 }

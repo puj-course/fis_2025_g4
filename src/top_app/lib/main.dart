@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/router/app_router.dart';
+import 'package:top_app/core/theme/app_theme.dart';
 
 void main() {
   configureDependencies();
@@ -17,10 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'TOP App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.darkTheme,
       routerConfig: appRouter.config(),
     );
   }
