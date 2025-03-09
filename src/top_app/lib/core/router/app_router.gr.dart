@@ -25,3 +25,19 @@ class WelcomeRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [YourLiveChangesScreen]
+class YourLiveChangesRoute extends PageRouteInfo<void> {
+  const YourLiveChangesRoute({List<PageRouteInfo>? children})
+    : super(YourLiveChangesRoute.name, initialChildren: children);
+
+  static const String name = 'YourLiveChangesRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const YourLiveChangesScreen();
+    },
+  );
+}

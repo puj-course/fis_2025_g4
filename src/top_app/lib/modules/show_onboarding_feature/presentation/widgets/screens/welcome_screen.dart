@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/molecules/swipe_up_indicator.dart';
 
@@ -9,11 +10,6 @@ import '../atoms/has_account_text_button.dart';
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
-  void _onSwipeUp() {
-    // TODO: Implement navigation or other functionality when user swipes up
-    debugPrint('User swiped up');
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +17,8 @@ class WelcomeScreen extends StatelessWidget {
         onVerticalDragEnd: (details) {
           // Check if the swipe was upward (negative velocity)
           if (details.velocity.pixelsPerSecond.dy < -10) {
-            _onSwipeUp();
+            // Using navigate instead of replace for better transition effect
+            AutoRouter.of(context).navigate(const YourLiveChangesRoute());
           }
         },
         child: SafeArea(
@@ -41,7 +38,9 @@ class WelcomeScreen extends StatelessWidget {
               ),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20),
-                child: SwipeUpIndicator(),
+                child: SwipeUpIndicator(
+                  delay: Duration(seconds: 2),
+                ),
               ),
               HasAccountTextButton(),
               const SizedBox(height: 20),
