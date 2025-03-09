@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [NinetyNineScreen]
+class NinetyNineRoute extends PageRouteInfo<void> {
+  const NinetyNineRoute({List<PageRouteInfo>? children})
+    : super(NinetyNineRoute.name, initialChildren: children);
+
+  static const String name = 'NinetyNineRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NinetyNineScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [WelcomeScreen]
 class WelcomeRoute extends PageRouteInfo<void> {
   const WelcomeRoute({List<PageRouteInfo>? children})
