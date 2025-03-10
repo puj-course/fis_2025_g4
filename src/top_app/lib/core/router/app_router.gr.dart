@@ -27,6 +27,22 @@ class NinetyNineRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ThatOneScreen]
+class ThatOneRoute extends PageRouteInfo<void> {
+  const ThatOneRoute({List<PageRouteInfo>? children})
+    : super(ThatOneRoute.name, initialChildren: children);
+
+  static const String name = 'ThatOneRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ThatOneScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [WelcomeScreen]
 class WelcomeRoute extends PageRouteInfo<void> {
   const WelcomeRoute({List<PageRouteInfo>? children})
