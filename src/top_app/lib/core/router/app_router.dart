@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/ninety_nine_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/start_or_level_up_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/that_one_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/welcome_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/your_live_changes_screen.dart';
@@ -54,6 +55,21 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           path: AppRouteNames.thatOne,
           page: ThatOneRoute.page,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
+            const curve = Curves.easeInOut;
+
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var offsetAnimation = animation.drive(tween);
+
+            return SlideTransition(position: offsetAnimation, child: child);
+          },
+          duration: const Duration(milliseconds: 300),
+        ),
+        CustomRoute(
+          path: AppRouteNames.startOrLevelUp,
+          page: StartOrLevelUpRoute.page,
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;

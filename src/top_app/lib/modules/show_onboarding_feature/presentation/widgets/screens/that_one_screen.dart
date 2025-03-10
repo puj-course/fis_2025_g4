@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/molecules/person_grid.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/molecules/swipe_up_indicator.dart';
@@ -18,8 +19,8 @@ class ThatOneScreen extends StatelessWidget {
         onVerticalDragEnd: (details) {
           // Check if the swipe was upward (negative velocity)
           if (details.velocity.pixelsPerSecond.dy < -10) {
-            // Navigate to the next screen (to be implemented)
-            // AutoRouter.of(context).navigate(const NextRoute());
+            // Navigate to the StartOrLevelUpScreen
+            context.router.navigate(const StartOrLevelUpRoute());
           }
         },
         child: SafeArea(

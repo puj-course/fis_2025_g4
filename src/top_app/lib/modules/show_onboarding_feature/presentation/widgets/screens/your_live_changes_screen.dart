@@ -42,7 +42,7 @@ class YourLiveChangesScreen extends StatelessWidget {
                 right: 0,
                 child: SwipeUpIndicator(
                   customText: 'Swipe up to continue',
-                  delay: Duration(seconds: 5),
+                  delay: const Duration(seconds: 3),
                 ),
               ),
             ],

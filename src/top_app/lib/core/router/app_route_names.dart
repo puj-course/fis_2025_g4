@@ -3,4 +3,5 @@ class AppRouteNames {
   static const String yourLiveChanges = '/your-live-changes';
   static const String ninetyNine = '/ninety-nine';
   static const String thatOne = '/that-one';
+  static const String startOrLevelUp = '/start-or-level-up';
 }
