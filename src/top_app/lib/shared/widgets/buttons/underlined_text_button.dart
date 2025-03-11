@@ -14,18 +14,22 @@ class UnderlinedTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-        minimumSize: Size.zero,
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      ),
-      child: Text(
-        text,
-        style: AppTextStyles.regular14.copyWith(
-          color: AppColors.grayMidLight,
-          decoration: TextDecoration.underline,
+    return Center(
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: Text(
+          text,
+          style: AppTextStyles.regular14.copyWith(
+            color: AppColors.grayMidLight,
+            decoration: TextDecoration.underline,
+            decorationColor: AppColors.grayMidLight,
+          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

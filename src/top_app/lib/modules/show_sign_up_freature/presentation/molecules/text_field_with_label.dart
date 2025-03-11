@@ -22,8 +22,10 @@ class TextFieldWithLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label, style: AppTextStyles.bold18),
+        const SizedBox(height: 12),
         GrayTextField(
           hint: hint,
           controller: controller,

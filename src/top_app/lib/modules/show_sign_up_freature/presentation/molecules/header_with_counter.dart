@@ -8,19 +8,24 @@ class HeaderWithCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Create your account', style: AppTextStyles.bold22),
-        Row(
-          children: [
-            Text(
-              'It takes less than 1 minute: ',
-              style: AppTextStyles.regular14.copyWith(color: AppColors.grayMidLight),
-            ),
-            SecondsCounter(initialSeconds: 60),
-          ],
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        children: [
+          Text('Create your account', style: AppTextStyles.bold22),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'It takes less than 1 minute: ',
+                style: AppTextStyles.regular14.copyWith(color: AppColors.grayMidLight),
+              ),
+              const SecondsCounter(initialSeconds: 60),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
