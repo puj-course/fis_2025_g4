@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/shared/widgets/delayed_fade_in.dart';
+import 'package:top_app/shared/widgets/animations/delayed_fade_in.dart';
 
 class SwipeUpIndicator extends StatefulWidget {
   final String customText;

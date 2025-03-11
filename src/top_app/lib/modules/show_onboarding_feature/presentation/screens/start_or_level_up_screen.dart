@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/molecules/swipe_up_indicator.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/molecules/swipe_up_indicator.dart';
 import 'package:typewritertext/typewritertext.dart';
 
 @RoutePage()
