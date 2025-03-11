@@ -113,7 +113,7 @@ La página de perfil donde el usuario puede ver su propio perfil o el de otros:
 - Diseñador UI/UX: Alejandro Parrado
 - Q/A Tester: Alejandro Parrado
 - Desarrollador Frontend: Alejandro Parrado
-- Desarrollador Frontend: Alejandro Parrado
+- Desarrollador Backend: Alejandro Parrado
 - Arquitecto de Sofware: Alejandro Parrado
 - Especialista Cloud: Alejandro Parrado
 
