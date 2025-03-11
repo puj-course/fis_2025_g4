@@ -10,20 +10,17 @@ class WhiteFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.whitePrimary,
-          foregroundColor: AppColors.blackPrimary,
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.whitePrimary,
+        foregroundColor: AppColors.blackPrimary,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Text(text, style: AppTextStyles.regular16),
       ),
+      child: Text(text, style: AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary)),
     );
   }
 }
