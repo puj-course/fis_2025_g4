@@ -1,34 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class GrayTextField extends StatelessWidget {
   const GrayTextField({
     super.key,
-    required this.label,
-    required this.hint,
+    this.label,
+    this.hint,
     this.controller,
     this.onChanged,
     this.onSubmitted,
     this.isEnabled = true,
     this.isObscured = false,
     this.validator,
-    this.suffixEmoji,
   });
 
   // Text related properties
-  final String label;
-  final String hint;
+  final String? label;
+  final String? hint;
 
   // Controller and callbacks
   final TextEditingController? controller;
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final String? Function(String?)? validator;
-
-  // Optional suffix emoji SVG
-  final String? suffixEmoji;
 
   // State properties
   final bool isEnabled;
@@ -72,16 +67,6 @@ class GrayTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
           borderSide: const BorderSide(color: Colors.red, width: 1.5),
         ),
-        suffixIcon: suffixEmoji != null
-            ? Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: SvgPicture.asset(
-                  suffixEmoji!,
-                  width: 20,
-                  height: 20,
-                ),
-              )
-            : null,
       ),
     );
   }
