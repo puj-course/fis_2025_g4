@@ -87,7 +87,8 @@ class CustomSnackBar {
     // Auto-dismiss after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       if (!snackBar._removed) {
-        snackBar._remove();
+        // Use the dismiss method to ensure animation plays
+        snackBar._key.currentState?.dismiss();
       }
     });
   }
@@ -113,7 +114,7 @@ class CustomSnackBar {
   static void removeAll() {
     for (final snackBar in _activeSnackBars) {
       if (!snackBar._removed) {
-        snackBar._remove();
+        snackBar._key.currentState?.dismiss();
       }
     }
     _activeSnackBars.clear();
@@ -146,6 +147,7 @@ class _SnackBarContent extends StatefulWidget {
 class _SnackBarContentState extends State<_SnackBarContent> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  bool _isDismissing = false;
 
   @override
   void initState() {
@@ -170,6 +172,9 @@ class _SnackBarContentState extends State<_SnackBarContent> with SingleTickerPro
 
   // Dismiss the snackbar with animation
   void dismiss() {
+    if (_isDismissing) return;
+    _isDismissing = true;
+
     _controller.reverse().then((_) {
       widget.onDismiss();
     });
