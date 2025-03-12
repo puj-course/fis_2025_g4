@@ -8,12 +8,18 @@ class NameQuestion extends StatefulWidget {
   const NameQuestion({super.key});
 
   @override
-  State<NameQuestion> createState() => _NameQuestionState();
+  State<NameQuestion> createState() => NameQuestionState();
 }
 
-class _NameQuestionState extends State<NameQuestion> {
+// Make the state class public so it can be accessed from outside
+class NameQuestionState extends State<NameQuestion> {
   final TextEditingController _nameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // Add a validate method that returns true if the form is valid
+  bool validate() {
+    return _formKey.currentState?.validate() ?? false;
+  }
 
   @override
   void dispose() {

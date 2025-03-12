@@ -10,7 +10,8 @@ class TextFieldWithLabel extends StatelessWidget {
       required this.controller,
       this.onChanged,
       this.onSubmitted,
-      this.validator});
+      this.validator,
+      this.obscure = false});
 
   final String label;
   final String hint;
@@ -18,6 +19,7 @@ class TextFieldWithLabel extends StatelessWidget {
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final String? Function(String?)? validator;
+  final bool obscure;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class TextFieldWithLabel extends StatelessWidget {
           onChanged: onChanged,
           onSubmitted: onSubmitted,
           validator: validator,
+          isObscured: obscure,
         ),
       ],
     );

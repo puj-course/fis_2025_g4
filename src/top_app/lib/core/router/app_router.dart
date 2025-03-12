@@ -22,7 +22,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.welcome,
           page: WelcomeRoute.page,
-          initial: true,
+          // initial: true,
         ),
         CustomRoute(
           path: AppRouteNames.yourLiveChanges,
@@ -100,6 +100,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.signUp,
           page: SignUpRoute.page,
+          initial: true,
         ),
       ];
 }

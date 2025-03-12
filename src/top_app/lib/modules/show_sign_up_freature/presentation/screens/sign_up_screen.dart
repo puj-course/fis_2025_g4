@@ -22,6 +22,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   int _currentPage = 0;
   final int _totalPages = 3;
 
+  // Keys for the question widgets
+  final GlobalKey<NameQuestionState> _nameQuestionKey = GlobalKey<NameQuestionState>();
+  final GlobalKey<EmailQuestionState> _emailQuestionKey = GlobalKey<EmailQuestionState>();
+  final GlobalKey<PasswordQuestionState> _passwordQuestionKey = GlobalKey<PasswordQuestionState>();
+
   @override
   void dispose() {
     _pageController.dispose();
@@ -29,6 +34,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _nextPage() {
+    // Validate the current page before proceeding
+    bool isValid = false;
+
+    switch (_currentPage) {
+      case 0:
+        isValid = _nameQuestionKey.currentState?.validate() ?? false;
+        break;
+      case 1:
+        isValid = _emailQuestionKey.currentState?.validate() ?? false;
+        break;
+      case 2:
+        isValid = _passwordQuestionKey.currentState?.validate() ?? false;
+        break;
+    }
+
+    if (!isValid) {
+      // Show error message if validation fails
+      CustomSnackBar.error(context, 'Please fix the errors before continuing');
+      return;
+    }
+
     if (_currentPage < _totalPages - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 300),
@@ -56,35 +82,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Stack(
           children: [
             // Header with counter
-            const Positioned(
-              top: 20,
-              left: 0,
-              right: 0,
-              child: HeaderWithCounter(),
-            ),
-
-            // Page view for signup steps
-            Positioned(
-              top: 140,
-              left: 0,
-              right: 0,
-              bottom: 100,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: PageView(
-                  controller: _pageController,
-                  physics: const NeverScrollableScrollPhysics(),
-                  onPageChanged: (page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
-                  },
-                  children: const [
-                    NameQuestion(),
-                    EmailQuestion(),
-                    PasswordQuestion(),
-                  ],
-                ),
+            SafeArea(
+              child: Column(
+                children: [
+                  HeaderWithCounter(),
+                  const SizedBox(height: 30),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: PageView(
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        onPageChanged: (page) {
+                          setState(() {
+                            _currentPage = page;
+                          });
+                        },
+                        children: [
+                          NameQuestion(key: _nameQuestionKey),
+                          EmailQuestion(key: _emailQuestionKey),
+                          PasswordQuestion(key: _passwordQuestionKey),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
 

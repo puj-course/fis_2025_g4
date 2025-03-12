@@ -8,13 +8,19 @@ class PasswordQuestion extends StatefulWidget {
   const PasswordQuestion({super.key});
 
   @override
-  State<PasswordQuestion> createState() => _PasswordQuestionState();
+  State<PasswordQuestion> createState() => PasswordQuestionState();
 }
 
-class _PasswordQuestionState extends State<PasswordQuestion> {
+// Make the state class public so it can be accessed from outside
+class PasswordQuestionState extends State<PasswordQuestion> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // Add a validate method that returns true if the form is valid
+  bool validate() {
+    return _formKey.currentState?.validate() ?? false;
+  }
 
   @override
   void dispose() {
@@ -37,6 +43,7 @@ class _PasswordQuestionState extends State<PasswordQuestion> {
               hint: 'Create a secure password',
               controller: _passwordController,
               validator: PasswordValidator.validate,
+              obscure: true,
             ),
             const SizedBox(height: 20),
             TextFieldWithLabel(
@@ -47,6 +54,7 @@ class _PasswordQuestionState extends State<PasswordQuestion> {
                 value,
                 _passwordController.text,
               ),
+              obscure: true,
             ),
             const SizedBox(height: 20),
             UnderlinedTextButton(

@@ -8,12 +8,18 @@ class EmailQuestion extends StatefulWidget {
   const EmailQuestion({super.key});
 
   @override
-  State<EmailQuestion> createState() => _EmailQuestionState();
+  State<EmailQuestion> createState() => EmailQuestionState();
 }
 
-class _EmailQuestionState extends State<EmailQuestion> {
+// Make the state class public so it can be accessed from outside
+class EmailQuestionState extends State<EmailQuestion> {
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  // Add a validate method that returns true if the form is valid
+  bool validate() {
+    return _formKey.currentState?.validate() ?? false;
+  }
 
   @override
   void dispose() {
