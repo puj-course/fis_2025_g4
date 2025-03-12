@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/ninety_nine_screen.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/start_or_level_up_screen.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/that_one_screen.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/top_is_the_place_screen.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/welcome_screen.dart';
-import 'package:top_app/modules/show_onboarding_feature/presentation/widgets/screens/your_live_changes_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/ninety_nine_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/start_or_level_up_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/that_one_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/top_is_the_place_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/welcome_screen.dart';
+import 'package:top_app/modules/show_onboarding_feature/presentation/screens/your_live_changes_screen.dart';
+import 'package:top_app/modules/show_sign_up_freature/presentation/screens/sign_up_screen.dart';
 
 import 'app_route_names.dart';
 
@@ -21,7 +22,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.welcome,
           page: WelcomeRoute.page,
-          initial: true,
+          // initial: true,
         ),
         CustomRoute(
           path: AppRouteNames.yourLiveChanges,
@@ -95,6 +96,11 @@ class AppRouter extends RootStackRouter {
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
+        ),
+        AutoRoute(
+          path: AppRouteNames.signUp,
+          page: SignUpRoute.page,
+          initial: true,
         ),
       ];
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:top_app/shared/widgets/delayed_fade_in.dart';
+import 'package:top_app/shared/widgets/animations/delayed_fade_in.dart';
 
 enum PersonGridMode { sequentialFadeIn, highlightOne }
 
