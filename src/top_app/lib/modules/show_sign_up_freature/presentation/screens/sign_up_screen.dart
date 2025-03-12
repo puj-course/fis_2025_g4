@@ -1,12 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:top_app/modules/show_sign_up_freature/presentation/atoms/custom_dot_page_indicator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_app/core/di/injector.dart';
+import 'package:top_app/modules/show_sign_up_freature/domain/cubit/sign_up_cubit.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/header_with_counter.dart';
+import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/signup_bottom_navigation.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/organisms/email_question.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/organisms/name_question.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/organisms/password_question.dart';
-import 'package:top_app/shared/widgets/buttons/underlined_text_button.dart';
-import 'package:top_app/shared/widgets/buttons/white_filled_button.dart';
 import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
 
 @RoutePage()
@@ -18,6 +19,23 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<SignUpCubit>(),
+      child: const SignUpScreenContent(),
+    );
+  }
+}
+
+class SignUpScreenContent extends StatefulWidget {
+  const SignUpScreenContent({super.key});
+
+  @override
+  State<SignUpScreenContent> createState() => _SignUpScreenContentState();
+}
+
+class _SignUpScreenContentState extends State<SignUpScreenContent> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   final int _totalPages = 3;
@@ -40,12 +58,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
     switch (_currentPage) {
       case 0:
         isValid = _nameQuestionKey.currentState?.validate() ?? false;
+        if (isValid) {
+          // Save name to cubit
+          final name = _nameQuestionKey.currentState?.getName() ?? '';
+          context.read<SignUpCubit>().setName(name);
+        }
         break;
       case 1:
         isValid = _emailQuestionKey.currentState?.validate() ?? false;
+        if (isValid) {
+          // Save email to cubit
+          final email = _emailQuestionKey.currentState?.getEmail() ?? '';
+          context.read<SignUpCubit>().setEmail(email);
+        }
         break;
       case 2:
         isValid = _passwordQuestionKey.currentState?.validate() ?? false;
+        if (isValid) {
+          // Save password and confirmPassword to cubit
+          final password = _passwordQuestionKey.currentState?.getPassword() ?? '';
+          final confirmPassword = _passwordQuestionKey.currentState?.getConfirmPassword() ?? '';
+          context.read<SignUpCubit>().setPassword(password);
+          context.read<SignUpCubit>().setConfirmPassword(confirmPassword);
+        }
         break;
     }
 
@@ -63,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     } else {
       // Handle signup completion
       CustomSnackBar.success(context, 'Account created successfully!');
+      //TODO: Sumbit form to API and navigate to home screen
     }
   }
 
@@ -77,81 +113,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // Header with counter
-            SafeArea(
-              child: Column(
-                children: [
-                  HeaderWithCounter(),
-                  const SizedBox(height: 30),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: PageView(
-                        controller: _pageController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        onPageChanged: (page) {
-                          setState(() {
-                            _currentPage = page;
-                          });
-                        },
-                        children: [
-                          NameQuestion(key: _nameQuestionKey),
-                          EmailQuestion(key: _emailQuestionKey),
-                          PasswordQuestion(key: _passwordQuestionKey),
-                        ],
+    return BlocConsumer<SignUpCubit, SignUpState>(
+      listener: (context, state) {
+        if (state is SignUpError) {
+          CustomSnackBar.error(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Stack(
+              children: [
+                // Main content
+                Column(
+                  children: [
+                    const HeaderWithCounter(),
+                    const SizedBox(height: 30),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: PageView(
+                          controller: _pageController,
+                          physics: const NeverScrollableScrollPhysics(),
+                          onPageChanged: (page) {
+                            setState(() {
+                              _currentPage = page;
+                            });
+                          },
+                          children: [
+                            NameQuestion(key: _nameQuestionKey),
+                            EmailQuestion(key: _emailQuestionKey),
+                            PasswordQuestion(key: _passwordQuestionKey),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Bottom navigation elements (dot indicator, go back button, continue button)
-            Positioned(
-              bottom: 20,
-              left: 0,
-              right: 0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Dot indicator
-                  Center(
-                    child: CustomDotPageIndicator(
-                      controller: _pageController,
-                      count: _totalPages,
-                    ),
-                  ),
-
-                  const SizedBox(height: 15),
-
-                  // Go Back button (only shown after first screen)
-                  if (_currentPage > 0) ...[
-                    UnderlinedTextButton(
-                      text: 'Go Back',
-                      onPressed: _previousPage,
-                    ),
-                    const SizedBox(height: 15),
                   ],
+                ),
 
-                  // Continue button
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: WhiteFilledButton(
-                      text: _currentPage == _totalPages - 1 ? 'Create Account' : 'Continue',
-                      onPressed: _nextPage,
-                    ),
-                  ),
-                ],
-              ),
+                // Bottom navigation
+                SignupBottomNavigation(
+                  pageController: _pageController,
+                  currentPage: _currentPage,
+                  totalPages: _totalPages,
+                  onNext: _nextPage,
+                  onPrevious: _previousPage,
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

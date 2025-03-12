@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/text_field_with_label.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/shared/utils/validators/name_validator.dart';
 import 'package:top_app/shared/widgets/buttons/underlined_text_button.dart';
 import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
+
+import '../../domain/cubit/sign_up_cubit.dart';
+import '../molecules/text_field_with_label.dart';
 
 class NameQuestion extends StatefulWidget {
   const NameQuestion({super.key});
@@ -16,6 +19,11 @@ class NameQuestionState extends State<NameQuestion> {
   final TextEditingController _nameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // Add a method to get the name value
+  String getName() {
+    return _nameController.text;
+  }
+
   // Add a validate method that returns true if the form is valid
   bool validate() {
     return _formKey.currentState?.validate() ?? false;
@@ -25,6 +33,12 @@ class NameQuestionState extends State<NameQuestion> {
   void dispose() {
     _nameController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = context.read<SignUpCubit>().name;
   }
 
   @override

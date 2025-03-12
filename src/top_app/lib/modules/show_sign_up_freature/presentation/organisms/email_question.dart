@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/text_field_with_label.dart';
 import 'package:top_app/shared/utils/validators/email_validator.dart';
 import 'package:top_app/shared/widgets/buttons/underlined_text_button.dart';
 import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
+
+import '../../domain/cubit/sign_up_cubit.dart';
 
 class EmailQuestion extends StatefulWidget {
   const EmailQuestion({super.key});
@@ -16,6 +19,11 @@ class EmailQuestionState extends State<EmailQuestion> {
   final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  // Add a method to get the email value
+  String getEmail() {
+    return _emailController.text;
+  }
+
   // Add a validate method that returns true if the form is valid
   bool validate() {
     return _formKey.currentState?.validate() ?? false;
@@ -25,6 +33,12 @@ class EmailQuestionState extends State<EmailQuestion> {
   void dispose() {
     _emailController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = context.read<SignUpCubit>().email;
   }
 
   @override
