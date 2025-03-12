@@ -63,7 +63,7 @@ class NameQuestionState extends State<NameQuestion> {
                 // Show information dialog or tooltip
                 CustomSnackBar.info(
                   context,
-                  'We use your name to personalize your experience',
+                  'We use your name to identify you in the app between other users',
                 );
               },
             ),

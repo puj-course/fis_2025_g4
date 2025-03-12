@@ -63,7 +63,7 @@ class EmailQuestionState extends State<EmailQuestion> {
                 // Show information dialog or tooltip
                 CustomSnackBar.info(
                   context,
-                  'We use your email for account verification and communication',
+                  'We use your email to verify your account in case of lost password or other issues',
                 );
               },
             ),

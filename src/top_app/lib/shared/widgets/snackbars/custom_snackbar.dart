@@ -12,7 +12,7 @@ class CustomSnackBar {
       context,
       message,
       AppColors.whitePrimary,
-      AppColors.blackPrimary,
+      AppColors.grayDark,
       Icons.info_outline,
     );
   }
@@ -56,23 +56,33 @@ class CustomSnackBar {
     // Trigger haptic feedback
     HapticFeedback.lightImpact();
 
-    // Get the top padding for safe area
-    final double topPadding = MediaQuery.of(context).padding.top;
+    // Get the overlay state directly
+    final OverlayState overlay = Overlay.of(context);
 
     // Create a new snackbar instance
     final snackBar = CustomSnackBar._();
 
     // Create the overlay entry
     snackBar._entry = OverlayEntry(
-      builder: (context) => _SnackBarContent(
-        key: snackBar._key,
-        message: message,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        icon: icon,
-        topPadding: topPadding,
-        onDismiss: () => snackBar._remove(),
-      ),
+      builder: (context) {
+        // Get the top padding for safe area inside the builder
+        // This ensures we get the correct padding from the current context
+        final double topPadding = MediaQuery.of(context).viewPadding.top;
+
+        return Positioned(
+          top: topPadding + 10,
+          left: 20,
+          right: 20,
+          child: _SnackBarContent(
+            key: snackBar._key,
+            message: message,
+            backgroundColor: backgroundColor,
+            textColor: textColor,
+            icon: icon,
+            onDismiss: () => snackBar._remove(),
+          ),
+        );
+      },
     );
 
     // Add to active snackbars
@@ -82,7 +92,7 @@ class CustomSnackBar {
     _removeExistingSnackBars();
 
     // Insert the new snackbar
-    Overlay.of(context).insert(snackBar._entry);
+    overlay.insert(snackBar._entry);
 
     // Auto-dismiss after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
@@ -127,7 +137,6 @@ class _SnackBarContent extends StatefulWidget {
   final Color backgroundColor;
   final Color textColor;
   final IconData icon;
-  final double topPadding;
   final VoidCallback onDismiss;
 
   const _SnackBarContent({
@@ -136,7 +145,6 @@ class _SnackBarContent extends StatefulWidget {
     required this.backgroundColor,
     required this.textColor,
     required this.icon,
-    required this.topPadding,
     required this.onDismiss,
   }) : super(key: key);
 
@@ -188,48 +196,43 @@ class _SnackBarContentState extends State<_SnackBarContent> with SingleTickerPro
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: widget.topPadding + 10,
-      left: 20,
-      right: 20,
-      child: AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return Transform.translate(
-            offset: Offset(0, -100 * (1 - _animation.value)),
-            child: Opacity(
-              opacity: _animation.value,
-              child: child,
-            ),
-          );
-        },
-        child: Material(
-          elevation: 6,
+    return AnimatedBuilder(
+      animation: _animation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(0, -100 * (1 - _animation.value)),
+          child: Opacity(
+            opacity: _animation.value,
+            child: child,
+          ),
+        );
+      },
+      child: Material(
+        elevation: 6,
+        borderRadius: BorderRadius.circular(10),
+        color: widget.backgroundColor,
+        child: InkWell(
+          onTap: dismiss,
           borderRadius: BorderRadius.circular(10),
-          color: widget.backgroundColor,
-          child: InkWell(
-            onTap: dismiss,
-            borderRadius: BorderRadius.circular(10),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                children: [
-                  Icon(widget.icon, color: widget.textColor),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      widget.message,
-                      style: TextStyle(color: widget.textColor),
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              children: [
+                Icon(widget.icon, color: widget.textColor),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    widget.message,
+                    style: TextStyle(color: widget.textColor),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.close, color: widget.textColor, size: 18),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: dismiss,
-                  ),
-                ],
-              ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: widget.textColor, size: 18),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: dismiss,
+                ),
+              ],
             ),
           ),
         ),

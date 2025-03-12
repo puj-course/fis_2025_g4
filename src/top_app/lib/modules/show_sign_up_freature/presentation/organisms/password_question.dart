@@ -81,7 +81,7 @@ class PasswordQuestionState extends State<PasswordQuestion> {
                 // Show information dialog or tooltip
                 CustomSnackBar.info(
                   context,
-                  'A strong password helps keep your account secure',
+                  'We use your password to ensure only you can access your account',
                 );
               },
             ),
