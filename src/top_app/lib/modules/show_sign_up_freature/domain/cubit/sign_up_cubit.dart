@@ -14,7 +14,7 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   String email = '';
   String password = '';
   String confirmPassword = '';
-
+  int remainingSeconds = 0;
   void setName(String value) {
     savingOperation(() {
       name = value.trim();
@@ -36,6 +36,12 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   void setConfirmPassword(String value) {
     savingOperation(() {
       confirmPassword = value.trim();
+    });
+  }
+
+  void setRemainingSeconds(int value) {
+    savingOperation(() {
+      remainingSeconds = value;
     });
   }
 }

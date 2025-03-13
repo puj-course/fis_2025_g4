@@ -11,6 +11,49 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CountdownRecordScreen]
+class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
+  CountdownRecordRoute({
+    Key? key,
+    required int remainingSeconds,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CountdownRecordRoute.name,
+         args: CountdownRecordRouteArgs(
+           key: key,
+           remainingSeconds: remainingSeconds,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'CountdownRecordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CountdownRecordRouteArgs>();
+      return CountdownRecordScreen(
+        key: args.key,
+        remainingSeconds: args.remainingSeconds,
+      );
+    },
+  );
+}
+
+class CountdownRecordRouteArgs {
+  const CountdownRecordRouteArgs({this.key, required this.remainingSeconds});
+
+  final Key? key;
+
+  final int remainingSeconds;
+
+  @override
+  String toString() {
+    return 'CountdownRecordRouteArgs{key: $key, remainingSeconds: $remainingSeconds}';
+  }
+}
+
+/// generated route for
 /// [NinetyNineScreen]
 class NinetyNineRoute extends PageRouteInfo<void> {
   const NinetyNineRoute({List<PageRouteInfo>? children})
