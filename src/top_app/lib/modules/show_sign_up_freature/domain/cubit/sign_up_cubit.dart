@@ -17,25 +17,25 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
 
   void setName(String value) {
     savingOperation(() {
-      name = value;
+      name = value.trim();
     });
   }
 
   void setEmail(String value) {
     savingOperation(() {
-      email = value;
+      email = value.trim();
     });
   }
 
   void setPassword(String value) {
     savingOperation(() {
-      password = value;
+      password = value.trim();
     });
   }
 
   void setConfirmPassword(String value) {
     savingOperation(() {
-      confirmPassword = value;
+      confirmPassword = value.trim();
     });
   }
 }
