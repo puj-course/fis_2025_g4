@@ -7,6 +7,7 @@ import 'package:top_app/modules/show_onboarding_feature/presentation/screens/top
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/welcome_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/your_live_changes_screen.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/screens/sign_up_screen.dart';
+import 'package:top_app/modules/show_sign_up_freature/sub_features/show_countdown_record/presentation/screens/countdown_record_screen.dart';
 
 import 'app_route_names.dart';
 
@@ -101,6 +102,10 @@ class AppRouter extends RootStackRouter {
           path: AppRouteNames.signUp,
           page: SignUpRoute.page,
           initial: true,
+        ),
+        AutoRoute(
+          page: CountdownRecordRoute.page,
+          path: AppRouteNames.countdownRecord,
         ),
       ];
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_app/modules/show_sign_up_freature/domain/cubit/sign_up_cubit.dart';
 import 'dart:async';
 import '../../../../core/theme/app_texts_styles.dart';
 
@@ -52,6 +54,7 @@ class _SecondsCounterState extends State<SecondsCounter> with SingleTickerProvid
           _secondsRemaining--;
           // Trigger the bounce animation when the number changes
           _animationController.forward(from: 0.0);
+          context.read<SignUpCubit>().setRemainingSeconds(_secondsRemaining);
         } else {
           _timer?.cancel();
           if (widget.onFinished != null) {

@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:top_app/core/theme/app_texts_styles.dart';
+
+class CongratsTexts extends StatelessWidget {
+  const CongratsTexts({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Text('Well done!', style: AppTextStyles.extraBold24.copyWith(fontSize: 30)),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 40),
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: [
+                TextSpan(text: 'You\'re the ', style: AppTextStyles.regular14),
+                TextSpan(text: '14th ', style: AppTextStyles.extraBold12),
+                TextSpan(
+                    text: 'fastest person in the world to complete our sign up process!',
+                    style: AppTextStyles.regular12),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

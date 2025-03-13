@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/modules/show_sign_up_freature/domain/cubit/sign_up_cubit.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/header_with_counter.dart';
 import 'package:top_app/modules/show_sign_up_freature/presentation/molecules/signup_bottom_navigation.dart';
@@ -97,8 +98,9 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
       );
     } else {
       // Handle signup completion
-      CustomSnackBar.success(context, 'Account created successfully!');
-      //TODO: Sumbit form to API and navigate to home screen
+      //TODO: Submit the form to the API
+      AutoRouter.of(context).replace(
+          CountdownRecordRoute(remainingSeconds: context.read<SignUpCubit>().remainingSeconds));
     }
   }
 
