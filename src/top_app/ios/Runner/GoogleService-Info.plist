@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.top.TOP-app</string>
+	<string>com.example.topApp.RunnerTests</string>
 	<key>PROJECT_ID</key>
 	<string>top-app-cbef2</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:936541363095:ios:811e9d08dc03168bb6c2d2</string>
+	<string>1:936541363095:ios:32911d261326aaf5b6c2d2</string>
 </dict>
 </plist>
