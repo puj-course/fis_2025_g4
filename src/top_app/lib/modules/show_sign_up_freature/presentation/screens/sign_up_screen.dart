@@ -124,44 +124,41 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Stack(
-              children: [
+            child:
                 // Main content
                 Column(
-                  children: [
-                    const HeaderWithCounter(),
-                    const SizedBox(height: 30),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: PageView(
-                          controller: _pageController,
-                          physics: const NeverScrollableScrollPhysics(),
-                          onPageChanged: (page) {
-                            setState(() {
-                              _currentPage = page;
-                            });
-                          },
-                          children: [
-                            NameQuestion(key: _nameQuestionKey),
-                            EmailQuestion(key: _emailQuestionKey),
-                            PasswordQuestion(key: _passwordQuestionKey),
-                          ],
-                        ),
-                      ),
+              children: [
+                const HeaderWithCounter(),
+                const SizedBox(height: 30),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: PageView(
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      onPageChanged: (page) {
+                        setState(() {
+                          _currentPage = page;
+                        });
+                      },
+                      children: [
+                        NameQuestion(key: _nameQuestionKey),
+                        EmailQuestion(key: _emailQuestionKey),
+                        PasswordQuestion(key: _passwordQuestionKey),
+                      ],
                     ),
-                  ],
-                ),
-
-                // Bottom navigation
-                SignupBottomNavigation(
-                  pageController: _pageController,
-                  currentPage: _currentPage,
-                  totalPages: _totalPages,
-                  onNext: _nextPage,
-                  onPrevious: _previousPage,
+                  ),
                 ),
               ],
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            child: SignupBottomNavigation(
+              pageController: _pageController,
+              currentPage: _currentPage,
+              totalPages: _totalPages,
+              onNext: _nextPage,
+              onPrevious: _previousPage,
             ),
           ),
         );

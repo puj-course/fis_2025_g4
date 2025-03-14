@@ -102,6 +102,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.signUp,
           page: SignUpRoute.page,
+          // initial: true,
         ),
         AutoRoute(
           page: CountdownRecordRoute.page,

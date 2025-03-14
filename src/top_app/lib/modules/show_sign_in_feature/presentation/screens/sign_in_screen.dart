@@ -68,6 +68,7 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
       },
       builder: (context, state) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             leading: IconButton(
@@ -79,39 +80,31 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
             ),
           ),
           body: SafeArea(
-            child: Stack(
-              children: [
+            child:
                 // Main content
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    children: [
-                      const SignInHeader(),
-                      const SizedBox(height: 40),
-                      SignInForm(
-                        key: _formKey,
-                        onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
-                        onPasswordChanged: (value) =>
-                            context.read<SignInCubit>().setPassword(value),
-                      ),
-                      const SizedBox(height: 100), // Add space for the button
-                    ],
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SignInHeader(),
+                    const SizedBox(height: 40),
+                    SignInForm(
+                      key: _formKey,
+                      onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
+                      onPasswordChanged: (value) => context.read<SignInCubit>().setPassword(value),
+                    ),
+                    const SizedBox(height: 100), // Add space for the button
+                  ],
                 ),
-
-                // Loading indicator
-                if (state is SignInLoading)
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-
-                // Bottom navigation using WhiteFilledButton
-                SignInBottomNavigation(
-                  onSignIn: () {
-                    _handleSignIn();
-                  },
-                ),
-              ],
+              ),
+            ),
+          ),
+          bottomNavigationBar: SafeArea(
+            child: SignInBottomNavigation(
+              onSignIn: () {
+                _handleSignIn();
+              },
             ),
           ),
         );

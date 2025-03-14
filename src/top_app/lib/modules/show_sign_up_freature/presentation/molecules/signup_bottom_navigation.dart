@@ -27,43 +27,38 @@ class SignupBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      left: 0,
-      right: 0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Dot indicator
-          Center(
-            child: CustomDotPageIndicator(
-              controller: pageController,
-              count: totalPages,
-            ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        // Dot indicator
+        Center(
+          child: CustomDotPageIndicator(
+            controller: pageController,
+            count: totalPages,
           ),
+        ),
 
+        const SizedBox(height: 15),
+
+        // Go Back button (only shown after first screen)
+        if (currentPage > 0) ...[
+          UnderlinedTextButton(
+            text: 'Go Back',
+            onPressed: onPrevious,
+          ),
           const SizedBox(height: 15),
-
-          // Go Back button (only shown after first screen)
-          if (currentPage > 0) ...[
-            UnderlinedTextButton(
-              text: 'Go Back',
-              onPressed: onPrevious,
-            ),
-            const SizedBox(height: 15),
-          ],
-
-          // Continue button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: WhiteFilledButton(
-              text: currentPage == totalPages - 1 ? 'Create Account' : 'Continue',
-              onPressed: onNext,
-            ),
-          ),
         ],
-      ),
+
+        // Continue button
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: WhiteFilledButton(
+            text: currentPage == totalPages - 1 ? 'Create Account' : 'Continue',
+            onPressed: onNext,
+          ),
+        ),
+      ],
     );
   }
 }
