@@ -22,8 +22,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<SignUpCubit>(),
+    return BlocProvider.value(
+      value: getIt<SignUpCubit>(),
       child: const SignUpScreenContent(),
     );
   }

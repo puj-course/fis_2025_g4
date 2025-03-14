@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/shared/widgets/text_fields/gray_text_field.dart';
+
+import '../../domain/cubit/sign_in_cubit.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
@@ -19,6 +22,13 @@ class SignInFormState extends State<SignInForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = context.read<SignInCubit>().email;
+    _passwordController.text = context.read<SignInCubit>().password;
+  }
 
   @override
   void dispose() {

@@ -2,13 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
-import 'package:top_app/core/router/app_router.dart';
+import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/show_sign_in_feature/domain/cubit/sign_in_cubit.dart';
 import 'package:top_app/modules/show_sign_in_feature/presentation/molecules/sign_in_bottom_navigation.dart';
 import 'package:top_app/modules/show_sign_in_feature/presentation/molecules/sign_in_header.dart';
 import 'package:top_app/modules/show_sign_in_feature/presentation/organisms/sign_in_form.dart';
 import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
-import 'package:top_app/shared/widgets/buttons/white_filled_button.dart';
 
 @RoutePage()
 class SignInScreen extends StatefulWidget {
@@ -21,8 +20,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<SignInCubit>(),
+    return BlocProvider.value(
+      value: getIt<SignInCubit>(),
       child: const SignInScreenContent(),
     );
   }
@@ -69,26 +68,34 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
       },
       builder: (context, state) {
         return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              color: AppColors.whitePrimary,
+              onPressed: () {
+                AutoRouter.of(context).pop();
+              },
+              icon: const Icon(Icons.arrow_back_ios),
+            ),
+          ),
           body: SafeArea(
             child: Stack(
               children: [
                 // Main content
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      children: [
-                        const SignInHeader(),
-                        const SizedBox(height: 40),
-                        SignInForm(
-                          key: _formKey,
-                          onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
-                          onPasswordChanged: (value) =>
-                              context.read<SignInCubit>().setPassword(value),
-                        ),
-                        const SizedBox(height: 100), // Add space for the button
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    children: [
+                      const SignInHeader(),
+                      const SizedBox(height: 40),
+                      SignInForm(
+                        key: _formKey,
+                        onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
+                        onPasswordChanged: (value) =>
+                            context.read<SignInCubit>().setPassword(value),
+                      ),
+                      const SizedBox(height: 100), // Add space for the button
+                    ],
                   ),
                 ),
 
@@ -99,14 +106,10 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
                   ),
 
                 // Bottom navigation using WhiteFilledButton
-                Positioned(
-                  left: 10,
-                  right: 10,
-                  bottom: 0,
-                  child: WhiteFilledButton(
-                    text: 'Log In',
-                    onPressed: _handleSignIn,
-                  ),
+                SignInBottomNavigation(
+                  onSignIn: () {
+                    _handleSignIn();
+                  },
                 ),
               ],
             ),
