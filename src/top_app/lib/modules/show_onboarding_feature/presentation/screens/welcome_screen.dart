@@ -31,7 +31,9 @@ class WelcomeScreen extends StatelessWidget {
                     children: [
                       Text('Welcome to', style: AppTextStyles.regular20),
                       const SizedBox(height: 10),
-                      Text('T.O.P', style: AppTextStyles.bold26.copyWith(fontSize: 40.0)),
+                      Text('T.O.P',
+                          style: AppTextStyles.bold26
+                              .copyWith(fontSize: 80.0, fontFamily: 'Times New Roman')),
                     ],
                   ),
                 ),
