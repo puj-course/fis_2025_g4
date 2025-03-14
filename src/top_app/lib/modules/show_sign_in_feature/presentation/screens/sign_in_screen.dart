@@ -1,0 +1,118 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_app/core/di/injector.dart';
+import 'package:top_app/core/router/app_router.dart';
+import 'package:top_app/modules/show_sign_in_feature/domain/cubit/sign_in_cubit.dart';
+import 'package:top_app/modules/show_sign_in_feature/presentation/molecules/sign_in_bottom_navigation.dart';
+import 'package:top_app/modules/show_sign_in_feature/presentation/molecules/sign_in_header.dart';
+import 'package:top_app/modules/show_sign_in_feature/presentation/organisms/sign_in_form.dart';
+import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
+import 'package:top_app/shared/widgets/buttons/white_filled_button.dart';
+
+@RoutePage()
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
+
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<SignInCubit>(),
+      child: const SignInScreenContent(),
+    );
+  }
+}
+
+class SignInScreenContent extends StatefulWidget {
+  const SignInScreenContent({super.key});
+
+  @override
+  State<SignInScreenContent> createState() => _SignInScreenContentState();
+}
+
+class _SignInScreenContentState extends State<SignInScreenContent> {
+  final GlobalKey<SignInFormState> _formKey = GlobalKey<SignInFormState>();
+
+  void _handleSignIn() {
+    if (_formKey.currentState?.validate() ?? false) {
+      // Get form values and update cubit
+      final email = _formKey.currentState?.getEmail() ?? '';
+      final password = _formKey.currentState?.getPassword() ?? '';
+
+      final cubit = context.read<SignInCubit>();
+      cubit.setEmail(email);
+      cubit.setPassword(password);
+
+      // Trigger sign-in
+      cubit.signIn();
+    } else {
+      CustomSnackBar.error(context, 'Please fix the errors before continuing');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<SignInCubit, SignInState>(
+      listener: (context, state) {
+        if (state is SignInError) {
+          CustomSnackBar.error(context, state.message);
+        } else if (state is SignInSuccess) {
+          // Navigate to home or dashboard
+          CustomSnackBar.success(context, 'Sign in successful!');
+          // AutoRouter.of(context).replace(const HomeRoute());
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Stack(
+              children: [
+                // Main content
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      children: [
+                        const SignInHeader(),
+                        const SizedBox(height: 40),
+                        SignInForm(
+                          key: _formKey,
+                          onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
+                          onPasswordChanged: (value) =>
+                              context.read<SignInCubit>().setPassword(value),
+                        ),
+                        const SizedBox(height: 100), // Add space for the button
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Loading indicator
+                if (state is SignInLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+
+                // Bottom navigation using WhiteFilledButton
+                Positioned(
+                  left: 10,
+                  right: 10,
+                  bottom: 0,
+                  child: WhiteFilledButton(
+                    text: 'Log In',
+                    onPressed: _handleSignIn,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
