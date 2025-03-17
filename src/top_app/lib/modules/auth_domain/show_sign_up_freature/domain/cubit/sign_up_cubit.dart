@@ -52,6 +52,7 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   Future<void> signUp() async {
     emit(SignUpState.loading());
     try {
+      final savedRemainingSeconds = remainingSeconds;
       final User? user = await _signUpRepository.signUp(email, password);
       if (user != null) {
         emit(SignUpState.success(user));
@@ -59,7 +60,9 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
         emit(const SignUpState.error('Something went wrong, please try again later'));
       }
     } catch (e) {
-      emit(SignUpState.error(e.toString()));
+      final errorMessage =
+          e.toString().replaceAll(RegExp(r'\[.*?\]'), '').replaceAll('Exception: ', '').trim();
+      emit(SignUpState.error(errorMessage));
     }
   }
 }

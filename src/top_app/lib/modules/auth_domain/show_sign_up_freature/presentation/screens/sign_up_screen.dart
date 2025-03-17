@@ -52,7 +52,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
     super.dispose();
   }
 
-  void _nextPage() {
+  void _nextPage() async {
     // Validate the current page before proceeding
     bool isValid = false;
 
@@ -98,9 +98,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
       );
     } else {
       // Handle signup completion
-      //TODO: Submit the form to the API
-      AutoRouter.of(context).replace(
-          CountdownRecordRoute(remainingSeconds: context.read<SignUpCubit>().remainingSeconds));
+      await context.read<SignUpCubit>().signUp();
     }
   }
 
@@ -119,6 +117,11 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
       listener: (context, state) {
         if (state is SignUpError) {
           CustomSnackBar.error(context, state.message);
+        }
+        if (state is SignUpSuccess) {
+          CustomSnackBar.success(context, 'Your account has been created successfully! Welcome!');
+          AutoRouter.of(context).replace(
+              CountdownRecordRoute(remainingSeconds: context.read<SignUpCubit>().remainingSeconds));
         }
       },
       builder: (context, state) {
@@ -154,6 +157,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           ),
           bottomNavigationBar: SafeArea(
             child: SignupBottomNavigation(
+              isLoading: state is SignUpLoading,
               pageController: _pageController,
               currentPage: _currentPage,
               totalPages: _totalPages,

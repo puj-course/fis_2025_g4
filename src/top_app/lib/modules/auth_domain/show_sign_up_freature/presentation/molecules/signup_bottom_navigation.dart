@@ -15,7 +15,7 @@ class SignupBottomNavigation extends StatelessWidget {
   final int totalPages;
   final VoidCallback onNext;
   final VoidCallback onPrevious;
-
+  final bool isLoading;
   const SignupBottomNavigation({
     super.key,
     required this.pageController,
@@ -23,6 +23,7 @@ class SignupBottomNavigation extends StatelessWidget {
     required this.totalPages,
     required this.onNext,
     required this.onPrevious,
+    required this.isLoading,
   });
 
   @override
@@ -54,6 +55,7 @@ class SignupBottomNavigation extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: WhiteFilledButton(
+            isLoading: isLoading,
             text: currentPage == totalPages - 1 ? 'Create Account' : 'Continue',
             onPressed: onNext,
           ),

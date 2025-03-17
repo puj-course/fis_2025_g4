@@ -9,12 +9,13 @@ class WhiteFilledButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.hasHaptic = true,
+    this.isLoading = false,
   });
 
   final String text;
   final void Function() onPressed;
   final bool hasHaptic;
-
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -32,7 +33,15 @@ class WhiteFilledButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      child: Text(text, style: AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary)),
+      child: isLoading
+          ? const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                color: AppColors.blackPrimary,
+              ),
+            )
+          : Text(text, style: AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary)),
     );
   }
 }

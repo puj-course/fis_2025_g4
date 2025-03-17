@@ -134,12 +134,11 @@ class SignUpSuccess implements SignUpState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is SignUpSuccess &&
-            const DeepCollectionEquality().equals(other.user, user));
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+  int get hashCode => Object.hash(runtimeType, user);
 
   @override
   String toString() {
@@ -169,10 +168,10 @@ class _$SignUpSuccessCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? user = freezed,
+    Object? user = null,
   }) {
     return _then(SignUpSuccess(
-      freezed == user
+      null == user
           ? _self.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
