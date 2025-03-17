@@ -6,9 +6,9 @@ import 'package:top_app/modules/show_onboarding_feature/presentation/screens/tha
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/top_is_the_place_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/welcome_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/your_live_changes_screen.dart';
-import 'package:top_app/modules/show_sign_in_feature/presentation/screens/sign_in_screen.dart';
-import 'package:top_app/modules/show_sign_up_freature/presentation/screens/sign_up_screen.dart';
-import 'package:top_app/modules/show_sign_up_freature/sub_features/show_countdown_record/presentation/screens/countdown_record_screen.dart';
+import 'package:top_app/modules/auth_domain/show_sign_in_feature/presentation/screens/sign_in_screen.dart';
+import 'package:top_app/modules/auth_domain/show_sign_up_freature/presentation/screens/sign_up_screen.dart';
+import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/show_countdown_record/presentation/screens/countdown_record_screen.dart';
 
 import 'app_route_names.dart';
 
@@ -24,7 +24,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.welcome,
           page: WelcomeRoute.page,
-          initial: true,
+          // initial: true,
         ),
         CustomRoute(
           path: AppRouteNames.yourLiveChanges,
@@ -102,7 +102,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: AppRouteNames.signUp,
           page: SignUpRoute.page,
-          // initial: true,
+          initial: true,
         ),
         AutoRoute(
           page: CountdownRecordRoute.page,
