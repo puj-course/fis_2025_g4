@@ -10,7 +10,7 @@ class SignUpState with _$SignUpState {
 
   const factory SignUpState.loading() = SignUpLoading;
 
-  const factory SignUpState.success(User user) = SignUpSuccess;
+  const factory SignUpState.success(UserEntity user) = SignUpSuccess;
 
   const factory SignUpState.error(String message) = SignUpError;
 }

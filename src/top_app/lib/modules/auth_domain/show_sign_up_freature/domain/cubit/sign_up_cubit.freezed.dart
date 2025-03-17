@@ -120,7 +120,7 @@ class SignUpLoading implements SignUpState {
 class SignUpSuccess implements SignUpState {
   const SignUpSuccess(this.user);
 
-  final User user;
+  final UserEntity user;
 
   /// Create a copy of SignUpState
   /// with the given fields replaced by the non-null parameter values.
@@ -153,7 +153,7 @@ abstract mixin class $SignUpSuccessCopyWith<$Res>
           SignUpSuccess value, $Res Function(SignUpSuccess) _then) =
       _$SignUpSuccessCopyWithImpl;
   @useResult
-  $Res call({User user});
+  $Res call({UserEntity user});
 }
 
 /// @nodoc
@@ -174,7 +174,7 @@ class _$SignUpSuccessCopyWithImpl<$Res>
       null == user
           ? _self.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as UserEntity,
     ));
   }
 }

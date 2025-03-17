@@ -4,6 +4,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/domain/cubit/sign_up_cubit_mixin.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/domain/repository/sign_up_repository.dart';
+import 'package:top_app/shared/global_state/user/api/user_public_api.dart';
+import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 
 part 'sign_up_state.dart';
 part 'sign_up_cubit.freezed.dart';
@@ -11,8 +13,9 @@ part 'sign_up_cubit.freezed.dart';
 @LazySingleton()
 class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   final SignUpRepository _signUpRepository;
+  final UserPublicApi _userPublicApi;
 
-  SignUpCubit(this._signUpRepository) : super(SignUpState.initial());
+  SignUpCubit(this._signUpRepository, this._userPublicApi) : super(SignUpState.initial());
 
   String name = '';
   String email = '';
@@ -52,9 +55,20 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   Future<void> signUp() async {
     emit(SignUpState.loading());
     try {
-      final savedRemainingSeconds = remainingSeconds;
-      final User? user = await _signUpRepository.signUp(email, password);
-      if (user != null) {
+      final User? firebaseUser = await _signUpRepository.signUp(email, password);
+      if (firebaseUser != null) {
+        // Create a user entity
+        final UserEntity user = UserEntity(
+          uid: firebaseUser.uid,
+          email: email,
+          name: name,
+          createdAt: DateTime.now(),
+          signUpSeconds: remainingSeconds,
+        );
+
+        // Create a user document in the database
+        await _userPublicApi.createUser(user);
+
         emit(SignUpState.success(user));
       } else {
         emit(const SignUpState.error('Something went wrong, please try again later'));
