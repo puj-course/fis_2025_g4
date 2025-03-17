@@ -30,6 +30,7 @@ environment:
 dependencies:
   animate_do: ^4.2.0
   auto_route: ^10.0.1
+  cloud_firestore: ^5.6.5
   confetti: ^0.8.0
   cupertino_icons: ^1.0.8
   firebase_auth: ^5.5.1
