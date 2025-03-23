@@ -120,8 +120,10 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
         }
         if (state is SignUpSuccess) {
           CustomSnackBar.success(context, 'Your account has been created successfully! Welcome!');
-          AutoRouter.of(context).replace(
-              CountdownRecordRoute(remainingSeconds: context.read<SignUpCubit>().remainingSeconds));
+          AutoRouter.of(context).replace(CountdownRecordRoute(
+            remainingSeconds: context.read<SignUpCubit>().freezedRemainingSeconds,
+            rank: context.read<SignUpCubit>().rank,
+          ));
         }
       },
       builder: (context, state) {

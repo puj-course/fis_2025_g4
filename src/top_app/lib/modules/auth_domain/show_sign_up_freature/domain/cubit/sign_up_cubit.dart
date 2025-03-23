@@ -22,6 +22,9 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   String password = '';
   String confirmPassword = '';
   int remainingSeconds = 0;
+  int freezedRemainingSeconds = 0;
+  int rank = 0;
+
   void setName(String value) {
     savingOperation(() {
       name = value.trim();
@@ -55,6 +58,8 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   Future<void> signUp() async {
     emit(SignUpState.loading());
     try {
+      freezedRemainingSeconds = remainingSeconds;
+
       final User? firebaseUser = await _signUpRepository.signUp(email, password);
       if (firebaseUser != null) {
         // Create a user entity
@@ -63,11 +68,14 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
           email: email,
           name: name,
           createdAt: DateTime.now(),
-          signUpSeconds: remainingSeconds,
+          signUpSeconds: freezedRemainingSeconds,
         );
 
         // Create a user document in the database
         await _userPublicApi.createUser(user);
+
+        // Get the rank of the user
+        rank = await _userPublicApi.getUserSignUpRank(freezedRemainingSeconds);
 
         emit(SignUpState.success(user));
       } else {
@@ -77,6 +85,7 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
       final errorMessage =
           e.toString().replaceAll(RegExp(r'\[.*?\]'), '').replaceAll('Exception: ', '').trim();
       emit(SignUpState.error(errorMessage));
+      print(errorMessage);
     }
   }
 }

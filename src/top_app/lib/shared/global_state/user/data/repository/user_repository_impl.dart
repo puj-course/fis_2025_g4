@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package
-
 import '../../domain/repository/user_repository.dart';
 import '../data_provider/user_data_provider.dart';
 
@@ -56,6 +55,15 @@ class UserRepositoryImpl implements UserRepository {
         // Handle other exceptions
         throw Exception('An error occurred: $e');
       }
+    }
+  }
+
+  @override
+  Future<int> getUserSignUpRank(int signUpSeconds) async {
+    try {
+      return await userDataProvider.getUserSignUpRank(signUpSeconds);
+    } catch (e) {
+      rethrow;
     }
   }
 }

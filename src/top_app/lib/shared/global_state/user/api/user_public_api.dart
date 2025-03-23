@@ -21,4 +21,8 @@ class UserPublicApi {
   Future<void> createUser(UserEntity user) async {
     await userCubit.createUser(user);
   }
+
+  Future<int> getUserSignUpRank(int signUpSeconds) async {
+    return await userCubit.getUserSignUpRank(signUpSeconds);
+  }
 }

@@ -41,4 +41,9 @@ class UserCubit extends Cubit<UserState> {
   Future<void> createUser(UserEntity user) async {
     await userRepository.createUserDocument(user);
   }
+
+  /// Get the rank of a user based on their sign up time
+  Future<int> getUserSignUpRank(int signUpSeconds) async {
+    return await userRepository.getUserSignUpRank(signUpSeconds);
+  }
 }
