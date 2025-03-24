@@ -3,9 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 
 @injectable
-class SignUpApiProvider {
+class SignUpDataProvider {
   final FirebaseProvider _firebaseProvider;
-  SignUpApiProvider(this._firebaseProvider);
+  SignUpDataProvider(this._firebaseProvider);
 
   Future<User?> signUp(String email, String password) async {
     try {

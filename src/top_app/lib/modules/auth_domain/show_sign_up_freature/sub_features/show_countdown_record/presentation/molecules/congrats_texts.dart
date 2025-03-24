@@ -20,7 +20,7 @@ class CongratsTexts extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(text: 'You\'re the ', style: AppTextStyles.regular14),
-                TextSpan(text: '${rank}th ', style: AppTextStyles.extraBold12),
+                TextSpan(text: '$rank° ', style: AppTextStyles.extraBold12),
                 TextSpan(
                     text: 'fastest person in the world to complete our sign up process!',
                     style: AppTextStyles.regular12),

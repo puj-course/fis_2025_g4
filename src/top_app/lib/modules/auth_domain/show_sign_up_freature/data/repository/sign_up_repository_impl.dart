@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/repository/sign_up_repository.dart';
-import '../data_provider/sign_up_api_provider.dart';
+import '../data_provider/sign_up_data_provider.dart';
 
 @Injectable(as: SignUpRepository)
 class SignUpRepositoryImpl implements SignUpRepository {
-  final SignUpApiProvider _signUpApiProvider;
+  final SignUpDataProvider _signUpApiProvider;
 
-  SignUpRepositoryImpl({required SignUpApiProvider signUpApiProvider})
+  SignUpRepositoryImpl({required SignUpDataProvider signUpApiProvider})
       : _signUpApiProvider = signUpApiProvider;
 
   @override
