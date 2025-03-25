@@ -47,3 +47,10 @@ app.*.map.json
 # Generated files
 /build/
 /lib/core/di/injector.config.dart
+
+# Sensitive files
+.env
+firebase_options.dart
+GoogleService-Info.plist
+google-services.json
+service-account-key.json

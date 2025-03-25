@@ -11,10 +11,62 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CountdownRecordScreen]
+class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
+  CountdownRecordRoute({
+    Key? key,
+    required int remainingSeconds,
+    required int rank,
+    List<PageRouteInfo>? children,
+  }) : super(
+         CountdownRecordRoute.name,
+         args: CountdownRecordRouteArgs(
+           key: key,
+           remainingSeconds: remainingSeconds,
+           rank: rank,
+         ),
+         initialChildren: children,
+       );
+
+  static const String name = 'CountdownRecordRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CountdownRecordRouteArgs>();
+      return CountdownRecordScreen(
+        key: args.key,
+        remainingSeconds: args.remainingSeconds,
+        rank: args.rank,
+      );
+    },
+  );
+}
+
+class CountdownRecordRouteArgs {
+  const CountdownRecordRouteArgs({
+    this.key,
+    required this.remainingSeconds,
+    required this.rank,
+  });
+
+  final Key? key;
+
+  final int remainingSeconds;
+
+  final int rank;
+
+  @override
+  String toString() {
+    return 'CountdownRecordRouteArgs{key: $key, remainingSeconds: $remainingSeconds, rank: $rank}';
+  }
+}
+
+/// generated route for
 /// [NinetyNineScreen]
 class NinetyNineRoute extends PageRouteInfo<void> {
   const NinetyNineRoute({List<PageRouteInfo>? children})
-      : super(NinetyNineRoute.name, initialChildren: children);
+    : super(NinetyNineRoute.name, initialChildren: children);
 
   static const String name = 'NinetyNineRoute';
 
@@ -27,10 +79,42 @@ class NinetyNineRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SignInScreen]
+class SignInRoute extends PageRouteInfo<void> {
+  const SignInRoute({List<PageRouteInfo>? children})
+    : super(SignInRoute.name, initialChildren: children);
+
+  static const String name = 'SignInRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SignInScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [SignUpScreen]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+    : super(SignUpRoute.name, initialChildren: children);
+
+  static const String name = 'SignUpRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SignUpScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [StartOrLevelUpScreen]
 class StartOrLevelUpRoute extends PageRouteInfo<void> {
   const StartOrLevelUpRoute({List<PageRouteInfo>? children})
-      : super(StartOrLevelUpRoute.name, initialChildren: children);
+    : super(StartOrLevelUpRoute.name, initialChildren: children);
 
   static const String name = 'StartOrLevelUpRoute';
 
@@ -46,7 +130,7 @@ class StartOrLevelUpRoute extends PageRouteInfo<void> {
 /// [ThatOneScreen]
 class ThatOneRoute extends PageRouteInfo<void> {
   const ThatOneRoute({List<PageRouteInfo>? children})
-      : super(ThatOneRoute.name, initialChildren: children);
+    : super(ThatOneRoute.name, initialChildren: children);
 
   static const String name = 'ThatOneRoute';
 
@@ -62,7 +146,7 @@ class ThatOneRoute extends PageRouteInfo<void> {
 /// [TopIsThePlaceScreen]
 class TopIsThePlaceRoute extends PageRouteInfo<void> {
   const TopIsThePlaceRoute({List<PageRouteInfo>? children})
-      : super(TopIsThePlaceRoute.name, initialChildren: children);
+    : super(TopIsThePlaceRoute.name, initialChildren: children);
 
   static const String name = 'TopIsThePlaceRoute';
 
@@ -78,7 +162,7 @@ class TopIsThePlaceRoute extends PageRouteInfo<void> {
 /// [WelcomeScreen]
 class WelcomeRoute extends PageRouteInfo<void> {
   const WelcomeRoute({List<PageRouteInfo>? children})
-      : super(WelcomeRoute.name, initialChildren: children);
+    : super(WelcomeRoute.name, initialChildren: children);
 
   static const String name = 'WelcomeRoute';
 
@@ -94,7 +178,7 @@ class WelcomeRoute extends PageRouteInfo<void> {
 /// [YourLiveChangesScreen]
 class YourLiveChangesRoute extends PageRouteInfo<void> {
   const YourLiveChangesRoute({List<PageRouteInfo>? children})
-      : super(YourLiveChangesRoute.name, initialChildren: children);
+    : super(YourLiveChangesRoute.name, initialChildren: children);
 
   static const String name = 'YourLiveChangesRoute';
 
