@@ -37,7 +37,7 @@ class SignInScreenContent extends StatefulWidget {
 class _SignInScreenContentState extends State<SignInScreenContent> {
   final GlobalKey<SignInFormState> _formKey = GlobalKey<SignInFormState>();
 
-  void _handleSignIn() {
+  Future<void> _handleSignIn() async {
     if (_formKey.currentState?.validate() ?? false) {
       // Get form values and update cubit
       final email = _formKey.currentState?.getEmail() ?? '';
@@ -48,7 +48,7 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
       cubit.setPassword(password);
 
       // Trigger sign-in
-      cubit.signIn();
+      await cubit.signIn();
     } else {
       CustomSnackBar.error(context, 'Please fix the errors before continuing');
     }
@@ -61,8 +61,9 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
         if (state is SignInError) {
           CustomSnackBar.error(context, state.message);
         } else if (state is SignInSuccess) {
-          // Navigate to home or dashboard
           CustomSnackBar.success(context, 'Sign in successful!');
+
+          //TODO: Navigate to home or dashboard
           // AutoRouter.of(context).replace(const HomeRoute());
         }
       },
@@ -102,6 +103,7 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
           ),
           bottomNavigationBar: SafeArea(
             child: SignInBottomNavigation(
+              isLoading: state is SignInLoading,
               onSignIn: () {
                 _handleSignIn();
               },

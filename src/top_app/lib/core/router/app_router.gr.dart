@@ -16,12 +16,14 @@ class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
   CountdownRecordRoute({
     Key? key,
     required int remainingSeconds,
+    required int rank,
     List<PageRouteInfo>? children,
   }) : super(
          CountdownRecordRoute.name,
          args: CountdownRecordRouteArgs(
            key: key,
            remainingSeconds: remainingSeconds,
+           rank: rank,
          ),
          initialChildren: children,
        );
@@ -35,21 +37,28 @@ class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
       return CountdownRecordScreen(
         key: args.key,
         remainingSeconds: args.remainingSeconds,
+        rank: args.rank,
       );
     },
   );
 }
 
 class CountdownRecordRouteArgs {
-  const CountdownRecordRouteArgs({this.key, required this.remainingSeconds});
+  const CountdownRecordRouteArgs({
+    this.key,
+    required this.remainingSeconds,
+    required this.rank,
+  });
 
   final Key? key;
 
   final int remainingSeconds;
 
+  final int rank;
+
   @override
   String toString() {
-    return 'CountdownRecordRouteArgs{key: $key, remainingSeconds: $remainingSeconds}';
+    return 'CountdownRecordRouteArgs{key: $key, remainingSeconds: $remainingSeconds, rank: $rank}';
   }
 }
 

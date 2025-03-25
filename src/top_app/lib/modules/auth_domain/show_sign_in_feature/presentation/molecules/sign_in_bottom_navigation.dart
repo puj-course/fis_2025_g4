@@ -5,10 +5,11 @@ class SignInBottomNavigation extends StatelessWidget {
   const SignInBottomNavigation({
     super.key,
     required this.onSignIn,
+    required this.isLoading,
   });
 
   final VoidCallback onSignIn;
-
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,6 +18,7 @@ class SignInBottomNavigation extends StatelessWidget {
         width: double.infinity,
         child: WhiteFilledButton(
           text: 'Log In',
+          isLoading: isLoading,
           onPressed: onSignIn,
         ),
       ),

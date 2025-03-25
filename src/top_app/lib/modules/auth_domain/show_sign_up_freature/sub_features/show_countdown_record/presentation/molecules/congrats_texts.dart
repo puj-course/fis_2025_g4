@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 
 class CongratsTexts extends StatelessWidget {
-  const CongratsTexts({super.key});
+  const CongratsTexts({super.key, required this.rank});
+
+  final int rank;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CongratsTexts extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(text: 'You\'re the ', style: AppTextStyles.regular14),
-                TextSpan(text: '14th ', style: AppTextStyles.extraBold12),
+                TextSpan(text: '$rank° ', style: AppTextStyles.extraBold12),
                 TextSpan(
                     text: 'fastest person in the world to complete our sign up process!',
                     style: AppTextStyles.regular12),

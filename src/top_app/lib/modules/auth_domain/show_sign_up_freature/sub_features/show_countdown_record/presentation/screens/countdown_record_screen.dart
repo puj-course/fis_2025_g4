@@ -6,9 +6,10 @@ import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/s
 
 @RoutePage()
 class CountdownRecordScreen extends StatelessWidget {
-  const CountdownRecordScreen({super.key, required this.remainingSeconds});
+  const CountdownRecordScreen({super.key, required this.remainingSeconds, required this.rank});
 
   final int remainingSeconds;
+  final int rank;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CountdownRecordScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RecordWithConfetti(seconds: remainingSeconds),
-                const CongratsTexts(),
+                CongratsTexts(rank: rank),
               ],
             ),
           ),
