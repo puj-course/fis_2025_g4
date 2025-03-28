@@ -1,45 +1,52 @@
 import '../../domain/entity/user_entity.dart';
+import '../../../../models/templates/goal_model.dart';
+import '../../../../models/templates/badge_model.dart';
+import '../../../../models/templates/challenge_model.dart';
 
 class UserModel {
   final String uid;
-  final String email;
   final String name;
-  final String? profilePictureUrl;
-  final String? bio;
+  final String email;
+  final String bio;
   final DateTime createdAt;
+  final String profilePictureUrl;
   final int signUpSeconds;
-  final List<String> goals;
-  final List<String> streaks;
-  final List<String> badges;
+  final List<GoalModel> goals;
+  final List<BadgeModel> badges;
+  final List<ChallengeModel> challenges;
+  final List<String> posts;
 
   UserModel({
     required this.uid,
-    required this.email,
     required this.name,
-    this.profilePictureUrl,
-    this.bio,
+    required this.email,
+    required this.bio,
     required this.createdAt,
+    required this.profilePictureUrl,
     required this.signUpSeconds,
-    List<String>? goals,
-    List<String>? streaks,
-    List<String>? badges,
+    List<GoalModel>? goals,
+    List<BadgeModel>? badges,
+    List<ChallengeModel>? challenges,
+    List<String>? posts,
   })  : goals = goals ?? [],
-        streaks = streaks ?? [],
-        badges = badges ?? [];
+        badges = badges ?? [],
+        challenges = challenges ?? [],
+        posts = posts ?? [];
 
   // Convert UserEntity to UserModel
   factory UserModel.fromEntity(UserEntity entity) {
     return UserModel(
       uid: entity.uid,
-      email: entity.email,
       name: entity.name,
-      profilePictureUrl: entity.profilePictureUrl,
-      bio: entity.bio,
+      email: entity.email,
+      bio: entity.bio ?? '',
       createdAt: entity.createdAt,
+      profilePictureUrl: entity.profilePictureUrl ?? '',
       signUpSeconds: entity.signUpSeconds,
-      goals: entity.goals,
-      streaks: entity.streaks,
-      badges: entity.badges,
+      goals: entity.goals.map((g) => GoalModel.fromEntity(g)).toList(),
+      badges: entity.badges.map((b) => BadgeModel.fromEntity(b)).toList(),
+      challenges: entity.challenges.map((c) => ChallengeModel.fromEntity(c)).toList(),
+      posts: entity.posts,
     );
   }
 
@@ -47,15 +54,16 @@ class UserModel {
   UserEntity toEntity() {
     return UserEntity(
       uid: uid,
-      email: email,
       name: name,
-      profilePictureUrl: profilePictureUrl,
+      email: email,
       bio: bio,
       createdAt: createdAt,
+      profilePictureUrl: profilePictureUrl,
       signUpSeconds: signUpSeconds,
-      goals: goals,
-      streaks: streaks,
-      badges: badges,
+      goals: goals.map((g) => g.toEntity()).toList(),
+      badges: badges.map((b) => b.toEntity()).toList(),
+      challenges: challenges.map((c) => c.toEntity()).toList(),
+      posts: posts,
     );
   }
 
@@ -63,15 +71,17 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json['uid'],
-      email: json['email'],
       name: json['name'],
-      profilePictureUrl: json['profilePictureUrl'],
+      email: json['email'],
       bio: json['bio'],
       createdAt: DateTime.parse(json['createdAt']),
+      profilePictureUrl: json['profilePictureUrl'],
       signUpSeconds: json['signUpSeconds'],
-      goals: List<String>.from(json['goals'] ?? []),
-      streaks: List<String>.from(json['streaks'] ?? []),
-      badges: List<String>.from(json['badges'] ?? []),
+      goals: (json['goals'] as List?)?.map((g) => GoalModel.fromJson(g)).toList() ?? [],
+      badges: (json['badges'] as List?)?.map((b) => BadgeModel.fromJson(b)).toList() ?? [],
+      challenges:
+          (json['challenges'] as List?)?.map((c) => ChallengeModel.fromJson(c)).toList() ?? [],
+      posts: List<String>.from(json['posts'] ?? []),
     );
   }
 
@@ -79,15 +89,16 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
-      'email': email,
       'name': name,
-      'profilePictureUrl': profilePictureUrl,
+      'email': email,
       'bio': bio,
       'createdAt': createdAt.toIso8601String(),
+      'profilePictureUrl': profilePictureUrl,
       'signUpSeconds': signUpSeconds,
-      'goals': goals,
-      'streaks': streaks,
-      'badges': badges,
+      'goals': goals.map((g) => g.toJson()).toList(),
+      'badges': badges.map((b) => b.toJson()).toList(),
+      'challenges': challenges.map((c) => c.toJson()).toList(),
+      'posts': posts,
     };
   }
 }
