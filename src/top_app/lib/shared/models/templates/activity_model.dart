@@ -1,4 +1,4 @@
-import '../entities/activity.dart';
+import '../../entities/templates/activity.dart';
 import 'proof_model.dart';
 
 class ActivityModel {

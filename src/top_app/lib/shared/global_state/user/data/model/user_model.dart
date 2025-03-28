@@ -1,7 +1,7 @@
 import '../../domain/entity/user_entity.dart';
-import '../../../../models/goal_model.dart';
-import '../../../../models/badge_model.dart';
-import '../../../../models/challenge_model.dart';
+import '../../../../models/templates/goal_model.dart';
+import '../../../../models/templates/badge_model.dart';
+import '../../../../models/templates/challenge_model.dart';
 
 class UserModel {
   final String uid;

@@ -1,4 +1,4 @@
-import '../entities/user_proof.dart';
+import '../../entities/user_specific/user_proof.dart';
 
 class UserProofModel {
   final String proofName;

@@ -1,4 +1,4 @@
-import '../entities/user_badge.dart';
+import '../../entities/user_specific/user_badge.dart';
 
 class UserBadgeModel {
   final String userId;

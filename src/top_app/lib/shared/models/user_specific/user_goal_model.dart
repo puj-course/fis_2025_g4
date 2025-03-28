@@ -1,4 +1,4 @@
-import '../entities/user_goal.dart';
+import '../../entities/user_specific/user_goal.dart';
 
 class UserGoalModel {
   final String userId;

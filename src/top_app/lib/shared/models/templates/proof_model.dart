@@ -1,4 +1,4 @@
-import '../entities/proof.dart';
+import '../../entities/templates/proof.dart';
 
 class ProofModel {
   final String name;

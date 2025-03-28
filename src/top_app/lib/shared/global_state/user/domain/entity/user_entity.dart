@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import '../../../../entities/goal.dart';
-import '../../../../entities/badge.dart';
-import '../../../../entities/challenge.dart';
+import '../../../../entities/templates/goal.dart';
+import '../../../../entities/templates/badge.dart';
+import '../../../../entities/templates/challenge.dart';
 
 class UserEntity extends Equatable {
   final String uid;

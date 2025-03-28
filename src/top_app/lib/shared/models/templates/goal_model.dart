@@ -1,4 +1,4 @@
-import '../entities/goal.dart';
+import '../../entities/templates/goal.dart';
 
 class GoalModel {
   final String id;

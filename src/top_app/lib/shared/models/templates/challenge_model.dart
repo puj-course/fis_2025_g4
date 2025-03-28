@@ -1,4 +1,4 @@
-import '../entities/challenge.dart';
+import '../../entities/templates/challenge.dart';
 import 'activity_model.dart';
 
 class ChallengeModel {

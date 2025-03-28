@@ -1,4 +1,4 @@
-import '../entities/user_challenge.dart';
+import '../../entities/user_specific/user_challenge.dart';
 import 'user_activity_model.dart';
 
 class UserChallengeModel {

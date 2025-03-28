@@ -1,4 +1,4 @@
-import '../entities/user_activity.dart';
+import '../../entities/user_specific/user_activity.dart';
 import 'user_proof_model.dart';
 
 class UserActivityModel {

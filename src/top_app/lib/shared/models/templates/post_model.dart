@@ -1,4 +1,4 @@
-import '../entities/post.dart';
+import '../../entities/templates/post.dart';
 
 class PostModel {
   final String userId;

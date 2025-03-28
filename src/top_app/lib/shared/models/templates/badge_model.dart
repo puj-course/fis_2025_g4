@@ -1,4 +1,4 @@
-import '../entities/badge.dart';
+import '../../entities/templates/badge.dart';
 
 class BadgeModel {
   final String iconUrl;
