@@ -1,3 +1,5 @@
+import 'package:top_app/core/theme/app_icon.dart';
+
 import '../../entities/templates/challenge.dart';
 import 'activity_model.dart';
 
@@ -6,7 +8,7 @@ class ChallengeModel {
   final String name;
   final String description;
   final String thumbnailUrl;
-  final String iconCode;
+  final AppIcon icon;
   final int duration;
   final int edgeReward;
   final String authorName;
@@ -18,7 +20,7 @@ class ChallengeModel {
     required this.name,
     required this.description,
     required this.thumbnailUrl,
-    required this.iconCode,
+    required this.icon,
     required this.duration,
     required this.edgeReward,
     required this.authorName,
@@ -32,7 +34,7 @@ class ChallengeModel {
       name: entity.name,
       description: entity.description,
       thumbnailUrl: entity.thumbnailUrl,
-      iconCode: entity.iconCode,
+      icon: entity.icon,
       duration: entity.duration,
       edgeReward: entity.edgeReward,
       authorName: entity.authorName,
@@ -47,7 +49,7 @@ class ChallengeModel {
       name: name,
       description: description,
       thumbnailUrl: thumbnailUrl,
-      iconCode: iconCode,
+      icon: icon,
       duration: duration,
       edgeReward: edgeReward,
       authorName: authorName,
@@ -58,11 +60,11 @@ class ChallengeModel {
 
   factory ChallengeModel.fromJson(Map<String, dynamic> json) {
     return ChallengeModel(
-      id: json['id'],
+      id: json['uid'],
       name: json['name'],
       description: json['description'],
       thumbnailUrl: json['thumbnailUrl'],
-      iconCode: json['iconCode'],
+      icon: AppIcon.fromCode(json['iconCode']),
       duration: json['duration'],
       edgeReward: json['edgeReward'],
       authorName: json['authorName'],
@@ -73,11 +75,11 @@ class ChallengeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'uid': id,
       'name': name,
       'description': description,
       'thumbnailUrl': thumbnailUrl,
-      'iconCode': iconCode,
+      'iconCode': icon.iconCode,
       'duration': duration,
       'edgeReward': edgeReward,
       'authorName': authorName,
