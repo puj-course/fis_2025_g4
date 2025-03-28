@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_app/modules/auth_domain/show_sign_in_feature/domain/cubit/sign_in_cubit.dart';
 import 'package:top_app/shared/widgets/text_fields/gray_text_field.dart';
-
-import '../../domain/cubit/sign_in_cubit.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({
