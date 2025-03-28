@@ -7,9 +7,9 @@ class UserEntity extends Equatable {
   final String uid;
   final String name;
   final String email;
-  final String bio;
+  final String? bio;
   final DateTime createdAt;
-  final String profilePictureUrl;
+  final String? profilePictureUrl;
   final int signUpSeconds;
   final List<Goal> goals;
   final List<Badge> badges;
@@ -20,9 +20,9 @@ class UserEntity extends Equatable {
     required this.uid,
     required this.name,
     required this.email,
-    required this.bio,
+    this.bio,
     required this.createdAt,
-    required this.profilePictureUrl,
+    this.profilePictureUrl,
     required this.signUpSeconds,
     List<Goal>? goals,
     List<Badge>? badges,
