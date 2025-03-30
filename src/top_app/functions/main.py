@@ -78,3 +78,71 @@ def get_user_sign_up_rank(req: https_fn.Request) -> https_fn.Response:
         error_response = json.dumps({'error': error_msg})
         return https_fn.Response(error_response, status=500, 
                                  content_type='application/json')
+
+@https_fn.on_request()
+def get_users_with_challenge(req: https_fn.Request) -> https_fn.Response:
+    """
+    Cloud function to get all users that have a specific challenge in their challenges list.
+    
+    This function expects a POST request with JSON body containing:
+    {
+        "challengeId": "challenge123"
+    }
+    
+    Returns a list of maps containing userName and userProfilePictureUrl for each matching user.
+    """
+    try:
+        # Get JSON data from request
+        request_json = req.get_json(silent=True)
+        
+        if not request_json or 'challengeId' not in request_json:
+            error_response = json.dumps({'error': 'challengeId is required'})
+            return https_fn.Response(error_response, status=400, 
+                                     content_type='application/json')
+        
+        challenge_id = request_json['challengeId']
+        logger.info(f"Processing request for challengeId: {challenge_id}")
+        
+        # Get Firestore client
+        firestore_client: google.cloud.firestore.Client = firestore.client()
+        
+        try:
+            # Query users collection
+            users_ref = firestore_client.collection('users')
+            users = list(users_ref.stream())
+            
+            # Filter users that have the challenge
+            matching_users = []
+            for user in users:
+                user_data = user.to_dict()
+                challenges = user_data.get('challenges', [])
+                
+                # Check if any challenge in the list matches the target challengeId
+                if any(challenge.get('challengeId') == challenge_id for challenge in challenges):
+                    matching_users.append({
+                        'userName': user_data.get('name', ''),
+                        'userProfilePictureUrl': user_data.get('profilePictureUrl', '')
+                    })
+            
+            logger.info(f"Found {len(matching_users)} users with challenge {challenge_id}")
+            
+            # Return the result as an HTTP response
+            response_data = json.dumps({'users': matching_users})
+            return https_fn.Response(response_data, status=200, 
+                                     content_type='application/json')
+            
+        except Exception as db_error:
+            error_msg = f"Database error: {str(db_error)}"
+            logger.error(error_msg)
+            logger.error(traceback.format_exc())
+            error_response = json.dumps({'error': error_msg})
+            return https_fn.Response(error_response, status=500, 
+                                     content_type='application/json')
+        
+    except Exception as e:
+        error_msg = f"Unexpected error: {str(e)}"
+        logger.error(error_msg)
+        logger.error(traceback.format_exc())
+        error_response = json.dumps({'error': error_msg})
+        return https_fn.Response(error_response, status=500, 
+                                 content_type='application/json')
