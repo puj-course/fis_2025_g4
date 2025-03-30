@@ -1,17 +1,19 @@
+import 'package:top_app/core/theme/app_icon.dart';
+
 import '../../entities/templates/activity.dart';
 import 'proof_model.dart';
 
 class ActivityModel {
   final String name;
   final int streakEdge;
-  final String iconCode;
+  final AppIcon icon;
   final List<int> daysOfWeek;
   final List<ProofModel> proof;
 
   ActivityModel({
     required this.name,
     required this.streakEdge,
-    required this.iconCode,
+    required this.icon,
     required this.daysOfWeek,
     required this.proof,
   });
@@ -20,7 +22,7 @@ class ActivityModel {
     return ActivityModel(
       name: entity.name,
       streakEdge: entity.streakEdge,
-      iconCode: entity.iconCode,
+      icon: entity.icon,
       daysOfWeek: entity.daysOfWeek,
       proof: entity.proof.map((p) => ProofModel.fromEntity(p)).toList(),
     );
@@ -30,7 +32,7 @@ class ActivityModel {
     return Activity(
       name: name,
       streakEdge: streakEdge,
-      iconCode: iconCode,
+      icon: icon,
       daysOfWeek: daysOfWeek,
       proof: proof.map((p) => p.toEntity()).toList(),
     );
@@ -39,9 +41,9 @@ class ActivityModel {
   factory ActivityModel.fromJson(Map<String, dynamic> json) {
     return ActivityModel(
       name: json['name'],
-      streakEdge: json['streakEdge'],
-      iconCode: json['iconCode'],
-      daysOfWeek: List<int>.from(json['daysOfWeek']),
+      streakEdge: json['streakEdge'] as int,
+      icon: AppIcon.fromCode(json['iconCode']),
+      daysOfWeek: List<int>.from(json['daysOfWeek'].map((e) => e as int)),
       proof: (json['proof'] as List).map((p) => ProofModel.fromJson(p)).toList(),
     );
   }
@@ -50,7 +52,7 @@ class ActivityModel {
     return {
       'name': name,
       'streakEdge': streakEdge,
-      'iconCode': iconCode,
+      'iconCode': icon.iconCode,
       'daysOfWeek': daysOfWeek,
       'proof': proof.map((p) => p.toJson()).toList(),
     };

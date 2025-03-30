@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:top_app/core/theme/app_icon.dart';
 import 'activity.dart';
 
 class Challenge extends Equatable {
@@ -6,7 +7,7 @@ class Challenge extends Equatable {
   final String name;
   final String description;
   final String thumbnailUrl;
-  final String iconCode;
+  final AppIcon icon;
   final int duration;
   final int edgeReward;
   final String authorName;
@@ -18,7 +19,7 @@ class Challenge extends Equatable {
     required this.name,
     required this.description,
     required this.thumbnailUrl,
-    required this.iconCode,
+    required this.icon,
     required this.duration,
     required this.edgeReward,
     required this.authorName,
@@ -31,7 +32,7 @@ class Challenge extends Equatable {
     String? name,
     String? description,
     String? thumbnailUrl,
-    String? iconCode,
+    AppIcon? icon,
     int? duration,
     int? edgeReward,
     String? authorName,
@@ -43,7 +44,7 @@ class Challenge extends Equatable {
       name: name ?? this.name,
       description: description ?? this.description,
       thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
-      iconCode: iconCode ?? this.iconCode,
+      icon: icon ?? this.icon,
       duration: duration ?? this.duration,
       edgeReward: edgeReward ?? this.edgeReward,
       authorName: authorName ?? this.authorName,
@@ -58,7 +59,7 @@ class Challenge extends Equatable {
         name,
         description,
         thumbnailUrl,
-        iconCode,
+        icon,
         duration,
         edgeReward,
         authorName,

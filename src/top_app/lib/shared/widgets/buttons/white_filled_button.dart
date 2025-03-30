@@ -10,12 +10,18 @@ class WhiteFilledButton extends StatelessWidget {
     required this.onPressed,
     this.hasHaptic = true,
     this.isLoading = false,
+    this.padding = const EdgeInsets.symmetric(vertical: 10),
+    this.textStyle,
+    this.borderRadius = 10,
   });
 
   final String text;
   final void Function() onPressed;
   final bool hasHaptic;
   final bool isLoading;
+  final EdgeInsets padding;
+  final TextStyle? textStyle;
+  final double borderRadius;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -28,9 +34,11 @@ class WhiteFilledButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.whitePrimary,
         foregroundColor: AppColors.blackPrimary,
-        padding: const EdgeInsets.symmetric(vertical: 10),
+        padding: padding,
+        minimumSize: Size.zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
       ),
       child: isLoading
@@ -41,7 +49,10 @@ class WhiteFilledButton extends StatelessWidget {
                 color: AppColors.blackPrimary,
               ),
             )
-          : Text(text, style: AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary)),
+          : Text(
+              text,
+              style: textStyle ?? AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary),
+            ),
     );
   }
 }

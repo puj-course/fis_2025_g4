@@ -41,7 +41,7 @@ class GoalModel {
 
   factory GoalModel.fromJson(Map<String, dynamic> json) {
     return GoalModel(
-      id: json['id'],
+      id: json['uid'],
       name: json['name'],
       createdAt: DateTime.parse(json['createdAt']),
       type: json['type'],
@@ -52,7 +52,7 @@ class GoalModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'uid': id,
       'name': name,
       'createdAt': createdAt.toIso8601String(),
       'type': type,

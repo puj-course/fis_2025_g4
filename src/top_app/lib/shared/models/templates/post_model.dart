@@ -45,7 +45,7 @@ class PostModel {
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
-      userId: json['userId'],
+      userId: json['uid'],
       date: DateTime.parse(json['date']),
       fires: json['fires'],
       text: json['text'],
@@ -57,7 +57,7 @@ class PostModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
+      'uid': userId,
       'date': date.toIso8601String(),
       'fires': fires,
       'text': text,

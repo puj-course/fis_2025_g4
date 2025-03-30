@@ -1,21 +1,23 @@
+import 'package:top_app/core/theme/app_icon.dart';
+
 import '../../entities/templates/proof.dart';
 
 class ProofModel {
   final String name;
   final String type;
-  final String iconCode;
+  final AppIcon icon;
 
   ProofModel({
     required this.name,
     required this.type,
-    required this.iconCode,
+    required this.icon,
   });
 
   factory ProofModel.fromEntity(Proof entity) {
     return ProofModel(
       name: entity.name,
       type: entity.type,
-      iconCode: entity.iconCode,
+      icon: entity.icon,
     );
   }
 
@@ -23,7 +25,7 @@ class ProofModel {
     return Proof(
       name: name,
       type: type,
-      iconCode: iconCode,
+      icon: icon,
     );
   }
 
@@ -31,7 +33,7 @@ class ProofModel {
     return ProofModel(
       name: json['name'],
       type: json['type'],
-      iconCode: json['iconCode'],
+      icon: AppIcon.fromCode(json['iconCode']),
     );
   }
 
@@ -39,7 +41,7 @@ class ProofModel {
     return {
       'name': name,
       'type': type,
-      'iconCode': iconCode,
+      'iconCode': icon.iconCode,
     };
   }
 }
