@@ -79,6 +79,22 @@ class NinetyNineRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ShowChallengesListScreen]
+class ShowChallengesListRoute extends PageRouteInfo<void> {
+  const ShowChallengesListRoute({List<PageRouteInfo>? children})
+    : super(ShowChallengesListRoute.name, initialChildren: children);
+
+  static const String name = 'ShowChallengesListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ShowChallengesListScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [SignInScreen]
 class SignInRoute extends PageRouteInfo<void> {
   const SignInRoute({List<PageRouteInfo>? children})

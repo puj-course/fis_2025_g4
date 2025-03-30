@@ -41,9 +41,9 @@ class ActivityModel {
   factory ActivityModel.fromJson(Map<String, dynamic> json) {
     return ActivityModel(
       name: json['name'],
-      streakEdge: json['streakEdge'],
+      streakEdge: json['streakEdge'] as int,
       icon: AppIcon.fromCode(json['iconCode']),
-      daysOfWeek: List<int>.from(json['daysOfWeek']),
+      daysOfWeek: List<int>.from(json['daysOfWeek'].map((e) => e as int)),
       proof: (json['proof'] as List).map((p) => ProofModel.fromJson(p)).toList(),
     );
   }

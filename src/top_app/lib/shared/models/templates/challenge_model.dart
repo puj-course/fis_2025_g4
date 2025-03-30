@@ -60,13 +60,13 @@ class ChallengeModel {
 
   factory ChallengeModel.fromJson(Map<String, dynamic> json) {
     return ChallengeModel(
-      id: json['uid'],
+      id: json['id'],
       name: json['name'],
       description: json['description'],
       thumbnailUrl: json['thumbnailUrl'],
       icon: AppIcon.fromCode(json['iconCode']),
-      duration: json['duration'],
-      edgeReward: json['edgeReward'],
+      duration: json['duration'] != null ? int.parse(json['duration']) : 0,
+      edgeReward: json['edgeReward'] != null ? int.parse(json['edgeReward']) : 0,
       authorName: json['authorName'],
       authorId: json['authorId'],
       activities: (json['activities'] as List).map((a) => ActivityModel.fromJson(a)).toList(),
@@ -75,7 +75,7 @@ class ChallengeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'uid': id,
+      'id': id,
       'name': name,
       'description': description,
       'thumbnailUrl': thumbnailUrl,
