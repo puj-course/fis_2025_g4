@@ -74,7 +74,8 @@ class ChallengeCard extends StatelessWidget {
                   child: WhiteFilledButton(
                     text: 'Join Now',
                     onPressed: onJoinPressed,
-                    padding: EdgeInsets.zero,
+                    borderRadius: 8,
+                    padding: const EdgeInsets.symmetric(vertical: 5),
                     textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
                   ),
                 ),
