@@ -5,6 +5,10 @@ import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/state_management/cubit/challenges_cubit.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/organisms/challenges_list.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/organisms/empty_challenges_content.dart';
+import 'package:top_app/shared/errors/error_message.dart';
+import 'package:top_app/shared/loaders/centered_loader.dart';
 
 @RoutePage()
 class ShowChallengesListScreen extends StatelessWidget {
@@ -26,30 +30,43 @@ class ShowChallengesListScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.blackPrimary,
+      appBar: AppBar(
+        backgroundColor: AppColors.blackPrimary,
+        title: Text(
+          'Browse Challenges',
+          style: AppTextStyles.bold16,
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.filter_list, color: AppColors.whitePrimary),
+            onPressed: () {
+              // TODO: Implement filtering
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<ChallengesCubit, ChallengesState>(
         builder: (context, ChallengesState state) {
           if (state is LoadingChallenges) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const CenteredLoader();
           }
 
           if (state is LoadedChallenges) {
-            return ListView.builder(
-              itemCount: state.challenges.length,
-              itemBuilder: (context, index) => Text(
-                state.challenges[index].name,
-                style: AppTextStyles.regular14,
-              ),
+            if (state.challenges.isEmpty) {
+              return const EmptyChallengesContent();
+            }
+
+            return ChallengesList(
+              challenges: state.challenges,
             );
           }
 
           if (state is ErrorLoadingChallenges) {
-            return Center(
-              child: Text(
-                'Error loading challenges: ${state.errorMessage}',
-                style: AppTextStyles.regular14,
-              ),
+            return ErrorMessage(
+              message: state.errorMessage,
+              onTryAgain: () {
+                context.read<ChallengesCubit>().getChallenges();
+              },
             );
           }
 

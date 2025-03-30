@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/show_challenges_list_screen.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/screens/show_challenges_list_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/ninety_nine_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/start_or_level_up_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/that_one_screen.dart';

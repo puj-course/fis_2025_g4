@@ -10,7 +10,7 @@ enum AppIcon {
   final String iconCode;
   final String assetPath;
 
-  const AppIcon(this.iconCode) : assetPath = 'assets/emojis/$iconCode.svg';
+  const AppIcon(this.iconCode) : assetPath = 'assets/emojis/$iconCode.png';
 
   static AppIcon fromCode(String code) {
     return AppIcon.values.firstWhere(
