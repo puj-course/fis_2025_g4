@@ -5,6 +5,7 @@ enum AppIcon {
   fire('fire'),
   silhouette('silhouette'),
   target('target'),
+  clock('clock'),
   ;
 
   final String iconCode;

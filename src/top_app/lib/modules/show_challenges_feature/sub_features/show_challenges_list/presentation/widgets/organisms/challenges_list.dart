@@ -18,13 +18,7 @@ class ChallengesList extends StatelessWidget {
       separatorBuilder: (context, index) => const SizedBox(height: 16),
       itemBuilder: (context, index) {
         final challenge = challenges[index];
-        return ChallengeCard(
-          name: challenge.name,
-          thumbnailUrl: challenge.thumbnailUrl,
-          duration: challenge.duration,
-          edgeReward: challenge.edgeReward,
-          onJoinPressed: () {},
-        );
+        return ChallengeCard(challenge: challenge);
       },
     );
   }
