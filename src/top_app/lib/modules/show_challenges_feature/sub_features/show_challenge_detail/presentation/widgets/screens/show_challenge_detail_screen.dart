@@ -78,13 +78,16 @@ class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
                 isLoading: _isLoading,
                 isJoined: _isJoined,
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 15),
+              const Divider(color: AppColors.grayDark),
+              const SizedBox(height: 15),
               ActivitiesList(
                 challenge: widget.challenge,
                 onActivityTap: _handleActivityTap,
               ),
+              const SizedBox(height: 15),
               const Divider(color: AppColors.grayDark),
-              const SizedBox(height: 24),
+              const SizedBox(height: 15),
               ProofsList(
                 challenge: widget.challenge,
               ),

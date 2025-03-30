@@ -18,10 +18,11 @@ class ProofsList extends StatelessWidget {
       children: [
         Text(
           'Proof of completion',
-          style: AppTextStyles.bold20,
+          style: AppTextStyles.bold16,
         ),
         const SizedBox(height: 16),
         ListView.separated(
+          padding: EdgeInsets.zero,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: challenge.activities.length,
