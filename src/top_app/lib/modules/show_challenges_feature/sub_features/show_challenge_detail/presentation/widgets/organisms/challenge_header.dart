@@ -28,16 +28,17 @@ class ChallengeHeader extends StatelessWidget {
       children: [
         SizedBox(
           width: double.infinity,
-          height: 200,
+          height: 220,
           child: ShimmerImage(
             imageUrl: challenge.thumbnailUrl,
+            width: double.infinity,
             fit: BoxFit.cover,
           ),
         ),
         const SizedBox(height: 16),
         Text(
           challenge.name,
-          style: AppTextStyles.bold16,
+          style: AppTextStyles.bold18,
         ),
         const SizedBox(height: 8),
         Row(
