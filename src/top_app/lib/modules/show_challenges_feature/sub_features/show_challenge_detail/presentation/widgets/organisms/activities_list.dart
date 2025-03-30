@@ -7,11 +7,9 @@ class ActivitiesList extends StatelessWidget {
   const ActivitiesList({
     super.key,
     required this.challenge,
-    required this.onActivityTap,
   });
 
   final Challenge challenge;
-  final void Function(String activityName) onActivityTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class ActivitiesList extends StatelessWidget {
           'Activities',
           style: AppTextStyles.bold16,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         ListView.separated(
           padding: EdgeInsets.zero,
           shrinkWrap: true,
@@ -34,7 +32,6 @@ class ActivitiesList extends StatelessWidget {
             return ActivityCard(
               name: activity.name,
               streakEdge: activity.streakEdge,
-              onTap: () => onActivityTap(activity.name),
             );
           },
         ),

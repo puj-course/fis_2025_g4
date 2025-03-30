@@ -27,14 +27,14 @@ class ProofTile extends StatelessWidget {
             ),
             child: Image.asset(
               icon.assetPath,
-              width: 24,
-              height: 24,
+              width: 20,
+              height: 20,
             ),
           ),
           const SizedBox(width: 16),
           Text(
             name,
-            style: AppTextStyles.regular16,
+            style: AppTextStyles.regular14,
           ),
         ],
       ),

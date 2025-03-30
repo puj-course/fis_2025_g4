@@ -2,6 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/atoms/custom_divider.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/molecules/challenge_description.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/activities_list.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/challenge_header.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/proofs_list.dart';
@@ -44,10 +46,6 @@ class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
     }
   }
 
-  void _handleActivityTap(String activityName) {
-    // TODO: Navigate to activity detail
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,19 +76,13 @@ class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
                 isLoading: _isLoading,
                 isJoined: _isJoined,
               ),
-              const SizedBox(height: 15),
-              const Divider(color: AppColors.grayDark),
-              const SizedBox(height: 15),
-              ActivitiesList(
-                challenge: widget.challenge,
-                onActivityTap: _handleActivityTap,
-              ),
-              const SizedBox(height: 15),
-              const Divider(color: AppColors.grayDark),
-              const SizedBox(height: 15),
-              ProofsList(
-                challenge: widget.challenge,
-              ),
+              const CustomDivider(),
+              ChallengeDescription(description: widget.challenge.description),
+              const CustomDivider(),
+              ActivitiesList(challenge: widget.challenge),
+              const CustomDivider(),
+              ProofsList(challenge: widget.challenge),
+              const SizedBox(height: 100),
             ],
           ),
         ),

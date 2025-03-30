@@ -20,7 +20,7 @@ class ProofsList extends StatelessWidget {
           'Proof of completion',
           style: AppTextStyles.bold16,
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 10),
         ListView.separated(
           padding: EdgeInsets.zero,
           shrinkWrap: true,

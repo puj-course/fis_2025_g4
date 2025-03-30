@@ -5,7 +5,6 @@ import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
-import 'package:top_app/shared/widgets/buttons/white_filled_button.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/atoms/challenge_chip.dart';
 import 'package:top_app/shared/loaders/shimmer_image.dart';
 
@@ -24,7 +23,7 @@ class ChallengeCard extends StatelessWidget {
         AutoRouter.of(context).push(ShowChallengeDetailRoute(challenge: challenge));
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.blackSecondary,
           borderRadius: BorderRadius.circular(12),
@@ -50,10 +49,9 @@ class ChallengeCard extends StatelessWidget {
                   Row(
                     children: [
                       ChallengeChip(
-                        icon: const Icon(
-                          Icons.access_time,
-                          size: 16,
-                          color: AppColors.whitePrimary,
+                        icon: Image.asset(
+                          AppIcon.clock.assetPath,
+                          width: 15.0,
                         ),
                         text: '${challenge.duration} days',
                       ),
@@ -67,19 +65,19 @@ class ChallengeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  SizedBox(
-                    width: double.infinity,
-                    child: WhiteFilledButton(
-                      text: 'Join Now',
-                      onPressed: () {
-                        // TODO: Implement join
-                      },
-                      borderRadius: 8,
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
-                    ),
-                  ),
+                  // const SizedBox(height: 12),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: WhiteFilledButton(
+                  //     text: 'See details',
+                  //     onPressed: () {
+                  //       AutoRouter.of(context).push(ShowChallengeDetailRoute(challenge: challenge));
+                  //     },
+                  //     borderRadius: 8,
+                  //     padding: const EdgeInsets.symmetric(vertical: 5),
+                  //     textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
