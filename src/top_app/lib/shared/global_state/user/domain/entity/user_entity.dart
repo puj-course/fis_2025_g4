@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
-import '../../../../entities/templates/goal.dart';
-import '../../../../entities/templates/badge.dart';
-import '../../../../entities/templates/challenge.dart';
+import '../../../../entities/user_specific/user_goal.dart';
+import '../../../../entities/user_specific/user_badge.dart';
+import '../../../../entities/user_specific/user_challenge.dart';
 
 class UserEntity extends Equatable {
   final String uid;
@@ -11,9 +11,9 @@ class UserEntity extends Equatable {
   final DateTime createdAt;
   final String? profilePictureUrl;
   final int signUpSeconds;
-  final List<Goal> goals;
-  final List<Badge> badges;
-  final List<Challenge> challenges;
+  final List<UserGoal> goals;
+  final List<UserBadge> badges;
+  final List<UserChallenge> challenges;
   final List<String> posts;
 
   UserEntity({
@@ -24,9 +24,9 @@ class UserEntity extends Equatable {
     required this.createdAt,
     this.profilePictureUrl,
     required this.signUpSeconds,
-    List<Goal>? goals,
-    List<Badge>? badges,
-    List<Challenge>? challenges,
+    List<UserGoal>? goals,
+    List<UserBadge>? badges,
+    List<UserChallenge>? challenges,
     List<String>? posts,
   })  : goals = goals ?? [],
         badges = badges ?? [],
@@ -41,9 +41,9 @@ class UserEntity extends Equatable {
     DateTime? createdAt,
     String? profilePictureUrl,
     int? signUpSeconds,
-    List<Goal>? goals,
-    List<Badge>? badges,
-    List<Challenge>? challenges,
+    List<UserGoal>? goals,
+    List<UserBadge>? badges,
+    List<UserChallenge>? challenges,
     List<String>? posts,
   }) {
     return UserEntity(

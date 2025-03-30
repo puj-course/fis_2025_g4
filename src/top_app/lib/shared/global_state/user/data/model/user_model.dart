@@ -1,7 +1,7 @@
 import '../../domain/entity/user_entity.dart';
-import '../../../../models/templates/goal_model.dart';
-import '../../../../models/templates/badge_model.dart';
-import '../../../../models/templates/challenge_model.dart';
+import '../../../../models/user_specific/user_goal_model.dart';
+import '../../../../models/user_specific/user_badge_model.dart';
+import '../../../../models/user_specific/user_challenge_model.dart';
 
 class UserModel {
   final String uid;
@@ -11,9 +11,9 @@ class UserModel {
   final DateTime createdAt;
   final String profilePictureUrl;
   final int signUpSeconds;
-  final List<GoalModel> goals;
-  final List<BadgeModel> badges;
-  final List<ChallengeModel> challenges;
+  final List<UserGoalModel> goals;
+  final List<UserBadgeModel> badges;
+  final List<UserChallengeModel> challenges;
   final List<String> posts;
 
   UserModel({
@@ -24,9 +24,9 @@ class UserModel {
     required this.createdAt,
     required this.profilePictureUrl,
     required this.signUpSeconds,
-    List<GoalModel>? goals,
-    List<BadgeModel>? badges,
-    List<ChallengeModel>? challenges,
+    List<UserGoalModel>? goals,
+    List<UserBadgeModel>? badges,
+    List<UserChallengeModel>? challenges,
     List<String>? posts,
   })  : goals = goals ?? [],
         badges = badges ?? [],
@@ -43,9 +43,9 @@ class UserModel {
       createdAt: entity.createdAt,
       profilePictureUrl: entity.profilePictureUrl ?? '',
       signUpSeconds: entity.signUpSeconds,
-      goals: entity.goals.map((g) => GoalModel.fromEntity(g)).toList(),
-      badges: entity.badges.map((b) => BadgeModel.fromEntity(b)).toList(),
-      challenges: entity.challenges.map((c) => ChallengeModel.fromEntity(c)).toList(),
+      goals: entity.goals.map((g) => UserGoalModel.fromEntity(g)).toList(),
+      badges: entity.badges.map((b) => UserBadgeModel.fromEntity(b)).toList(),
+      challenges: entity.challenges.map((c) => UserChallengeModel.fromEntity(c)).toList(),
       posts: entity.posts,
     );
   }
@@ -77,10 +77,10 @@ class UserModel {
       createdAt: DateTime.parse(json['createdAt']),
       profilePictureUrl: json['profilePictureUrl'],
       signUpSeconds: json['signUpSeconds'],
-      goals: (json['goals'] as List?)?.map((g) => GoalModel.fromJson(g)).toList() ?? [],
-      badges: (json['badges'] as List?)?.map((b) => BadgeModel.fromJson(b)).toList() ?? [],
+      goals: (json['goals'] as List?)?.map((g) => UserGoalModel.fromJson(g)).toList() ?? [],
+      badges: (json['badges'] as List?)?.map((b) => UserBadgeModel.fromJson(b)).toList() ?? [],
       challenges:
-          (json['challenges'] as List?)?.map((c) => ChallengeModel.fromJson(c)).toList() ?? [],
+          (json['challenges'] as List?)?.map((c) => UserChallengeModel.fromJson(c)).toList() ?? [],
       posts: List<String>.from(json['posts'] ?? []),
     );
   }
