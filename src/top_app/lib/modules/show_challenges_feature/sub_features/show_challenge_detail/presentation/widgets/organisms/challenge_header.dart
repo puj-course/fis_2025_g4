@@ -11,15 +11,9 @@ class ChallengeHeader extends StatelessWidget {
   const ChallengeHeader({
     super.key,
     required this.challenge,
-    required this.onJoinPressed,
-    required this.isLoading,
-    required this.isJoined,
   });
 
   final Challenge challenge;
-  final Future<void> Function() onJoinPressed;
-  final bool isLoading;
-  final bool isJoined;
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +56,10 @@ class ChallengeHeader extends StatelessWidget {
             ),
             const Spacer(),
             WhiteFilledButton(
-              text: isJoined ? 'Joined' : 'Join Now',
-              onPressed: onJoinPressed,
-              isLoading: isLoading,
-              isDone: isJoined,
+              text: 'Join Now',
+              onPressed: () {},
+              isLoading: false,
+              isDone: false,
               doneIcon: const Icon(
                 Icons.check,
                 color: AppColors.blackPrimary,
