@@ -13,10 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Flutter using pubspec.yaml
+      - name: Setup Flutter (3.29.2)
         uses: subosito/flutter-action@v2
         with:
-          flutter-version-file: src/top_app/pubspec.yaml
+          flutter-version: '3.29.2'
 
       - name: Get dependencies
         run: cd src/top_app && flutter pub get
