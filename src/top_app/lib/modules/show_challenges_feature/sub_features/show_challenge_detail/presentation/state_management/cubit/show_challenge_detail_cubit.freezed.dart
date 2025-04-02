@@ -38,13 +38,13 @@ class $ShowChallengeDetailStateCopyWith<$Res> {
 
 /// @nodoc
 
-class _Initial implements ShowChallengeDetailState {
-  const _Initial();
+class Initial implements ShowChallengeDetailState {
+  const Initial();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Initial);
+        (other.runtimeType == runtimeType && other is Initial);
   }
 
   @override
@@ -58,13 +58,13 @@ class _Initial implements ShowChallengeDetailState {
 
 /// @nodoc
 
-class _LoadingCompetitors implements ShowChallengeDetailState {
-  const _LoadingCompetitors();
+class LoadingCompetitors implements ShowChallengeDetailState {
+  const LoadingCompetitors();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _LoadingCompetitors);
+        (other.runtimeType == runtimeType && other is LoadingCompetitors);
   }
 
   @override
@@ -78,8 +78,8 @@ class _LoadingCompetitors implements ShowChallengeDetailState {
 
 /// @nodoc
 
-class _LoadedCompetitors implements ShowChallengeDetailState {
-  const _LoadedCompetitors({required final List<CompetitorInfo> competitors})
+class LoadedCompetitors implements ShowChallengeDetailState {
+  const LoadedCompetitors({required final List<CompetitorInfo> competitors})
       : _competitors = competitors;
 
   final List<CompetitorInfo> _competitors;
@@ -93,14 +93,14 @@ class _LoadedCompetitors implements ShowChallengeDetailState {
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$LoadedCompetitorsCopyWith<_LoadedCompetitors> get copyWith =>
-      __$LoadedCompetitorsCopyWithImpl<_LoadedCompetitors>(this, _$identity);
+  $LoadedCompetitorsCopyWith<LoadedCompetitors> get copyWith =>
+      _$LoadedCompetitorsCopyWithImpl<LoadedCompetitors>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _LoadedCompetitors &&
+            other is LoadedCompetitors &&
             const DeepCollectionEquality()
                 .equals(other._competitors, _competitors));
   }
@@ -116,22 +116,22 @@ class _LoadedCompetitors implements ShowChallengeDetailState {
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCompetitorsCopyWith<$Res>
+abstract mixin class $LoadedCompetitorsCopyWith<$Res>
     implements $ShowChallengeDetailStateCopyWith<$Res> {
-  factory _$LoadedCompetitorsCopyWith(
-          _LoadedCompetitors value, $Res Function(_LoadedCompetitors) _then) =
-      __$LoadedCompetitorsCopyWithImpl;
+  factory $LoadedCompetitorsCopyWith(
+          LoadedCompetitors value, $Res Function(LoadedCompetitors) _then) =
+      _$LoadedCompetitorsCopyWithImpl;
   @useResult
   $Res call({List<CompetitorInfo> competitors});
 }
 
 /// @nodoc
-class __$LoadedCompetitorsCopyWithImpl<$Res>
-    implements _$LoadedCompetitorsCopyWith<$Res> {
-  __$LoadedCompetitorsCopyWithImpl(this._self, this._then);
+class _$LoadedCompetitorsCopyWithImpl<$Res>
+    implements $LoadedCompetitorsCopyWith<$Res> {
+  _$LoadedCompetitorsCopyWithImpl(this._self, this._then);
 
-  final _LoadedCompetitors _self;
-  final $Res Function(_LoadedCompetitors) _then;
+  final LoadedCompetitors _self;
+  final $Res Function(LoadedCompetitors) _then;
 
   /// Create a copy of ShowChallengeDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -139,7 +139,7 @@ class __$LoadedCompetitorsCopyWithImpl<$Res>
   $Res call({
     Object? competitors = null,
   }) {
-    return _then(_LoadedCompetitors(
+    return _then(LoadedCompetitors(
       competitors: null == competitors
           ? _self._competitors
           : competitors // ignore: cast_nullable_to_non_nullable
@@ -150,61 +150,65 @@ class __$LoadedCompetitorsCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _Error implements ShowChallengeDetailState {
-  const _Error({required this.message});
+class ErrorLoadingCompetitors implements ShowChallengeDetailState {
+  const ErrorLoadingCompetitors({required this.errorMessage});
 
-  final String message;
+  final String errorMessage;
 
   /// Create a copy of ShowChallengeDetailState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$ErrorCopyWith<_Error> get copyWith =>
-      __$ErrorCopyWithImpl<_Error>(this, _$identity);
+  $ErrorLoadingCompetitorsCopyWith<ErrorLoadingCompetitors> get copyWith =>
+      _$ErrorLoadingCompetitorsCopyWithImpl<ErrorLoadingCompetitors>(
+          this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Error &&
-            (identical(other.message, message) || other.message == message));
+            other is ErrorLoadingCompetitors &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, errorMessage);
 
   @override
   String toString() {
-    return 'ShowChallengeDetailState.error(message: $message)';
+    return 'ShowChallengeDetailState.errorLoadingCompetitors(errorMessage: $errorMessage)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res>
+abstract mixin class $ErrorLoadingCompetitorsCopyWith<$Res>
     implements $ShowChallengeDetailStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) =
-      __$ErrorCopyWithImpl;
+  factory $ErrorLoadingCompetitorsCopyWith(ErrorLoadingCompetitors value,
+          $Res Function(ErrorLoadingCompetitors) _then) =
+      _$ErrorLoadingCompetitorsCopyWithImpl;
   @useResult
-  $Res call({String message});
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$ErrorLoadingCompetitorsCopyWithImpl<$Res>
+    implements $ErrorLoadingCompetitorsCopyWith<$Res> {
+  _$ErrorLoadingCompetitorsCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final ErrorLoadingCompetitors _self;
+  final $Res Function(ErrorLoadingCompetitors) _then;
 
   /// Create a copy of ShowChallengeDetailState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
-    Object? message = null,
+    Object? errorMessage = null,
   }) {
-    return _then(_Error(
-      message: null == message
-          ? _self.message
-          : message // ignore: cast_nullable_to_non_nullable
+    return _then(ErrorLoadingCompetitors(
+      errorMessage: null == errorMessage
+          ? _self.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }

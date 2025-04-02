@@ -1,16 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/atoms/custom_divider.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/molecules/challenge_description.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/activities_list.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/challenge_header.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/competitors_grid.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/proofs_list.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 
 @RoutePage()
-class ShowChallengeDetailScreen extends StatefulWidget {
+class ShowChallengeDetailScreen extends StatelessWidget {
   const ShowChallengeDetailScreen({
     super.key,
     required this.challenge,
@@ -19,32 +23,21 @@ class ShowChallengeDetailScreen extends StatefulWidget {
   final Challenge challenge;
 
   @override
-  State<ShowChallengeDetailScreen> createState() => _ShowChallengeDetailScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => getIt<ShowChallengeDetailCubit>()..getChallengeCompetitors(challenge.id),
+      child: ShowChallengeDetailBody(challenge: challenge),
+    );
+  }
 }
 
-class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
-  bool _isLoading = false;
-  bool _isJoined = false;
+class ShowChallengeDetailBody extends StatelessWidget {
+  final Challenge challenge;
 
-  Future<void> _handleJoinPressed() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      // TODO: Implement join
-      await Future.delayed(const Duration(seconds: 2)); // Simulate API call
-      setState(() {
-        _isJoined = true;
-      });
-    } catch (e) {
-      // TODO: Handle error
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  const ShowChallengeDetailBody({
+    super.key,
+    required this.challenge,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +47,7 @@ class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
         backgroundColor: AppColors.blackPrimary,
         foregroundColor: AppColors.whitePrimary,
         title: Text(
-          widget.challenge.name,
+          challenge.name,
           style: AppTextStyles.bold18.copyWith(color: AppColors.whitePrimary),
         ),
         actions: [
@@ -70,19 +63,15 @@ class _ShowChallengeDetailScreenState extends State<ShowChallengeDetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ChallengeHeader(
-                challenge: widget.challenge,
-                onJoinPressed: _handleJoinPressed,
-                isLoading: _isLoading,
-                isJoined: _isJoined,
-              ),
+              ChallengeHeader(challenge: challenge),
               const CustomDivider(),
-              ChallengeDescription(description: widget.challenge.description),
+              ChallengeDescription(description: challenge.description),
               const CustomDivider(),
-              ActivitiesList(challenge: widget.challenge),
+              ActivitiesList(challenge: challenge),
               const CustomDivider(),
-              ProofsList(challenge: widget.challenge),
-              const SizedBox(height: 100),
+              ProofsList(challenge: challenge),
+              const CustomDivider(),
+              const CompetitorsGrid(),
             ],
           ),
         ),
