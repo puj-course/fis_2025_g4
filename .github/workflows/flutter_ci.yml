@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Flutter
+      - name: Setup Flutter using pubspec.yaml
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.0'
+          flutter-version-file: src/top_app/pubspec.yaml
 
-      - name: Change directory to Flutter app
+      - name: Get dependencies
         run: cd src/top_app && flutter pub get
 
       - name: Analyze code
