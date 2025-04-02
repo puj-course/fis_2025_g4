@@ -26,7 +26,18 @@ jobs:
 
       - name: Create mock firebase_options.dart
         run: |
-          echo "class DefaultFirebaseOptions { static const currentPlatform = {}; }" > src/top_app/lib/firebase_options.dart
+          mkdir -p src/top_app/lib
+          echo "import 'package:firebase_core/firebase_core.dart';" > src/top_app/lib/firebase_options.dart
+          echo "" >> src/top_app/lib/firebase_options.dart
+          echo "class DefaultFirebaseOptions {" >> src/top_app/lib/firebase_options.dart
+          echo "  static FirebaseOptions get currentPlatform => const FirebaseOptions(" >> src/top_app/lib/firebase_options.dart
+          echo "    apiKey: 'mock-api-key'," >> src/top_app/lib/firebase_options.dart
+          echo "    appId: 'mock-app-id'," >> src/top_app/lib/firebase_options.dart
+          echo "    messagingSenderId: 'mock-sender-id'," >> src/top_app/lib/firebase_options.dart
+          echo "    projectId: 'mock-project-id'," >> src/top_app/lib/firebase_options.dart
+          echo "    storageBucket: 'mock-storage'," >> src/top_app/lib/firebase_options.dart
+          echo "  );" >> src/top_app/lib/firebase_options.dart
+          echo "}" >> src/top_app/lib/firebase_options.dart
 
       - name: Analyze code
         run: cd src/top_app && flutter analyze
