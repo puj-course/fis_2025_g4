@@ -1,0 +1,2 @@
+/Users/alejoparrado/Documents/fis_2025_g4/src/top_app/android/app/.cxx/RelWithDebInfo/36574z5w/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/alejoparrado/Documents/fis_2025_g4/src/top_app/android/app/.cxx/RelWithDebInfo/36574z5w/armeabi-v7a/CMakeFiles/rebuild_cache.dir
