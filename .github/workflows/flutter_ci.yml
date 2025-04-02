@@ -21,8 +21,8 @@ jobs:
       - name: Get dependencies
         run: cd src/top_app && flutter pub get
 
-      - name: Analyze code
-        run: cd src/top_app && flutter analyze
-
       - name: Generate code (build_runner)
         run: cd src/top_app && flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Analyze code
+        run: cd src/top_app && flutter analyze
