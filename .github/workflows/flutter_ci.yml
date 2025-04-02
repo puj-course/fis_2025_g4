@@ -24,5 +24,9 @@ jobs:
       - name: Generate code (build_runner)
         run: cd src/top_app && flutter pub run build_runner build --delete-conflicting-outputs
 
+      - name: Create mock firebase_options.dart
+        run: |
+          echo "class DefaultFirebaseOptions { static const currentPlatform = {}; }" > src/top_app/lib/firebase_options.dart
+
       - name: Analyze code
         run: cd src/top_app && flutter analyze
