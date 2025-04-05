@@ -34,7 +34,7 @@ class ShowChallengesListScreenBody extends StatelessWidget {
         backgroundColor: AppColors.blackPrimary,
         title: Text(
           'Browse Challenges',
-          style: AppTextStyles.bold16,
+          style: AppTextStyles.bold18,
         ),
         actions: [
           IconButton(
