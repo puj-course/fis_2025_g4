@@ -31,7 +31,7 @@ class CompetitorsGrid extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  childAspectRatio: 0.8,
+                  childAspectRatio: 0.9,
                   crossAxisSpacing: 16,
                   mainAxisSpacing: 16,
                 ),
@@ -49,7 +49,7 @@ class CompetitorsGrid extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         competitor.userName,
-                        style: AppTextStyles.regular14.copyWith(
+                        style: AppTextStyles.regular12.copyWith(
                           color: AppColors.whitePrimary,
                         ),
                         textAlign: TextAlign.center,
