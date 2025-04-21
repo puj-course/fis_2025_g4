@@ -101,7 +101,7 @@ class _WhiteFilledButtonState extends State<WhiteFilledButton> with SingleTicker
                     : Text(
                         widget.text,
                         style: widget.textStyle ??
-                            AppTextStyles.regular16.copyWith(color: AppColors.blackPrimary),
+                            AppTextStyles.bold16.copyWith(color: AppColors.blackPrimary),
                       ),
           ),
         ),

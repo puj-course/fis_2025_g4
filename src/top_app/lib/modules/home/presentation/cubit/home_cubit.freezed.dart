@@ -98,8 +98,14 @@ class LoadingChallenges implements HomeState {
 /// @nodoc
 
 class Loaded implements HomeState {
-  const Loaded({required this.user, final List<Challenge>? challenges})
-      : _challenges = challenges;
+  const Loaded(
+      {required this.user,
+      final List<Challenge>? challenges,
+      final List<Activity>? activities,
+      final List<Goal>? goals})
+      : _challenges = challenges,
+        _activities = activities,
+        _goals = goals;
 
   final UserEntity user;
   final List<Challenge>? _challenges;
@@ -107,6 +113,24 @@ class Loaded implements HomeState {
     final value = _challenges;
     if (value == null) return null;
     if (_challenges is EqualUnmodifiableListView) return _challenges;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<Activity>? _activities;
+  List<Activity>? get activities {
+    final value = _activities;
+    if (value == null) return null;
+    if (_activities is EqualUnmodifiableListView) return _activities;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<Goal>? _goals;
+  List<Goal>? get goals {
+    final value = _goals;
+    if (value == null) return null;
+    if (_goals is EqualUnmodifiableListView) return _goals;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -125,16 +149,23 @@ class Loaded implements HomeState {
             other is Loaded &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
-                .equals(other._challenges, _challenges));
+                .equals(other._challenges, _challenges) &&
+            const DeepCollectionEquality()
+                .equals(other._activities, _activities) &&
+            const DeepCollectionEquality().equals(other._goals, _goals));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, user, const DeepCollectionEquality().hash(_challenges));
+      runtimeType,
+      user,
+      const DeepCollectionEquality().hash(_challenges),
+      const DeepCollectionEquality().hash(_activities),
+      const DeepCollectionEquality().hash(_goals));
 
   @override
   String toString() {
-    return 'HomeState.loaded(user: $user, challenges: $challenges)';
+    return 'HomeState.loaded(user: $user, challenges: $challenges, activities: $activities, goals: $goals)';
   }
 }
 
@@ -143,7 +174,11 @@ abstract mixin class $LoadedCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
   @useResult
-  $Res call({UserEntity user, List<Challenge>? challenges});
+  $Res call(
+      {UserEntity user,
+      List<Challenge>? challenges,
+      List<Activity>? activities,
+      List<Goal>? goals});
 }
 
 /// @nodoc
@@ -159,6 +194,8 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
   $Res call({
     Object? user = null,
     Object? challenges = freezed,
+    Object? activities = freezed,
+    Object? goals = freezed,
   }) {
     return _then(Loaded(
       user: null == user
@@ -169,6 +206,14 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
           ? _self._challenges
           : challenges // ignore: cast_nullable_to_non_nullable
               as List<Challenge>?,
+      activities: freezed == activities
+          ? _self._activities
+          : activities // ignore: cast_nullable_to_non_nullable
+              as List<Activity>?,
+      goals: freezed == goals
+          ? _self._goals
+          : goals // ignore: cast_nullable_to_non_nullable
+              as List<Goal>?,
     ));
   }
 }

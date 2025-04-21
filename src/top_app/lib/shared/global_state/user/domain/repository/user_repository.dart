@@ -5,7 +5,7 @@ abstract class UserRepository {
   Future<void> createUserDocument(UserEntity user);
 
   /// Gets a user document from the database
-  Future<UserEntity> getUserDocument(String uid);
+  Future<UserEntity?> getUserDocument(String uid);
 
   /// Gets the rank of a user based on their sign up time
   Future<int> getUserSignUpRank(int signUpSeconds);

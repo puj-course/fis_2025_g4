@@ -1,5 +1,6 @@
+import 'package:top_app/shared/models/templates/goal_model.dart';
+
 import '../../domain/entity/user_entity.dart';
-import '../../../../models/user_specific/user_goal_model.dart';
 import '../../../../models/user_specific/user_badge_model.dart';
 import '../../../../models/user_specific/user_challenge_model.dart';
 
@@ -11,7 +12,7 @@ class UserModel {
   final DateTime createdAt;
   final String profilePictureUrl;
   final int signUpSeconds;
-  final List<UserGoalModel> goals;
+  final List<GoalModel> goals;
   final List<UserBadgeModel> badges;
   final List<UserChallengeModel> challenges;
   final List<String> posts;
@@ -24,7 +25,7 @@ class UserModel {
     required this.createdAt,
     required this.profilePictureUrl,
     required this.signUpSeconds,
-    List<UserGoalModel>? goals,
+    List<GoalModel>? goals,
     List<UserBadgeModel>? badges,
     List<UserChallengeModel>? challenges,
     List<String>? posts,
@@ -43,7 +44,7 @@ class UserModel {
       createdAt: entity.createdAt,
       profilePictureUrl: entity.profilePictureUrl ?? '',
       signUpSeconds: entity.signUpSeconds,
-      goals: entity.goals.map((g) => UserGoalModel.fromEntity(g)).toList(),
+      goals: entity.goals.map((g) => GoalModel.fromEntity(g)).toList(),
       badges: entity.badges.map((b) => UserBadgeModel.fromEntity(b)).toList(),
       challenges: entity.challenges.map((c) => UserChallengeModel.fromEntity(c)).toList(),
       posts: entity.posts,
@@ -77,7 +78,7 @@ class UserModel {
       createdAt: DateTime.parse(json['createdAt']),
       profilePictureUrl: json['profilePictureUrl'],
       signUpSeconds: json['signUpSeconds'],
-      goals: (json['goals'] as List?)?.map((g) => UserGoalModel.fromJson(g)).toList() ?? [],
+      goals: (json['goals'] as List?)?.map((g) => GoalModel.fromJson(g)).toList() ?? [],
       badges: (json['badges'] as List?)?.map((b) => UserBadgeModel.fromJson(b)).toList() ?? [],
       challenges:
           (json['challenges'] as List?)?.map((c) => UserChallengeModel.fromJson(c)).toList() ?? [],

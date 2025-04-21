@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../../../entities/user_specific/user_goal.dart';
+import 'package:top_app/shared/entities/templates/goal.dart';
 import '../../../../entities/user_specific/user_badge.dart';
 import '../../../../entities/user_specific/user_challenge.dart';
 
@@ -11,7 +11,7 @@ class UserEntity extends Equatable {
   final DateTime createdAt;
   final String? profilePictureUrl;
   final int signUpSeconds;
-  final List<UserGoal> goals;
+  final List<Goal> goals;
   final List<UserBadge> badges;
   final List<UserChallenge> challenges;
   final List<String> posts;
@@ -24,7 +24,7 @@ class UserEntity extends Equatable {
     required this.createdAt,
     this.profilePictureUrl,
     required this.signUpSeconds,
-    List<UserGoal>? goals,
+    List<Goal>? goals,
     List<UserBadge>? badges,
     List<UserChallenge>? challenges,
     List<String>? posts,
@@ -41,7 +41,7 @@ class UserEntity extends Equatable {
     DateTime? createdAt,
     String? profilePictureUrl,
     int? signUpSeconds,
-    List<UserGoal>? goals,
+    List<Goal>? goals,
     List<UserBadge>? badges,
     List<UserChallenge>? challenges,
     List<String>? posts,

@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'user_activity.dart';
 
 class UserChallenge extends Equatable {
-  final String userId;
   final String challengeId;
   final DateTime dateStarted;
   final int currentStreak;
@@ -11,7 +10,6 @@ class UserChallenge extends Equatable {
   final List<UserActivity> activities;
 
   const UserChallenge({
-    required this.userId,
     required this.challengeId,
     required this.dateStarted,
     required this.currentStreak,
@@ -21,7 +19,6 @@ class UserChallenge extends Equatable {
   });
 
   UserChallenge copyWith({
-    String? userId,
     String? challengeId,
     DateTime? dateStarted,
     int? currentStreak,
@@ -30,7 +27,6 @@ class UserChallenge extends Equatable {
     List<UserActivity>? activities,
   }) {
     return UserChallenge(
-      userId: userId ?? this.userId,
       challengeId: challengeId ?? this.challengeId,
       dateStarted: dateStarted ?? this.dateStarted,
       currentStreak: currentStreak ?? this.currentStreak,
@@ -42,7 +38,6 @@ class UserChallenge extends Equatable {
 
   @override
   List<Object?> get props => [
-        userId,
         challengeId,
         dateStarted,
         currentStreak,

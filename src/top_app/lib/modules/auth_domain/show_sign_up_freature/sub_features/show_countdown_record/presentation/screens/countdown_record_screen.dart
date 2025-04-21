@@ -1,5 +1,7 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/show_countdown_record/presentation/molecules/record_with_confetti.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/show_countdown_record/presentation/molecules/congrats_texts.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/show_countdown_record/presentation/atoms/bottom_navigation_button.dart';
@@ -28,7 +30,7 @@ class CountdownRecordScreen extends StatelessWidget {
           BottomNavigationButton(
             buttonText: 'Start',
             onPressed: () {
-              // Empty function for now
+              AutoRouter.of(context).replace(const HomeRoute());
             },
           ),
         ],

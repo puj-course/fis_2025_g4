@@ -5,7 +5,7 @@ import 'package:top_app/core/theme/app_colors.dart';
 class ShimmerImage extends StatelessWidget {
   const ShimmerImage({
     super.key,
-    required this.imageUrl,
+    this.imageUrl,
     this.width,
     this.height,
     this.fit = BoxFit.cover,
@@ -14,7 +14,7 @@ class ShimmerImage extends StatelessWidget {
     this.borderRadius,
   });
 
-  final String imageUrl;
+  final String? imageUrl;
   final double? width;
   final double? height;
   final BoxFit fit;
@@ -41,27 +41,34 @@ class ShimmerImage extends StatelessWidget {
           ),
         ClipRRect(
           borderRadius: borderRadius ?? BorderRadius.zero,
-          child: Image.network(
-            imageUrl,
-            width: width,
-            height: height,
-            fit: fit,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Shimmer.fromColors(
-                baseColor: shimmerBaseColor,
-                highlightColor: shimmerHighlightColor,
-                child: Container(
+          child: imageUrl != null && imageUrl!.isNotEmpty
+              ? Image.network(
+                  imageUrl!,
                   width: width,
                   height: height,
-                  decoration: BoxDecoration(
-                    color: shimmerBaseColor,
-                    borderRadius: borderRadius,
-                  ),
+                  fit: fit,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Shimmer.fromColors(
+                      baseColor: shimmerBaseColor,
+                      highlightColor: shimmerHighlightColor,
+                      child: Container(
+                        width: width,
+                        height: height,
+                        decoration: BoxDecoration(
+                          color: shimmerBaseColor,
+                          borderRadius: borderRadius,
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : Image.asset(
+                  'assets/images/default_profile_pic.png',
+                  width: width,
+                  height: height,
+                  fit: fit,
                 ),
-              );
-            },
-          ),
         ),
       ],
     );

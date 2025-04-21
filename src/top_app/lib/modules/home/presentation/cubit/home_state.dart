@@ -8,6 +8,8 @@ class HomeState with _$HomeState {
   const factory HomeState.loaded({
     required UserEntity user,
     List<Challenge>? challenges,
+    List<Activity>? activities,
+    List<Goal>? goals,
   }) = Loaded;
   const factory HomeState.error({
     required String message,

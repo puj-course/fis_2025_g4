@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/modules/home/presentation/pages/home_screen.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/screens/show_challenge_detail_screen.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/screens/show_challenges_list_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/ninety_nine_screen.dart';
@@ -114,15 +115,20 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: SignInRoute.page,
           path: AppRouteNames.signIn,
+          // initial: true,
         ),
         AutoRoute(
           page: ShowChallengesListRoute.page,
           path: AppRouteNames.showChallengesList,
-          initial: true,
         ),
         AutoRoute(
           page: ShowChallengeDetailRoute.page,
           path: AppRouteNames.showChallengeDetail,
+        ),
+        AutoRoute(
+          initial: true,
+          page: HomeRoute.page,
+          path: AppRouteNames.home,
         ),
       ];
 }

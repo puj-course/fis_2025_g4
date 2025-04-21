@@ -37,7 +37,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<UserEntity> getUserDocument(String uid) async {
+  Future<UserEntity?> getUserDocument(String uid) async {
     try {
       return await userDataProvider.getUserDocument(uid);
     } catch (e) {
@@ -47,7 +47,7 @@ class UserRepositoryImpl implements UserRepository {
           case 'permission-denied':
             throw Exception('You do not have permission to access this document.');
           case 'not-found':
-            throw Exception('No user found with the provided ID.');
+            return null;
           default:
             throw Exception('An unknown error occurred: ${e.message}');
         }
