@@ -8,7 +8,7 @@ class UserModel {
   final String uid;
   final String name;
   final String email;
-  final String bio;
+  final String? bio;
   final DateTime createdAt;
   final String profilePictureUrl;
   final int signUpSeconds;

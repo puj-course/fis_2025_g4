@@ -24,6 +24,7 @@ class UserCubit extends Cubit<UserState> {
     try {
       final uid = firebaseProvider.firebaseAuth.currentUser?.uid;
       if (uid == null) {
+        await signOut();
         emit(UserState.unauthenticated());
         return null;
       }

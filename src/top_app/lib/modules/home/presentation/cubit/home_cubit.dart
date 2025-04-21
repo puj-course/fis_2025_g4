@@ -10,6 +10,7 @@ import 'package:top_app/shared/entities/templates/challenge.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
 import 'package:top_app/shared/global_state/user/api/user_public_api.dart';
 import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
+import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
 
 part 'home_cubit.freezed.dart';
 part 'home_state.dart';
@@ -22,12 +23,22 @@ class HomeCubit extends Cubit<HomeState> {
     required GetTodaysGoalsUsecase getTodaysGoalsUsecase,
     required CompleteGoalUsecase completeGoalUsecase,
     required UserPublicApi userPublicApi,
+    required UserCubit userCubit,
   })  : _getUserChallengesUsecase = getUserChallengesUsecase,
         _getTodaysActivitiesUsecase = getTodaysActivitiesUsecase,
         _getTodaysGoalsUsecase = getTodaysGoalsUsecase,
         _completeGoalUsecase = completeGoalUsecase,
         _userPublicApi = userPublicApi,
-        super(const HomeState.initial());
+        _userCubit = userCubit,
+        super(const HomeState.initial()) {
+    // Listen to UserCubit state changes
+    _userCubit.stream.listen((userState) {
+      if (userState is Authenticated) {
+        _user = userState.user;
+        getUserChallenges();
+      }
+    });
+  }
 
   // Usecases
   final GetUserChallengesUsecase _getUserChallengesUsecase;
@@ -37,6 +48,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   // Repositories
   final UserPublicApi _userPublicApi;
+  final UserCubit _userCubit;
 
   // Local State
   UserEntity? _user;

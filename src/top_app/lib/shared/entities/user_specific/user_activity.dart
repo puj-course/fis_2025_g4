@@ -5,7 +5,7 @@ class UserActivity extends Equatable {
   final String activityName;
   final int currentStreak;
   final double completion;
-  final List<UserProof> proofs;
+  final List<UserProof>? proofs;
 
   const UserActivity({
     required this.activityName,
