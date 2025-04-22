@@ -37,6 +37,18 @@ class UserDataProvider {
     }
   }
 
+  /// Updates a user document in the database
+  Future<void> updateUserDocument(UserEntity user) async {
+    try {
+      await firebaseProvider.firestore
+          .collection('users')
+          .doc(user.uid)
+          .update(UserModel.fromEntity(user).toJson());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   /// Gets the rank of a user based on their sign up time
   Future<int> getUserSignUpRank(int signUpSeconds) async {
     try {

@@ -44,6 +44,11 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
+  /// Push the user changes to the database
+  Future<void> updateUser(UserEntity user) async {
+    await userRepository.updateUserDocument(user);
+  }
+
   /// Sign out the user
   Future<void> signOut() async {
     await firebaseProvider.firebaseAuth.signOut();

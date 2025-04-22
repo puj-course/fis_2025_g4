@@ -25,7 +25,7 @@ class ToggleGoalCompletionUsecase {
     final updatedUser = user.copyWith(goals: updatedGoals);
 
     // Push changes to Firebase
-    await _userPublicApi.pushUserChanges(updatedUser);
+    await _userPublicApi.updateUser(updatedUser);
 
     return updatedUser;
   }
