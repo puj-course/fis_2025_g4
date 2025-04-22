@@ -25,4 +25,8 @@ class UserPublicApi {
   Future<int> getUserSignUpRank(int signUpSeconds) async {
     return await userCubit.getUserSignUpRank(signUpSeconds);
   }
+
+  Future<void> pushUserChanges(UserEntity user) async {
+    // Implementation needed
+  }
 }

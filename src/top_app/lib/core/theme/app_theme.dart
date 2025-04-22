@@ -10,5 +10,6 @@ class AppTheme {
           selectionColor: Colors.white,
         ),
         scaffoldBackgroundColor: AppColors.blackPrimary,
+        brightness: Brightness.dark,
       );
 }

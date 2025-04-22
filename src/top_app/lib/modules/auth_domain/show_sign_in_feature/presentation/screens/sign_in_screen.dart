@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/auth_domain/show_sign_in_feature/domain/cubit/sign_in_cubit.dart';
 import 'package:top_app/modules/auth_domain/show_sign_in_feature/presentation/molecules/sign_in_bottom_navigation.dart';
@@ -63,8 +64,7 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
         } else if (state is SignInSuccess) {
           CustomSnackBar.success(context, 'Sign in successful!');
 
-          //TODO: Navigate to home or dashboard
-          // AutoRouter.of(context).replace(const HomeRoute());
+          AutoRouter.of(context).replace(const HomeRoute());
         }
       },
       builder: (context, state) {

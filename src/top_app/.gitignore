@@ -47,6 +47,7 @@ app.*.map.json
 # Generated files
 /build/
 /lib/core/di/injector.config.dart
+.DS_Store
 
 # Sensitive files
 .env

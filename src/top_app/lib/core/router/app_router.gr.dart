@@ -63,6 +63,22 @@ class CountdownRecordRouteArgs {
 }
 
 /// generated route for
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+    : super(HomeRoute.name, initialChildren: children);
+
+  static const String name = 'HomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomeScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [NinetyNineScreen]
 class NinetyNineRoute extends PageRouteInfo<void> {
   const NinetyNineRoute({List<PageRouteInfo>? children})
@@ -76,6 +92,47 @@ class NinetyNineRoute extends PageRouteInfo<void> {
       return const NinetyNineScreen();
     },
   );
+}
+
+/// generated route for
+/// [ShowChallengeDetailScreen]
+class ShowChallengeDetailRoute
+    extends PageRouteInfo<ShowChallengeDetailRouteArgs> {
+  ShowChallengeDetailRoute({
+    Key? key,
+    required Challenge challenge,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ShowChallengeDetailRoute.name,
+         args: ShowChallengeDetailRouteArgs(key: key, challenge: challenge),
+         initialChildren: children,
+       );
+
+  static const String name = 'ShowChallengeDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ShowChallengeDetailRouteArgs>();
+      return ShowChallengeDetailScreen(
+        key: args.key,
+        challenge: args.challenge,
+      );
+    },
+  );
+}
+
+class ShowChallengeDetailRouteArgs {
+  const ShowChallengeDetailRouteArgs({this.key, required this.challenge});
+
+  final Key? key;
+
+  final Challenge challenge;
+
+  @override
+  String toString() {
+    return 'ShowChallengeDetailRouteArgs{key: $key, challenge: $challenge}';
+  }
 }
 
 /// generated route for

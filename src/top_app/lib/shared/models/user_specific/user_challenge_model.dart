@@ -2,7 +2,6 @@ import '../../entities/user_specific/user_challenge.dart';
 import 'user_activity_model.dart';
 
 class UserChallengeModel {
-  final String userId;
   final String challengeId;
   final DateTime dateStarted;
   final int currentStreak;
@@ -11,7 +10,6 @@ class UserChallengeModel {
   final List<UserActivityModel> activities;
 
   UserChallengeModel({
-    required this.userId,
     required this.challengeId,
     required this.dateStarted,
     required this.currentStreak,
@@ -22,7 +20,6 @@ class UserChallengeModel {
 
   factory UserChallengeModel.fromEntity(UserChallenge entity) {
     return UserChallengeModel(
-      userId: entity.userId,
       challengeId: entity.challengeId,
       dateStarted: entity.dateStarted,
       currentStreak: entity.currentStreak,
@@ -34,7 +31,6 @@ class UserChallengeModel {
 
   UserChallenge toEntity() {
     return UserChallenge(
-      userId: userId,
       challengeId: challengeId,
       dateStarted: dateStarted,
       currentStreak: currentStreak,
@@ -46,7 +42,6 @@ class UserChallengeModel {
 
   factory UserChallengeModel.fromJson(Map<String, dynamic> json) {
     return UserChallengeModel(
-      userId: json['userId'],
       challengeId: json['challengeId'],
       dateStarted: DateTime.parse(json['dateStarted']),
       currentStreak: json['currentStreak'],
@@ -58,7 +53,6 @@ class UserChallengeModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'userId': userId,
       'challengeId': challengeId,
       'dateStarted': dateStarted.toIso8601String(),
       'currentStreak': currentStreak,

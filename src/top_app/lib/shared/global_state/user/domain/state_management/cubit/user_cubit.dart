@@ -21,14 +21,27 @@ class UserCubit extends Cubit<UserState> {
 
   /// Initialize the user cubit
   Future<UserEntity?> fetchUser() async {
-    final uid = firebaseProvider.firebaseAuth.currentUser?.uid;
-    if (uid == null) {
+    try {
+      final uid = firebaseProvider.firebaseAuth.currentUser?.uid;
+      if (uid == null) {
+        await signOut();
+        emit(UserState.unauthenticated());
+        return null;
+      }
+      user = await userRepository.getUserDocument(uid);
+      if (user == null) {
+        await signOut();
+        emit(UserState.unauthenticated());
+        return null;
+      }
+
+      emit(UserState.authenticated(user!));
+      return user;
+    } catch (e) {
+      await signOut();
       emit(UserState.unauthenticated());
       return null;
     }
-    user = await userRepository.getUserDocument(uid);
-    emit(UserState.authenticated(user!));
-    return user;
   }
 
   /// Sign out the user

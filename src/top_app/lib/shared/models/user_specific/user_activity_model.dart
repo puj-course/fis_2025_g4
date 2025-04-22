@@ -5,7 +5,7 @@ class UserActivityModel {
   final String activityName;
   final int currentStreak;
   final double completion;
-  final List<UserProofModel> proofs;
+  final List<UserProofModel>? proofs;
 
   UserActivityModel({
     required this.activityName,
@@ -19,7 +19,7 @@ class UserActivityModel {
       activityName: entity.activityName,
       currentStreak: entity.currentStreak,
       completion: entity.completion,
-      proofs: entity.proofs.map((p) => UserProofModel.fromEntity(p)).toList(),
+      proofs: entity.proofs?.map((p) => UserProofModel.fromEntity(p)).toList(),
     );
   }
 
@@ -28,7 +28,7 @@ class UserActivityModel {
       activityName: activityName,
       currentStreak: currentStreak,
       completion: completion,
-      proofs: proofs.map((p) => p.toEntity()).toList(),
+      proofs: proofs?.map((p) => p.toEntity()).toList(),
     );
   }
 
@@ -37,7 +37,9 @@ class UserActivityModel {
       activityName: json['activityName'],
       currentStreak: json['currentStreak'],
       completion: json['completion'].toDouble(),
-      proofs: (json['proofs'] as List).map((p) => UserProofModel.fromJson(p)).toList(),
+      proofs: json['proofs'] != null
+          ? (json['proofs'] as List).map((p) => UserProofModel.fromJson(p)).toList()
+          : null,
     );
   }
 
@@ -46,7 +48,7 @@ class UserActivityModel {
       'activityName': activityName,
       'currentStreak': currentStreak,
       'completion': completion,
-      'proofs': proofs.map((p) => p.toJson()).toList(),
+      'proofs': proofs?.map((p) => p.toJson()).toList(),
     };
   }
 }
