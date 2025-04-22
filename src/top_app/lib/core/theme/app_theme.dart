@@ -11,5 +11,14 @@ class AppTheme {
         ),
         scaffoldBackgroundColor: AppColors.blackPrimary,
         brightness: Brightness.dark,
+        highlightColor: Colors.white,
+        splashColor: Colors.white,
+        colorScheme: ColorScheme.dark(
+          primary: Colors.white,
+          secondary: Colors.white,
+        ),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: Colors.white,
+        ),
       );
 }

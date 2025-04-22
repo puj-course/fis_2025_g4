@@ -79,6 +79,22 @@ class HomeRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NavigationScreen]
+class NavigationRoute extends PageRouteInfo<void> {
+  const NavigationRoute({List<PageRouteInfo>? children})
+    : super(NavigationRoute.name, initialChildren: children);
+
+  static const String name = 'NavigationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const NavigationScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [NinetyNineScreen]
 class NinetyNineRoute extends PageRouteInfo<void> {
   const NinetyNineRoute({List<PageRouteInfo>? children})

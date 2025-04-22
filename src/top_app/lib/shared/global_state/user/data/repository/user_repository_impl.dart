@@ -66,4 +66,13 @@ class UserRepositoryImpl implements UserRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> updateUserDocument(UserEntity user) async {
+    try {
+      await userDataProvider.updateUserDocument(user);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
