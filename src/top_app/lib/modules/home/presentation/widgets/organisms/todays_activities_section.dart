@@ -24,28 +24,19 @@ class TodaysActivitiesSection extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Today Activities',
-          style: AppTextStyles.bold16,
-        ),
-        const SizedBox(height: 16),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: activities.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            final activity = activities[index];
-            return TodaysActivityCard(
-              activity: activity,
-              onTap: () => onActivityTap(activity),
-            );
-          },
-        ),
-      ],
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: activities.length,
+      padding: EdgeInsets.zero,
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final activity = activities[index];
+        return TodaysActivityCard(
+          activity: activity,
+          onTap: () => onActivityTap(activity),
+        );
+      },
     );
   }
 }

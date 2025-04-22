@@ -24,28 +24,19 @@ class TodaysGoalsSection extends StatelessWidget {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Daily Goals',
-          style: AppTextStyles.bold16,
-        ),
-        const SizedBox(height: 16),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: goals.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 12),
-          itemBuilder: (context, index) {
-            final goal = goals[index];
-            return TodaysGoalItem(
-              goal: goal,
-              onComplete: () => onGoalComplete(goal),
-            );
-          },
-        ),
-      ],
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: goals.length,
+      padding: EdgeInsets.zero,
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
+      itemBuilder: (context, index) {
+        final goal = goals[index];
+        return TodaysGoalItem(
+          goal: goal,
+          onComplete: () => onGoalComplete(goal),
+        );
+      },
     );
   }
 }

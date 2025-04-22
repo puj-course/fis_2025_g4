@@ -55,7 +55,7 @@ class GoalModel {
       'uid': id,
       'name': name,
       'createdAt': createdAt.toIso8601String(),
-      'type': type,
+      'type': type, // progressive or instant
       'dueDate': dueDate.toIso8601String(),
       'completion': completion,
     };

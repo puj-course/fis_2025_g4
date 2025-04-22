@@ -129,7 +129,7 @@ class HomeCubit extends Cubit<HomeState> {
       );
 
       _user = updatedUser;
-      _todaysGoals = _getTodaysGoalsUsecase.call(updatedUser.goals);
+      _todaysGoals = _getTodaysGoalsUsecase.call(_user!.goals);
 
       emit(HomeState.loaded(
         user: updatedUser,
