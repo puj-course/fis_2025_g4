@@ -63,6 +63,7 @@ class TodaysActivityCard extends StatelessWidget {
             Icon(
               Icons.arrow_forward_ios,
               color: AppColors.whitePrimary,
+              size: 16,
             )
           ],
         ),

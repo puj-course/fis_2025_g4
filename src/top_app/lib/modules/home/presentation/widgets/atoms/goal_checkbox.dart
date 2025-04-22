@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 
 class GoalCheckbox extends StatelessWidget {
@@ -11,26 +12,33 @@ class GoalCheckbox extends StatelessWidget {
   final bool isCompleted;
   final VoidCallback onTap;
 
+  void _handleTap() {
+    HapticFeedback.mediumImpact();
+    onTap();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: _handleTap,
       child: Container(
-        width: 24,
-        height: 24,
+        alignment: Alignment.center,
+        width: 20,
+        height: 20,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
+          color: isCompleted ? AppColors.whitePrimary : Colors.transparent,
           border: Border.all(
             color: isCompleted ? AppColors.whitePrimary : AppColors.grayMidDark,
             width: 2,
           ),
-          color: isCompleted ? AppColors.whitePrimary : Colors.transparent,
         ),
         child: isCompleted
             ? Center(
                 child: Icon(
                   Icons.check,
-                  color: AppColors.whitePrimary,
+                  color: AppColors.blackPrimary,
+                  size: 16,
                 ),
               )
             : null,

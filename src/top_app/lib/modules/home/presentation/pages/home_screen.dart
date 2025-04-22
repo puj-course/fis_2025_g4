@@ -79,7 +79,7 @@ class HomeScreenContent extends StatelessWidget {
                         TodaysGoalsSection(
                           goals: state.goals ?? [],
                           onGoalComplete: (goal) {
-                            context.read<HomeCubit>().completeGoal(goal.id);
+                            context.read<HomeCubit>().toggleGoal(goal.id);
                           },
                         ),
                       ]),

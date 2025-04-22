@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:top_app/modules/home/domain/usecases/complete_goal_usecase.dart';
+import 'package:top_app/modules/home/domain/usecases/toggle_goal_completion_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/get_todays_activities_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/get_todays_goals_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/get_user_challenges_usecase.dart';
@@ -21,13 +21,13 @@ class HomeCubit extends Cubit<HomeState> {
     required GetUserChallengesUsecase getUserChallengesUsecase,
     required GetTodaysActivitiesUsecase getTodaysActivitiesUsecase,
     required GetTodaysGoalsUsecase getTodaysGoalsUsecase,
-    required CompleteGoalUsecase completeGoalUsecase,
+    required ToggleGoalCompletionUsecase toggleGoalCompletionUsecase,
     required UserPublicApi userPublicApi,
     required UserCubit userCubit,
   })  : _getUserChallengesUsecase = getUserChallengesUsecase,
         _getTodaysActivitiesUsecase = getTodaysActivitiesUsecase,
         _getTodaysGoalsUsecase = getTodaysGoalsUsecase,
-        _completeGoalUsecase = completeGoalUsecase,
+        _toggleGoalCompletionUsecase = toggleGoalCompletionUsecase,
         _userPublicApi = userPublicApi,
         _userCubit = userCubit,
         super(const HomeState.initial()) {
@@ -44,7 +44,7 @@ class HomeCubit extends Cubit<HomeState> {
   final GetUserChallengesUsecase _getUserChallengesUsecase;
   final GetTodaysActivitiesUsecase _getTodaysActivitiesUsecase;
   final GetTodaysGoalsUsecase _getTodaysGoalsUsecase;
-  final CompleteGoalUsecase _completeGoalUsecase;
+  final ToggleGoalCompletionUsecase _toggleGoalCompletionUsecase;
 
   // Repositories
   final UserPublicApi _userPublicApi;
@@ -113,7 +113,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> completeGoal(String goalId) async {
+  Future<void> toggleGoal(String goalId) async {
     try {
       if (_user == null) {
         emit(const HomeState.error(
@@ -123,7 +123,7 @@ class HomeCubit extends Cubit<HomeState> {
         return;
       }
 
-      final updatedUser = await _completeGoalUsecase.call(
+      final updatedUser = await _toggleGoalCompletionUsecase.call(
         user: _user!,
         goalId: goalId,
       );
@@ -138,7 +138,7 @@ class HomeCubit extends Cubit<HomeState> {
       ));
     } catch (e) {
       emit(HomeState.error(
-        message: 'Failed to complete goal: ${e.toString()}',
+        message: 'Failed to toggle goal: ${e.toString()}',
         isUserError: false,
       ));
     }
