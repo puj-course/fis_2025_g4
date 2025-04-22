@@ -56,9 +56,7 @@ class ShowChallengesListScreenBody extends StatelessWidget {
               return const EmptyChallengesContent();
             }
 
-            return ChallengesList(
-              challenges: state.challenges,
-            );
+            return ChallengesList(challenges: state.challenges);
           }
 
           if (state is ErrorLoadingChallenges) {
