@@ -77,15 +77,13 @@ class HomeScreenContent extends StatelessWidget {
                       const SizedBox(height: 16),
                       BlocBuilder<ActivitiesCubit, ActivitiesState>(
                         builder: (context, activitiesState) {
-                          if (activitiesState is Loaded) {
-                            return TodaysActivitiesSection(
-                              activities: activitiesState.activities ?? <Activity>[],
-                              onActivityTap: (Activity activity) {
-                                print('Activity tapped: ${activity.name}');
-                              },
-                            );
-                          }
-                          return const SizedBox.shrink();
+                          return TodaysActivitiesSection(
+                            activities:
+                                context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                            onActivityTap: (Activity activity) {
+                              print('Activity tapped: ${activity.name}');
+                            },
+                          );
                         },
                       ),
                       const SizedBox(height: 24),
@@ -95,10 +93,7 @@ class HomeScreenContent extends StatelessWidget {
                       const SizedBox(height: 16),
                       BlocBuilder<GoalsCubit, GoalsState>(
                         builder: (BuildContext context, GoalsState goalsState) {
-                          if (goalsState is LoadedGoals) {
-                            return TodaysGoalsSection(goals: goalsState.goals);
-                          }
-                          return const SizedBox.shrink();
+                          return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
                         },
                       ),
                     ]),

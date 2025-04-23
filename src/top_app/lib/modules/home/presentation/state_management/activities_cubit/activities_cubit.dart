@@ -44,7 +44,7 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
 
   // Local State
   UserEntity? _user;
-  List<Activity>? _todaysActivities;
+  List<Activity>? todaysActivities;
 
   Future<UserEntity?> getUser() async {
     try {
@@ -87,12 +87,12 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
         _user!.challenges.map((UserChallenge e) => e.challengeId).toList(),
       );
 
-      _todaysActivities = _getTodaysActivitiesUsecase.call(challenges);
+      todaysActivities = _getTodaysActivitiesUsecase.call(challenges);
 
       emit(ActivitiesState.loaded(
         user: _user!,
         challenges: challenges,
-        activities: _todaysActivities,
+        activities: todaysActivities,
       ));
     } catch (e) {
       emit(ActivitiesState.error(
