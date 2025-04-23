@@ -6,20 +6,61 @@ import 'package:top_app/modules/home/presentation/state_management/goals_cubit/g
 import 'package:top_app/modules/home/presentation/widgets/atoms/goal_checkbox.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
 
-class TodaysGoalItem extends StatelessWidget {
+class TodaysGoalItem extends StatefulWidget {
   const TodaysGoalItem({
     super.key,
     required this.goal,
+    this.autoFocus = false,
   });
 
   final Goal goal;
+  final bool autoFocus;
+
+  @override
+  State<TodaysGoalItem> createState() => _TodaysGoalItemState();
+}
+
+class _TodaysGoalItemState extends State<TodaysGoalItem> {
+  late final TextEditingController _controller;
+  late final FocusNode _focusNode;
+  bool _isEditing = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.goal.name);
+    _focusNode = FocusNode();
+    if (widget.autoFocus) {
+      _focusNode.requestFocus();
+      _isEditing = true;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleSubmit() {
+    final String newName = _controller.text.trim();
+    if (newName.isEmpty) {
+      context.read<GoalsCubit>().deleteGoal(widget.goal.id);
+    } else {
+      context.read<GoalsCubit>().editGoalName(widget.goal.id, newName);
+    }
+    setState(() {
+      _isEditing = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bool isCompleted = goal.completion == 1.0;
+    final bool isCompleted = widget.goal.completion == 1.0;
 
     return Dismissible(
-      key: Key(goal.id),
+      key: Key(widget.goal.id),
       direction: DismissDirection.endToStart,
       background: Container(
         color: Colors.red,
@@ -31,7 +72,7 @@ class TodaysGoalItem extends StatelessWidget {
         ),
       ),
       onDismissed: (_) {
-        context.read<GoalsCubit>().deleteGoal(goal.id);
+        context.read<GoalsCubit>().deleteGoal(widget.goal.id);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -40,18 +81,38 @@ class TodaysGoalItem extends StatelessWidget {
             GoalCheckbox(
               isCompleted: isCompleted,
               onTap: () {
-                context.read<GoalsCubit>().toggleGoal(goal.id);
+                context.read<GoalsCubit>().toggleGoal(widget.goal.id);
               },
             ),
             const SizedBox(width: 16),
             Expanded(
-              child: Text(
-                goal.name,
-                style: AppTextStyles.regular14.copyWith(
-                  color: isCompleted ? AppColors.grayMidLight : null,
-                  decoration: isCompleted ? TextDecoration.lineThrough : null,
-                ),
-              ),
+              child: _isEditing
+                  ? TextField(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                      style: AppTextStyles.regular14,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      onSubmitted: (_) => _handleSubmit(),
+                      onEditingComplete: _handleSubmit,
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _isEditing = true;
+                          _focusNode.requestFocus();
+                        });
+                      },
+                      child: Text(
+                        widget.goal.name,
+                        style: AppTextStyles.regular14.copyWith(
+                          color: isCompleted ? AppColors.grayMidLight : null,
+                          decoration: isCompleted ? TextDecoration.lineThrough : null,
+                        ),
+                      ),
+                    ),
             ),
           ],
         ),
