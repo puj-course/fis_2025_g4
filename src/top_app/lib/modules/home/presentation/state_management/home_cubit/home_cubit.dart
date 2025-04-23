@@ -1,13 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:top_app/modules/home/domain/usecases/toggle_goal_completion_usecase.dart';
-import 'package:top_app/modules/home/domain/usecases/get_todays_activities_usecase.dart';
-import 'package:top_app/modules/home/domain/usecases/get_todays_goals_usecase.dart';
-import 'package:top_app/modules/home/domain/usecases/get_user_challenges_usecase.dart';
+import 'package:top_app/modules/home/domain/usecases/activities/get_todays_activities_usecase.dart';
+import 'package:top_app/modules/home/domain/usecases/goals/get_todays_goals_usecase.dart';
+import 'package:top_app/modules/home/domain/usecases/challenges/get_user_challenges_usecase.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
+import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
 import 'package:top_app/shared/global_state/user/api/user_public_api.dart';
 import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
@@ -21,18 +21,16 @@ class HomeCubit extends Cubit<HomeState> {
     required GetUserChallengesUsecase getUserChallengesUsecase,
     required GetTodaysActivitiesUsecase getTodaysActivitiesUsecase,
     required GetTodaysGoalsUsecase getTodaysGoalsUsecase,
-    required ToggleGoalCompletionUsecase toggleGoalCompletionUsecase,
     required UserPublicApi userPublicApi,
     required UserCubit userCubit,
   })  : _getUserChallengesUsecase = getUserChallengesUsecase,
         _getTodaysActivitiesUsecase = getTodaysActivitiesUsecase,
         _getTodaysGoalsUsecase = getTodaysGoalsUsecase,
-        _toggleGoalCompletionUsecase = toggleGoalCompletionUsecase,
         _userPublicApi = userPublicApi,
         _userCubit = userCubit,
         super(const HomeState.initial()) {
     // Listen to UserCubit state changes
-    _userCubit.stream.listen((userState) {
+    _userCubit.stream.listen((UserState userState) {
       if (userState is Authenticated) {
         _user = userState.user;
         getUserChallenges();
@@ -44,7 +42,6 @@ class HomeCubit extends Cubit<HomeState> {
   final GetUserChallengesUsecase _getUserChallengesUsecase;
   final GetTodaysActivitiesUsecase _getTodaysActivitiesUsecase;
   final GetTodaysGoalsUsecase _getTodaysGoalsUsecase;
-  final ToggleGoalCompletionUsecase _toggleGoalCompletionUsecase;
 
   // Repositories
   final UserPublicApi _userPublicApi;
@@ -58,7 +55,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<UserEntity?> getUser() async {
     try {
       emit(const HomeState.loadingUser());
-      final user = await _userPublicApi.getUser();
+      final UserEntity? user = await _userPublicApi.getUser();
 
       if (user == null) {
         emit(const HomeState.error(
@@ -92,8 +89,8 @@ class HomeCubit extends Cubit<HomeState> {
         return;
       }
 
-      final challenges = await _getUserChallengesUsecase.call(
-        _user!.challenges.map((e) => e.challengeId).toList(),
+      final List<Challenge> challenges = await _getUserChallengesUsecase.call(
+        _user!.challenges.map((UserChallenge e) => e.challengeId).toList(),
       );
 
       _todaysActivities = _getTodaysActivitiesUsecase.call(challenges);
@@ -108,37 +105,6 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (e) {
       emit(HomeState.error(
         message: 'Failed to load challenges: ${e.toString()}',
-        isUserError: false,
-      ));
-    }
-  }
-
-  Future<void> toggleGoal(String goalId) async {
-    try {
-      if (_user == null) {
-        emit(const HomeState.error(
-          message: 'User not found',
-          isUserError: true,
-        ));
-        return;
-      }
-
-      final updatedUser = await _toggleGoalCompletionUsecase.call(
-        user: _user!,
-        goalId: goalId,
-      );
-
-      _user = updatedUser;
-      _todaysGoals = _getTodaysGoalsUsecase.call(_user!.goals);
-
-      emit(HomeState.loaded(
-        user: updatedUser,
-        activities: _todaysActivities,
-        goals: _todaysGoals,
-      ));
-    } catch (e) {
-      emit(HomeState.error(
-        message: 'Failed to toggle goal: ${e.toString()}',
         isUserError: false,
       ));
     }

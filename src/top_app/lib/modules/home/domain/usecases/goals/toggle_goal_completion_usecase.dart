@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:top_app/shared/entities/templates/goal.dart';
 import 'package:top_app/shared/global_state/user/api/user_public_api.dart';
 import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 
@@ -9,12 +10,14 @@ class ToggleGoalCompletionUsecase {
   ToggleGoalCompletionUsecase({required UserPublicApi userPublicApi})
       : _userPublicApi = userPublicApi;
 
-  Future<UserEntity> call({
-    required UserEntity user,
-    required String goalId,
-  }) async {
+  Future<List<Goal>> call({required String goalId}) async {
     // Update the goal completion status
-    final updatedGoals = user.goals.map((goal) {
+    final UserEntity? user = await _userPublicApi.getUser();
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final List<Goal> updatedGoals = user.goals.map((Goal goal) {
       if (goal.id == goalId) {
         return goal.copyWith(completion: goal.completion == 1.0 ? 0.0 : 1.0);
       }
@@ -22,11 +25,11 @@ class ToggleGoalCompletionUsecase {
     }).toList();
 
     // Create updated user
-    final updatedUser = user.copyWith(goals: updatedGoals);
+    final UserEntity updatedUser = user.copyWith(goals: updatedGoals);
 
     // Push changes to Firebase
     await _userPublicApi.updateUser(updatedUser);
 
-    return updatedUser;
+    return updatedGoals;
   }
 }
