@@ -35,7 +35,10 @@ class TodaysGoalsSection extends StatelessWidget {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   final Goal goal = goals[index];
-                  return TodaysGoalItem(goal: goal);
+                  return TodaysGoalItem(
+                    goal: goal,
+                    autoFocus: index == goals.length - 1,
+                  );
                 },
               ),
         const SizedBox(height: 12),
