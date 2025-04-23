@@ -24,8 +24,8 @@ class ShowChallengeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<ShowChallengeDetailCubit>()..getChallengeCompetitors(challenge.id),
+    return BlocProvider.value(
+      value: getIt<ShowChallengeDetailCubit>()..getChallengeCompetitors(challenge.id),
       child: ShowChallengeDetailBody(challenge: challenge),
     );
   }

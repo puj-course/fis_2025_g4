@@ -32,6 +32,7 @@ class ActivitiesList extends StatelessWidget {
             return ActivityCard(
               name: activity.name,
               streakEdge: activity.streakEdge,
+              icon: activity.icon,
             );
           },
         ),

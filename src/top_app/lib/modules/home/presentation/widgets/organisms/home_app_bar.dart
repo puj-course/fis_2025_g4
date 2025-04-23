@@ -32,8 +32,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.circular(20),
             child: ShimmerImage(
               imageUrl: user.profilePictureUrl,
-              width: 40,
-              height: 40,
+              width: 45,
+              height: 45,
             ),
           ),
           const SizedBox(width: 12),
