@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
-import 'package:top_app/modules/home/presentation/cubit/home_cubit.dart';
+import 'package:top_app/modules/home/presentation/state_management/home_cubit/home_cubit.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/home_app_bar.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_activities_section.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_goals_section.dart';

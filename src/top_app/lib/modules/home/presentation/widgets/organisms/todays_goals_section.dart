@@ -15,28 +15,37 @@ class TodaysGoalsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (goals.isEmpty) {
-      return Center(
-        child: Text(
-          'No goals for today',
-          style: AppTextStyles.regular14,
-        ),
-      );
-    }
-
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: goals.length,
-      padding: EdgeInsets.zero,
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
-        final goal = goals[index];
-        return TodaysGoalItem(
-          goal: goal,
-          onComplete: () => onGoalComplete(goal),
-        );
-      },
+    return Column(
+      children: [
+        goals.isEmpty
+            ? Center(
+                child: Text(
+                  'No goals for today',
+                  style: AppTextStyles.regular14,
+                ),
+              )
+            : ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: goals.length,
+                padding: EdgeInsets.zero,
+                separatorBuilder: (context, index) => const SizedBox(height: 12),
+                itemBuilder: (context, index) {
+                  final goal = goals[index];
+                  return TodaysGoalItem(
+                    goal: goal,
+                    onComplete: () => onGoalComplete(goal),
+                  );
+                },
+              ),
+        const SizedBox(height: 12),
+        IconButton(
+          onPressed: () {
+            print('Add goal');
+          },
+          icon: const Icon(Icons.add),
+        )
+      ],
     );
   }
 }
