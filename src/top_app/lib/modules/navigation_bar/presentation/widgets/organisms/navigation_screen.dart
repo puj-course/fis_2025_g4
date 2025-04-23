@@ -11,19 +11,20 @@ class NavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter.tabBar(
-      routes: const [
+      physics: const NeverScrollableScrollPhysics(),
+      routes: const <PageRouteInfo<Object?>>[
         HomeRoute(),
         ShowChallengesListRoute(),
         HomeRoute(), // Placeholder for Tribe
         HomeRoute(), // Placeholder for Profile
       ],
-      builder: (context, child, controller) {
-        final tabsRouter = AutoTabsRouter.of(context);
+      builder: (BuildContext context, Widget child, TabController controller) {
+        final TabsRouter tabsRouter = AutoTabsRouter.of(context);
         return Scaffold(
           body: child,
           bottomNavigationBar: CustomBottomNavigationBar(
             currentIndex: tabsRouter.activeIndex,
-            onTap: (index) {
+            onTap: (int index) {
               if (index == 2 || index == 3) {
                 CustomSnackBar.info(context, 'Coming soon!');
                 return;
