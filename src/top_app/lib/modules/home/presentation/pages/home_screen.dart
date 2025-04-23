@@ -6,7 +6,7 @@ import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/home/presentation/state_management/goals_cubit/goals_cubit.dart';
-import 'package:top_app/modules/home/presentation/state_management/home_cubit/home_cubit.dart';
+import 'package:top_app/modules/home/presentation/state_management/activities_cubit/activities_cubit.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/home_app_bar.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_activities_section.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_goals_section.dart';
@@ -20,13 +20,12 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      // ignore: always_specify_types
       providers: [
         BlocProvider<UserCubit>.value(
           value: GetIt.I<UserCubit>()..fetchUser(),
         ),
-        BlocProvider<HomeCubit>.value(
-          value: GetIt.I<HomeCubit>(),
+        BlocProvider<ActivitiesCubit>.value(
+          value: GetIt.I<ActivitiesCubit>(),
         ),
         BlocProvider<GoalsCubit>.value(
           value: GetIt.I<GoalsCubit>(),
@@ -52,61 +51,60 @@ class HomeScreenContent extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
-        body: BlocBuilder<HomeCubit, HomeState>(
-          builder: (BuildContext context, HomeState state) {
-            if (state is Loaded) {
-              return CustomScrollView(
-                slivers: <Widget>[
-                  SliverAppBar(
-                    floating: true,
-                    pinned: true,
-                    expandedHeight: 0,
-                    flexibleSpace: HomeAppBar(user: state.user),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(16),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate(<Widget>[
-                        //? Activities Section
-                        Text(
-                          "Today's Activities",
-                          style: AppTextStyles.bold18,
-                        ),
-                        const SizedBox(height: 16),
-                        TodaysActivitiesSection(
-                          activities: state.activities ?? <Activity>[],
-                          onActivityTap: (Activity activity) {
-                            print('Activity tapped: ${activity.name}');
-                          },
-                        ),
-                        const SizedBox(height: 24),
-
-                        //? Goals Section
-                        Text("Today's Goals", style: AppTextStyles.bold18),
-                        const SizedBox(height: 16),
-                        BlocBuilder<GoalsCubit, GoalsState>(
-                          builder: (BuildContext context, GoalsState goalsState) {
-                            if (goalsState is LoadedGoals) {
-                              return TodaysGoalsSection(goals: goalsState.goals);
-                            }
-                            return const SizedBox.shrink();
-                          },
-                        ),
-                      ]),
-                    ),
-                  ),
-                ],
-              );
+        body: BlocBuilder<UserCubit, UserState>(
+          builder: (context, userState) {
+            if (userState is! Authenticated) {
+              return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is Error) {
-              return Center(
-                child: Text(state.message),
-              );
-            }
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  floating: true,
+                  pinned: true,
+                  expandedHeight: 0,
+                  flexibleSpace: HomeAppBar(user: userState.user),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.all(16),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate(<Widget>[
+                      //? Activities Section
+                      Text(
+                        "Today's Activities",
+                        style: AppTextStyles.bold18,
+                      ),
+                      const SizedBox(height: 16),
+                      BlocBuilder<ActivitiesCubit, ActivitiesState>(
+                        builder: (context, activitiesState) {
+                          if (activitiesState is Loaded) {
+                            return TodaysActivitiesSection(
+                              activities: activitiesState.activities ?? <Activity>[],
+                              onActivityTap: (Activity activity) {
+                                print('Activity tapped: ${activity.name}');
+                              },
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      const SizedBox(height: 24),
 
-            return const Center(
-              child: CircularProgressIndicator(),
+                      //? Goals Section
+                      Text("Today's Goals", style: AppTextStyles.bold18),
+                      const SizedBox(height: 16),
+                      BlocBuilder<GoalsCubit, GoalsState>(
+                        builder: (BuildContext context, GoalsState goalsState) {
+                          if (goalsState is LoadedGoals) {
+                            return TodaysGoalsSection(goals: goalsState.goals);
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                    ]),
+                  ),
+                ),
+              ],
             );
           },
         ),
