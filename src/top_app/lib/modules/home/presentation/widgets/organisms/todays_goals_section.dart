@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/home/presentation/state_management/goals_cubit/goals_cubit.dart';
 import 'package:top_app/modules/home/presentation/widgets/molecules/todays_goal_item.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
 
@@ -32,12 +30,7 @@ class TodaysGoalsSection extends StatelessWidget {
                 separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 12),
                 itemBuilder: (BuildContext context, int index) {
                   final Goal goal = goals[index];
-                  return TodaysGoalItem(
-                    goal: goal,
-                    onComplete: () {
-                      context.read<GoalsCubit>().toggleGoal(goal.id);
-                    },
-                  );
+                  return TodaysGoalItem(goal: goal);
                 },
               ),
         const SizedBox(height: 12),
