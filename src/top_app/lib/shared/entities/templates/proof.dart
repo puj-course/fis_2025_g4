@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:top_app/core/theme/app_icon.dart';
+import 'proof_type.dart';
 
 class Proof extends Equatable {
   final String name;
-  final String type;
+  final ProofType type;
   final AppIcon icon;
 
   const Proof({
@@ -14,7 +15,7 @@ class Proof extends Equatable {
 
   Proof copyWith({
     String? name,
-    String? type,
+    ProofType? type,
     AppIcon? icon,
   }) {
     return Proof(

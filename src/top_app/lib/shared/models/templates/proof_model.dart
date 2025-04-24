@@ -1,10 +1,10 @@
 import 'package:top_app/core/theme/app_icon.dart';
-
 import '../../entities/templates/proof.dart';
+import 'proof_type_model.dart';
 
 class ProofModel {
   final String name;
-  final String type;
+  final ProofTypeModel type;
   final AppIcon icon;
 
   ProofModel({
@@ -16,7 +16,7 @@ class ProofModel {
   factory ProofModel.fromEntity(Proof entity) {
     return ProofModel(
       name: entity.name,
-      type: entity.type,
+      type: ProofTypeModel.fromEntity(entity.type),
       icon: entity.icon,
     );
   }
@@ -24,7 +24,7 @@ class ProofModel {
   Proof toEntity() {
     return Proof(
       name: name,
-      type: type,
+      type: type.toEntity(),
       icon: icon,
     );
   }
@@ -32,7 +32,7 @@ class ProofModel {
   factory ProofModel.fromJson(Map<String, dynamic> json) {
     return ProofModel(
       name: json['name'],
-      type: json['type'],
+      type: ProofTypeModel.fromJson(json),
       icon: AppIcon.fromCode(json['iconCode']),
     );
   }
@@ -40,7 +40,8 @@ class ProofModel {
   Map<String, dynamic> toJson() {
     return {
       'name': name,
-      'type': type,
+      'type': type.name,
+      'timeBased': type.timeBased,
       'iconCode': icon.iconCode,
     };
   }
