@@ -37,7 +37,7 @@ class TodaysGoalsSection extends StatelessWidget {
                   final Goal goal = goals[index];
                   return TodaysGoalItem(
                     goal: goal,
-                    autoFocus: index == goals.length - 1,
+                    autoFocus: goals.last.name.isEmpty ? index == goals.length - 1 : false,
                   );
                 },
               ),

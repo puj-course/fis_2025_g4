@@ -16,7 +16,7 @@ class DeleteGoalUsecase {
 
     final List<Goal> updatedGoals = user.goals.where((Goal goal) => goal.id != goalId).toList();
     UserEntity updatedUser = user.copyWith(goals: updatedGoals);
-    await userPublicApi.updateUser(updatedUser);
+    userPublicApi.updateUser(updatedUser);
     return updatedGoals;
   }
 }
