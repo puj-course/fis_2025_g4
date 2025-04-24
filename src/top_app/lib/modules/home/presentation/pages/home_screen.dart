@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           value: GetIt.I<ActivitiesCubit>(),
         ),
         BlocProvider<GoalsCubit>.value(
-          value: GetIt.I<GoalsCubit>()..loadGoals(),
+          value: GetIt.I<GoalsCubit>(),
         ),
       ],
       child: const HomeScreenContent(),

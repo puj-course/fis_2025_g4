@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -24,6 +26,8 @@ class GoalsCubit extends Cubit<GoalsState> {
   final UserCubit userCubit;
   final GetTodaysGoalsUsecase getTodaysGoalsUsecase;
 
+  StreamSubscription<UserState>? userSubscription;
+
   GoalsCubit(
     this.createGoalUsecase,
     this.deleteGoalUsecase,
@@ -32,7 +36,13 @@ class GoalsCubit extends Cubit<GoalsState> {
     this.toggleGoalCompletionUsecase,
     this.userCubit,
     this.getTodaysGoalsUsecase,
-  ) : super(GoalsState.initial());
+  ) : super(GoalsState.initial()) {
+    userSubscription = userCubit.stream.listen((UserState state) {
+      if (state is Authenticated && goals.isEmpty) {
+        loadGoals();
+      }
+    });
+  }
 
   List<Goal> goals = <Goal>[];
 
