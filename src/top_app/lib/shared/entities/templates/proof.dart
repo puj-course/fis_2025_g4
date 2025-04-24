@@ -1,6 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:top_app/core/theme/app_icon.dart';
-import 'proof_type.dart';
+
+enum ProofType {
+  text('text'),
+  image('image'),
+  textAndImage('text-and-image');
+
+  final String name;
+  const ProofType(this.name);
+}
 
 class Proof extends Equatable {
   final String name;
