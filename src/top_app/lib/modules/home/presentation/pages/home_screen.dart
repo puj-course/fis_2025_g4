@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nested/nested.dart';
 import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
@@ -20,7 +21,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
+      providers: <SingleChildWidget>[
         BlocProvider<UserCubit>.value(
           value: GetIt.I<UserCubit>()..fetchUser(),
         ),
@@ -45,63 +46,60 @@ class HomeScreenContent extends StatelessWidget {
       listener: (BuildContext context, UserState state) {
         if (state is Unauthenticated) {
           AutoRouter.of(context).replace(const WelcomeRoute());
-        } else if (state is Authenticated) {
-          context.read<GoalsCubit>().loadGoals(state.user.goals);
         }
       },
       child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
-        body: BlocBuilder<UserCubit, UserState>(
-          builder: (context, userState) {
-            if (userState is! Authenticated) {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-            return CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  floating: true,
-                  pinned: true,
-                  expandedHeight: 0,
-                  flexibleSpace: HomeAppBar(user: userState.user),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.all(16),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate(<Widget>[
-                      //? Activities Section
-                      Text(
-                        "Today's Activities",
-                        style: AppTextStyles.bold18,
-                      ),
-                      const SizedBox(height: 16),
-                      BlocBuilder<ActivitiesCubit, ActivitiesState>(
-                        builder: (context, activitiesState) {
-                          return TodaysActivitiesSection(
-                            activities:
-                                context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
-                            onActivityTap: (Activity activity) {
-                              print('Activity tapped: ${activity.name}');
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 24),
-
-                      //? Goals Section
-                      Text("Today's Goals", style: AppTextStyles.bold18),
-                      const SizedBox(height: 16),
-                      BlocBuilder<GoalsCubit, GoalsState>(
-                        builder: (BuildContext context, GoalsState goalsState) {
-                          return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
-                        },
-                      ),
-                    ]),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              floating: true,
+              pinned: true,
+              expandedHeight: 0,
+              flexibleSpace: BlocBuilder<UserCubit, UserState>(
+                builder: (BuildContext context, UserState userState) {
+                  if (userState is! Authenticated) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return HomeAppBar(user: userState.user);
+                },
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  //? Activities Section
+                  Text(
+                    "Today's Activities",
+                    style: AppTextStyles.bold18,
                   ),
-                ),
-              ],
-            );
-          },
+                  const SizedBox(height: 16),
+                  BlocBuilder<ActivitiesCubit, ActivitiesState>(
+                    builder: (BuildContext context, ActivitiesState activitiesState) {
+                      return TodaysActivitiesSection(
+                        activities:
+                            context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                        onActivityTap: (Activity activity) {
+                          print('Activity tapped: ${activity.name}');
+                        },
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 24),
+
+                  //? Goals Section
+                  Text("Today's Goals", style: AppTextStyles.bold18),
+                  const SizedBox(height: 16),
+                  BlocBuilder<GoalsCubit, GoalsState>(
+                    builder: (BuildContext context, GoalsState goalsState) {
+                      return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                    },
+                  ),
+                ]),
+              ),
+            ),
+          ],
         ),
       ),
     );

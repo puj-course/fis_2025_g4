@@ -7,6 +7,7 @@ import 'package:top_app/modules/home/domain/usecases/goals/edit_goal_name_usecas
 import 'package:top_app/modules/home/domain/usecases/goals/toggle_goal_completion_usecase.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
 import 'package:top_app/shared/global_state/user/api/user_public_api.dart';
+import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 
 part 'goals_state.dart';
 part 'goals_cubit.freezed.dart';
@@ -34,8 +35,16 @@ class GoalsCubit extends Cubit<GoalsState> {
   void addGoal(String goalName) async {
     emit(GoalsState.loadingGoals());
     try {
-      goals = await createGoalUsecase.call(goalName);
+      // Update local state immediately
+      goals = createGoalUsecase.call(goalName, goals);
       emit(GoalsState.loadedGoals(goals: goals));
+
+      // Update backend asynchronously
+      final UserEntity? user = await userPublicApi.getUser();
+      if (user != null) {
+        final UserEntity updatedUser = user.copyWith(goals: goals);
+        userPublicApi.updateUser(updatedUser);
+      }
     } catch (e) {
       emit(GoalsState.goalsError(message: e.toString()));
     }
@@ -44,8 +53,16 @@ class GoalsCubit extends Cubit<GoalsState> {
   void deleteGoal(String goalId) async {
     emit(GoalsState.loadingGoals());
     try {
-      goals = await deleteGoalUsecase.call(goalId);
+      // Update local state immediately
+      goals = deleteGoalUsecase.call(goalId, goals);
       emit(GoalsState.loadedGoals(goals: goals));
+
+      // Update backend asynchronously
+      final UserEntity? user = await userPublicApi.getUser();
+      if (user != null) {
+        final UserEntity updatedUser = user.copyWith(goals: goals);
+        userPublicApi.updateUser(updatedUser);
+      }
     } catch (e) {
       emit(GoalsState.goalsError(message: e.toString()));
     }
@@ -54,8 +71,16 @@ class GoalsCubit extends Cubit<GoalsState> {
   void editGoalName(String goalId, String newName) async {
     emit(GoalsState.loadingGoals());
     try {
-      goals = await editGoalNameUsecase.call(goalId, newName);
+      // Update local state immediately
+      goals = editGoalNameUsecase.call(goalId, newName, goals);
       emit(GoalsState.loadedGoals(goals: goals));
+
+      // Update backend asynchronously
+      final UserEntity? user = await userPublicApi.getUser();
+      if (user != null) {
+        final UserEntity updatedUser = user.copyWith(goals: goals);
+        userPublicApi.updateUser(updatedUser);
+      }
     } catch (e) {
       emit(GoalsState.goalsError(message: e.toString()));
     }
@@ -64,8 +89,16 @@ class GoalsCubit extends Cubit<GoalsState> {
   Future<void> toggleGoal(String goalId) async {
     emit(GoalsState.loadingGoals());
     try {
-      goals = await toggleGoalCompletionUsecase.call(goalId: goalId);
+      // Update local state immediately
+      goals = toggleGoalCompletionUsecase.call(goalId: goalId, currentGoals: goals);
       emit(GoalsState.loadedGoals(goals: goals));
+
+      // Update backend asynchronously
+      final UserEntity? user = await userPublicApi.getUser();
+      if (user != null) {
+        final UserEntity updatedUser = user.copyWith(goals: goals);
+        userPublicApi.updateUser(updatedUser);
+      }
     } catch (e) {
       emit(GoalsState.goalsError(message: e.toString()));
     }
