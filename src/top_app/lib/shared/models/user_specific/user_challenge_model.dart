@@ -1,5 +1,7 @@
+import 'package:top_app/shared/entities/user_specific/user_activity_progress.dart';
+
 import '../../entities/user_specific/user_challenge.dart';
-import 'user_activity_model.dart';
+import 'user_activity_progress_model.dart';
 
 class UserChallengeModel {
   final String challengeId;
@@ -7,7 +9,7 @@ class UserChallengeModel {
   final int currentStreak;
   final int bestStreak;
   final double completion;
-  final List<UserActivityModel> activities;
+  final List<UserActivityProgressModel> activities;
 
   UserChallengeModel({
     required this.challengeId,
@@ -25,7 +27,9 @@ class UserChallengeModel {
       currentStreak: entity.currentStreak,
       bestStreak: entity.bestStreak,
       completion: entity.completion,
-      activities: entity.activities.map((a) => UserActivityModel.fromEntity(a)).toList(),
+      activities: entity.activities
+          .map((UserActivityProgress a) => UserActivityProgressModel.fromEntity(a))
+          .toList(),
     );
   }
 
@@ -36,7 +40,7 @@ class UserChallengeModel {
       currentStreak: currentStreak,
       bestStreak: bestStreak,
       completion: completion,
-      activities: activities.map((a) => a.toEntity()).toList(),
+      activities: activities.map((UserActivityProgressModel a) => a.toEntity()).toList(),
     );
   }
 
@@ -47,18 +51,19 @@ class UserChallengeModel {
       currentStreak: json['currentStreak'],
       bestStreak: json['bestStreak'],
       completion: json['completion'].toDouble(),
-      activities: (json['activities'] as List).map((a) => UserActivityModel.fromJson(a)).toList(),
+      activities:
+          (json['activities'] as List).map((a) => UserActivityProgressModel.fromJson(a)).toList(),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'challengeId': challengeId,
       'dateStarted': dateStarted.toIso8601String(),
       'currentStreak': currentStreak,
       'bestStreak': bestStreak,
       'completion': completion,
-      'activities': activities.map((a) => a.toJson()).toList(),
+      'activities': activities.map((UserActivityProgressModel a) => a.toJson()).toList(),
     };
   }
 }

@@ -1,28 +1,25 @@
 import '../../entities/user_specific/user_proof.dart';
 
 class UserProofModel {
-  final String proofName;
   final String type;
   final String? submittedText;
-  final String? submittedPictureUrl;
+  final List<String> submittedImageUrls;
   final DateTime submittedAt;
   final bool isValid;
 
   UserProofModel({
-    required this.proofName,
     required this.type,
     this.submittedText,
-    this.submittedPictureUrl,
+    required this.submittedImageUrls,
     required this.submittedAt,
     required this.isValid,
   });
 
   factory UserProofModel.fromEntity(UserProof entity) {
     return UserProofModel(
-      proofName: entity.proofName,
       type: entity.type,
       submittedText: entity.submittedText,
-      submittedPictureUrl: entity.submittedPictureUrl,
+      submittedImageUrls: entity.submittedImageUrls,
       submittedAt: entity.submittedAt,
       isValid: entity.isValid,
     );
@@ -30,10 +27,9 @@ class UserProofModel {
 
   UserProof toEntity() {
     return UserProof(
-      proofName: proofName,
       type: type,
       submittedText: submittedText,
-      submittedPictureUrl: submittedPictureUrl,
+      submittedImageUrls: submittedImageUrls,
       submittedAt: submittedAt,
       isValid: isValid,
     );
@@ -41,10 +37,9 @@ class UserProofModel {
 
   factory UserProofModel.fromJson(Map<String, dynamic> json) {
     return UserProofModel(
-      proofName: json['proofName'],
       type: json['type'],
       submittedText: json['submittedText'],
-      submittedPictureUrl: json['submittedPictureUrl'],
+      submittedImageUrls: List<String>.from(json['submittedImageUrls']),
       submittedAt: DateTime.parse(json['submittedAt']),
       isValid: json['isValid'],
     );
@@ -52,10 +47,9 @@ class UserProofModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'proofName': proofName,
       'type': type,
       'submittedText': submittedText,
-      'submittedPictureUrl': submittedPictureUrl,
+      'submittedImageUrls': submittedImageUrls,
       'submittedAt': submittedAt.toIso8601String(),
       'isValid': isValid,
     };

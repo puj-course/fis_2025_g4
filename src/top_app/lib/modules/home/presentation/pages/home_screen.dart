@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
           value: GetIt.I<ActivitiesCubit>(),
         ),
         BlocProvider<GoalsCubit>.value(
-          value: GetIt.I<GoalsCubit>(),
+          value: GetIt.I<GoalsCubit>()..loadGoals(),
         ),
       ],
       child: const HomeScreenContent(),
@@ -58,10 +58,10 @@ class HomeScreenContent extends StatelessWidget {
               expandedHeight: 0,
               flexibleSpace: BlocBuilder<UserCubit, UserState>(
                 builder: (BuildContext context, UserState userState) {
-                  if (userState is! Authenticated) {
-                    return const Center(child: CircularProgressIndicator());
+                  if (userState is Authenticated) {
+                    return HomeAppBar(user: userState.user);
                   }
-                  return HomeAppBar(user: userState.user);
+                  return const SizedBox.shrink();
                 },
               ),
             ),

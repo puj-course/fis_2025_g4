@@ -1,3 +1,7 @@
+import 'package:top_app/shared/entities/templates/goal.dart';
+import 'package:top_app/shared/entities/templates/post.dart';
+import 'package:top_app/shared/entities/user_specific/user_badge.dart';
+import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
 import 'package:top_app/shared/models/templates/goal_model.dart';
 
 import '../../domain/entity/user_entity.dart';
@@ -15,7 +19,7 @@ class UserModel {
   final List<GoalModel> goals;
   final List<UserBadgeModel> badges;
   final List<UserChallengeModel> challenges;
-  final List<String> posts;
+  final List<Post> posts;
 
   UserModel({
     required this.uid,
@@ -28,11 +32,11 @@ class UserModel {
     List<GoalModel>? goals,
     List<UserBadgeModel>? badges,
     List<UserChallengeModel>? challenges,
-    List<String>? posts,
-  })  : goals = goals ?? [],
-        badges = badges ?? [],
-        challenges = challenges ?? [],
-        posts = posts ?? [];
+    List<Post>? posts,
+  })  : goals = goals ?? <GoalModel>[],
+        badges = badges ?? <UserBadgeModel>[],
+        challenges = challenges ?? <UserChallengeModel>[],
+        posts = posts ?? <Post>[];
 
   // Convert UserEntity to UserModel
   factory UserModel.fromEntity(UserEntity entity) {
@@ -44,9 +48,10 @@ class UserModel {
       createdAt: entity.createdAt,
       profilePictureUrl: entity.profilePictureUrl ?? '',
       signUpSeconds: entity.signUpSeconds,
-      goals: entity.goals.map((g) => GoalModel.fromEntity(g)).toList(),
-      badges: entity.badges.map((b) => UserBadgeModel.fromEntity(b)).toList(),
-      challenges: entity.challenges.map((c) => UserChallengeModel.fromEntity(c)).toList(),
+      goals: entity.goals.map((Goal g) => GoalModel.fromEntity(g)).toList(),
+      badges: entity.badges.map((UserBadge b) => UserBadgeModel.fromEntity(b)).toList(),
+      challenges:
+          entity.challenges.map((UserChallenge c) => UserChallengeModel.fromEntity(c)).toList(),
       posts: entity.posts,
     );
   }
@@ -61,9 +66,9 @@ class UserModel {
       createdAt: createdAt,
       profilePictureUrl: profilePictureUrl,
       signUpSeconds: signUpSeconds,
-      goals: goals.map((g) => g.toEntity()).toList(),
-      badges: badges.map((b) => b.toEntity()).toList(),
-      challenges: challenges.map((c) => c.toEntity()).toList(),
+      goals: goals.map((GoalModel g) => g.toEntity()).toList(),
+      badges: badges.map((UserBadgeModel b) => b.toEntity()).toList(),
+      challenges: challenges.map((UserChallengeModel c) => c.toEntity()).toList(),
       posts: posts,
     );
   }
@@ -78,17 +83,20 @@ class UserModel {
       createdAt: DateTime.parse(json['createdAt']),
       profilePictureUrl: json['profilePictureUrl'],
       signUpSeconds: json['signUpSeconds'],
-      goals: (json['goals'] as List?)?.map((g) => GoalModel.fromJson(g)).toList() ?? [],
-      badges: (json['badges'] as List?)?.map((b) => UserBadgeModel.fromJson(b)).toList() ?? [],
-      challenges:
-          (json['challenges'] as List?)?.map((c) => UserChallengeModel.fromJson(c)).toList() ?? [],
-      posts: List<String>.from(json['posts'] ?? []),
+      goals: (json['goals'] as List?)?.map((g) => GoalModel.fromJson(g)).toList() ?? <GoalModel>[],
+      badges: (json['badges'] as List?)?.map((b) => UserBadgeModel.fromJson(b)).toList() ??
+          <UserBadgeModel>[],
+      challenges: (json['challenges'] as List<dynamic>?)
+              ?.map((c) => UserChallengeModel.fromJson(c))
+              .toList() ??
+          <UserChallengeModel>[],
+      posts: List<Post>.from(json['posts'] ?? <Post>[]),
     );
   }
 
   // Convert UserModel to a map
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'uid': uid,
       'name': name,
       'email': email,
@@ -96,9 +104,9 @@ class UserModel {
       'createdAt': createdAt.toIso8601String(),
       'profilePictureUrl': profilePictureUrl,
       'signUpSeconds': signUpSeconds,
-      'goals': goals.map((g) => g.toJson()).toList(),
-      'badges': badges.map((b) => b.toJson()).toList(),
-      'challenges': challenges.map((c) => c.toJson()).toList(),
+      'goals': goals.map((GoalModel g) => g.toJson()).toList(),
+      'badges': badges.map((UserBadgeModel b) => b.toJson()).toList(),
+      'challenges': challenges.map((UserChallengeModel c) => c.toJson()).toList(),
       'posts': posts,
     };
   }

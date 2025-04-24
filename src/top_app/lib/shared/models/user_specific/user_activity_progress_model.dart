@@ -1,39 +1,41 @@
-import '../../entities/user_specific/user_activity.dart';
+import 'package:top_app/shared/entities/user_specific/user_proof.dart';
+
+import '../../entities/user_specific/user_activity_progress.dart';
 import 'user_proof_model.dart';
 
-class UserActivityModel {
+class UserActivityProgressModel {
   final String activityName;
   final int currentStreak;
   final double completion;
   final List<UserProofModel>? proofs;
 
-  UserActivityModel({
+  UserActivityProgressModel({
     required this.activityName,
     required this.currentStreak,
     required this.completion,
     required this.proofs,
   });
 
-  factory UserActivityModel.fromEntity(UserActivity entity) {
-    return UserActivityModel(
+  factory UserActivityProgressModel.fromEntity(UserActivityProgress entity) {
+    return UserActivityProgressModel(
       activityName: entity.activityName,
       currentStreak: entity.currentStreak,
       completion: entity.completion,
-      proofs: entity.proofs?.map((p) => UserProofModel.fromEntity(p)).toList(),
+      proofs: entity.proofs?.map((UserProof p) => UserProofModel.fromEntity(p)).toList(),
     );
   }
 
-  UserActivity toEntity() {
-    return UserActivity(
+  UserActivityProgress toEntity() {
+    return UserActivityProgress(
       activityName: activityName,
       currentStreak: currentStreak,
       completion: completion,
-      proofs: proofs?.map((p) => p.toEntity()).toList(),
+      proofs: proofs?.map((UserProofModel p) => p.toEntity()).toList(),
     );
   }
 
-  factory UserActivityModel.fromJson(Map<String, dynamic> json) {
-    return UserActivityModel(
+  factory UserActivityProgressModel.fromJson(Map<String, dynamic> json) {
+    return UserActivityProgressModel(
       activityName: json['activityName'],
       currentStreak: json['currentStreak'],
       completion: json['completion'].toDouble(),
@@ -44,11 +46,11 @@ class UserActivityModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'activityName': activityName,
       'currentStreak': currentStreak,
       'completion': completion,
-      'proofs': proofs?.map((p) => p.toJson()).toList(),
+      'proofs': proofs?.map((UserProofModel p) => p.toJson()).toList(),
     };
   }
 }
