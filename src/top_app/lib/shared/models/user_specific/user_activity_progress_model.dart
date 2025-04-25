@@ -4,53 +4,65 @@ import '../../entities/user_specific/user_activity_progress.dart';
 import 'user_proof_model.dart';
 
 class UserActivityProgressModel {
-  final String activityName;
+  final String activityId;
   final int currentStreak;
   final double completion;
-  final List<UserProofModel>? proofs;
+  final Map<DateTime, UserProofModel> dailyProofs;
 
   UserActivityProgressModel({
-    required this.activityName,
+    required this.activityId,
     required this.currentStreak,
     required this.completion,
-    required this.proofs,
+    required this.dailyProofs,
   });
 
   factory UserActivityProgressModel.fromEntity(UserActivityProgress entity) {
     return UserActivityProgressModel(
-      activityName: entity.activityName,
+      activityId: entity.activityId,
       currentStreak: entity.currentStreak,
       completion: entity.completion,
-      proofs: entity.proofs?.map((UserProof p) => UserProofModel.fromEntity(p)).toList(),
+      dailyProofs: entity.dailyProofs.map(
+        (DateTime key, UserProof value) => MapEntry(key, UserProofModel.fromEntity(value)),
+      ),
     );
   }
 
   UserActivityProgress toEntity() {
     return UserActivityProgress(
-      activityName: activityName,
+      activityId: activityId,
       currentStreak: currentStreak,
       completion: completion,
-      proofs: proofs?.map((UserProofModel p) => p.toEntity()).toList(),
+      dailyProofs: dailyProofs.map(
+        (DateTime key, UserProofModel value) => MapEntry(key, value.toEntity()),
+      ),
     );
   }
 
   factory UserActivityProgressModel.fromJson(Map<String, dynamic> json) {
     return UserActivityProgressModel(
-      activityName: json['activityName'],
+      activityId: json['activityId'],
       currentStreak: json['currentStreak'],
       completion: json['completion'].toDouble(),
-      proofs: json['proofs'] != null
-          ? (json['proofs'] as List).map((p) => UserProofModel.fromJson(p)).toList()
-          : null,
+      dailyProofs: (json['dailyProofs'] as Map<String, dynamic>).map(
+        (String key, dynamic value) => MapEntry<DateTime, UserProofModel>(
+          DateTime.parse(key),
+          UserProofModel.fromJson(value),
+        ),
+      ),
     );
   }
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'activityName': activityName,
+      'activityId': activityId,
       'currentStreak': currentStreak,
       'completion': completion,
-      'proofs': proofs?.map((UserProofModel p) => p.toJson()).toList(),
+      'dailyProofs': dailyProofs.map(
+        (DateTime key, UserProofModel value) => MapEntry<String, dynamic>(
+          key.toIso8601String(),
+          value.toJson(),
+        ),
+      ),
     };
   }
 }

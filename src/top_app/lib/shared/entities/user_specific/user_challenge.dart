@@ -18,6 +18,24 @@ class UserChallenge extends Equatable {
     required this.activities,
   });
 
+  UserChallenge copyWith({
+    String? challengeId,
+    DateTime? dateStarted,
+    int? currentStreak,
+    int? bestStreak,
+    double? completion,
+    List<UserActivityProgress>? activities,
+  }) {
+    return UserChallenge(
+      challengeId: challengeId ?? this.challengeId,
+      dateStarted: dateStarted ?? this.dateStarted,
+      currentStreak: currentStreak ?? this.currentStreak,
+      bestStreak: bestStreak ?? this.bestStreak,
+      completion: completion ?? this.completion,
+      activities: activities ?? this.activities,
+    );
+  }
+
   @override
   List<Object?> get props => [
         challengeId,

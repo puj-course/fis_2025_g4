@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/shared/models/templates/challenge_model.dart';
@@ -11,10 +12,13 @@ class ShowChallengesListDataProvider {
 
   Future<List<ChallengeModel>> getChallenges() async {
     try {
-      final querySnapshot = await _firebaseProvider.firestore.collection('challenges').get();
+      final QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseProvider.firestore.collection('challenges').get();
 
-      final challenges =
-          querySnapshot.docs.map((doc) => ChallengeModel.fromJson(doc.data())).toList();
+      final List<ChallengeModel> challenges = querySnapshot.docs
+          .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) =>
+              ChallengeModel.fromJson(doc.data()))
+          .toList();
 
       return challenges;
     } catch (e) {

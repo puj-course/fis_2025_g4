@@ -2,32 +2,32 @@ import 'package:equatable/equatable.dart';
 import 'user_proof.dart';
 
 class UserActivityProgress extends Equatable {
-  final String activityName;
+  final String activityId;
   final int currentStreak;
   final double completion;
-  final List<UserProof>? proofs;
+  final Map<DateTime, UserProof> dailyProofs;
 
   const UserActivityProgress({
-    required this.activityName,
+    required this.activityId,
     required this.currentStreak,
     required this.completion,
-    required this.proofs,
+    required this.dailyProofs,
   });
 
   UserActivityProgress copyWith({
-    String? activityName,
+    String? activityId,
     int? currentStreak,
     double? completion,
-    List<UserProof>? proofs,
+    Map<DateTime, UserProof>? dailyProofs,
   }) {
     return UserActivityProgress(
-      activityName: activityName ?? this.activityName,
+      activityId: activityId ?? this.activityId,
       currentStreak: currentStreak ?? this.currentStreak,
       completion: completion ?? this.completion,
-      proofs: proofs ?? this.proofs,
+      dailyProofs: dailyProofs ?? this.dailyProofs,
     );
   }
 
   @override
-  List<Object?> get props => <Object?>[activityName, currentStreak, completion, proofs];
+  List<Object?> get props => [activityId, currentStreak, completion, dailyProofs];
 }
