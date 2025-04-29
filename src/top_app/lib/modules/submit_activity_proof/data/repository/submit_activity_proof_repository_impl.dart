@@ -48,4 +48,16 @@ class SubmitActivityProofRepositoryImpl implements SubmitActivityProofRepository
       proof: proofModel,
     );
   }
+
+  @override
+  Future<String> uploadImage(String imagePath) async {
+    final UserEntity? user = await _userPublicApi.getUser();
+    if (user == null) {
+      throw Exception('User not found');
+    }
+
+    final String path = 'users/${user.uid}/dailyProofs/${DateTime.now().millisecondsSinceEpoch}';
+
+    return await _dataSource.uploadImage(path, imagePath);
+  }
 }
