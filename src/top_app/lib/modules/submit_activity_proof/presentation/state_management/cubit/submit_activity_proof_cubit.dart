@@ -31,6 +31,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     proofTemplate = activity.proof.first;
 
     userProof = UserProof(
+      proofId: proofTemplate.id,
       type: proofTemplate.type,
       submittedImageUrls: <String>[],
       submittedText: '',
@@ -64,7 +65,6 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     } catch (e) {
       emit(SubmitActivityProofState.error(e.toString()));
     }
-    emit(SubmitActivityProofState.proofSubmitted());
   }
 
   void updateProofText(String text) {

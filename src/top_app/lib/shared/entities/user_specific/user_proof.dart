@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:top_app/shared/entities/templates/proof.dart';
 
 class UserProof extends Equatable {
+  final String proofId;
   final ProofType type;
   final String? submittedText;
   final List<String> submittedImageUrls;
@@ -9,6 +10,7 @@ class UserProof extends Equatable {
   final bool isValid;
 
   const UserProof({
+    required this.proofId,
     required this.type,
     this.submittedText,
     required this.submittedImageUrls,
@@ -23,6 +25,7 @@ class UserProof extends Equatable {
     bool? isValid,
   }) {
     return UserProof(
+      proofId: proofId,
       type: type,
       submittedText: submittedText ?? this.submittedText,
       submittedImageUrls: submittedImageUrls ?? this.submittedImageUrls,
@@ -33,6 +36,7 @@ class UserProof extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[
+        proofId,
         type,
         submittedText,
         submittedImageUrls,
