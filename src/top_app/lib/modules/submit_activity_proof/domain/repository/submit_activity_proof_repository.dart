@@ -1,5 +1,4 @@
 import 'package:top_app/shared/entities/templates/activity.dart';
-import 'package:top_app/shared/entities/user_specific/user_activity_progress.dart';
 import 'package:top_app/shared/entities/user_specific/user_proof.dart';
 
 abstract class SubmitActivityProofRepository {

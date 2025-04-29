@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
+import 'package:top_app/shared/image_helper/remove_image.dart' as remove_image;
 import 'package:top_app/shared/image_helper/upload_image.dart' as upload_image;
 
 /// Helper class that encapsulates image operations.
@@ -12,5 +13,9 @@ class ImageHelper {
   /// Uploads an image to Firebase Storage and returns the download URL.
   Future<String> uploadImage(String path, String imagePath) async {
     return await upload_image.uploadImage(path, imagePath, firebaseProvider);
+  }
+
+  Future<void> removeImage(String path, String imagePath) async {
+    return await remove_image.removeImage(path, imagePath, firebaseProvider);
   }
 }

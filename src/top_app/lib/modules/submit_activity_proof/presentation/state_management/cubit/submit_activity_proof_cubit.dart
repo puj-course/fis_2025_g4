@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/modules/submit_activity_proof/domain/repository/submit_activity_proof_repository.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
-import 'package:top_app/shared/entities/user_specific/user_activity_progress.dart';
 import 'package:top_app/shared/entities/user_specific/user_proof.dart';
 
 part 'submit_activity_proof_state.dart';
