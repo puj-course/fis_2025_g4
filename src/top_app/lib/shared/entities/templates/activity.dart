@@ -9,7 +9,7 @@ class Activity extends Equatable {
   final AppIcon icon;
   final List<int> daysOfWeek;
   final List<Proof> proof;
-
+  final String challengeId;
   const Activity({
     required this.id,
     required this.name,
@@ -17,6 +17,7 @@ class Activity extends Equatable {
     required this.icon,
     required this.daysOfWeek,
     required this.proof,
+    required this.challengeId,
   });
 
   Activity copyWith({
@@ -26,6 +27,7 @@ class Activity extends Equatable {
     AppIcon? icon,
     List<int>? daysOfWeek,
     List<Proof>? proof,
+    String? challengeId,
   }) {
     return Activity(
       id: id ?? this.id,
@@ -34,9 +36,10 @@ class Activity extends Equatable {
       icon: icon ?? this.icon,
       daysOfWeek: daysOfWeek ?? this.daysOfWeek,
       proof: proof ?? this.proof,
+      challengeId: challengeId ?? this.challengeId,
     );
   }
 
   @override
-  List<Object?> get props => [id, name, streakEdge, icon, daysOfWeek, proof];
+  List<Object?> get props => <Object?>[id, name, streakEdge, icon, daysOfWeek, proof, challengeId];
 }

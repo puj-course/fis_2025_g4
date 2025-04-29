@@ -11,6 +11,7 @@ class ActivityModel {
   final AppIcon icon;
   final List<int> daysOfWeek;
   final List<ProofModel> proof;
+  final String challengeId;
 
   ActivityModel({
     required this.id,
@@ -19,6 +20,7 @@ class ActivityModel {
     required this.icon,
     required this.daysOfWeek,
     required this.proof,
+    required this.challengeId,
   });
 
   factory ActivityModel.fromEntity(Activity entity) {
@@ -29,6 +31,7 @@ class ActivityModel {
       icon: entity.icon,
       daysOfWeek: entity.daysOfWeek,
       proof: entity.proof.map((Proof p) => ProofModel.fromEntity(p)).toList(),
+      challengeId: entity.challengeId,
     );
   }
 
@@ -40,10 +43,11 @@ class ActivityModel {
       icon: icon,
       daysOfWeek: daysOfWeek,
       proof: proof.map((ProofModel p) => p.toEntity()).toList(),
+      challengeId: challengeId,
     );
   }
 
-  factory ActivityModel.fromJson(Map<String, dynamic> json) {
+  factory ActivityModel.fromJson(Map<String, dynamic> json, String challengeId) {
     return ActivityModel(
       id: json['id'],
       name: json['name'],
@@ -51,6 +55,7 @@ class ActivityModel {
       icon: AppIcon.fromCode(json['iconCode']),
       daysOfWeek: List<int>.from(json['daysOfWeek'].map((e) => e as int)),
       proof: (json['proof'] as List).map((p) => ProofModel.fromJson(p)).toList(),
+      challengeId: challengeId,
     );
   }
 

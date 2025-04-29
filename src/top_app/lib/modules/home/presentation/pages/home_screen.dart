@@ -80,9 +80,6 @@ class HomeScreenContent extends StatelessWidget {
                       return TodaysActivitiesSection(
                         activities:
                             context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
-                        onActivityTap: (Activity activity) {
-                          print('Activity tapped: ${activity.name}');
-                        },
                       );
                     },
                   ),

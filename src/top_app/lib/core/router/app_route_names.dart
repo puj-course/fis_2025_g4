@@ -11,4 +11,5 @@ class AppRouteNames {
   static const String showChallengeDetail = '/challenge-detail';
   static const String home = 'home';
   static const String navigation = '/';
+  static const String submitActivityProof = '/submit-activity-proof';
 }

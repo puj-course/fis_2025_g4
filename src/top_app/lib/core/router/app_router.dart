@@ -13,6 +13,8 @@ import 'package:top_app/modules/show_onboarding_feature/presentation/screens/you
 import 'package:top_app/modules/auth_domain/show_sign_in_feature/presentation/screens/sign_in_screen.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/presentation/screens/sign_up_screen.dart';
 import 'package:top_app/modules/auth_domain/show_sign_up_freature/sub_features/show_countdown_record/presentation/screens/countdown_record_screen.dart';
+import 'package:top_app/modules/submit_activity_proof/presentation/widgets/screens/submit_activity_proof_screen.dart';
+import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 
 import 'app_route_names.dart';
@@ -25,7 +27,7 @@ class AppRouter extends RootStackRouter {
   RouteType get defaultRouteType => RouteType.material();
 
   @override
-  List<AutoRoute> get routes => [
+  List<AutoRoute> get routes => <AutoRoute>[
         AutoRoute(
           path: AppRouteNames.welcome,
           page: WelcomeRoute.page,
@@ -34,13 +36,15 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           path: AppRouteNames.yourLiveChanges,
           page: YourLiveChangesRoute.page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            const Offset begin = Offset(0.0, 1.0);
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            Animatable<Offset> tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Animation<Offset> offsetAnimation = animation.drive(tween);
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
@@ -49,13 +53,15 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           path: AppRouteNames.ninetyNine,
           page: NinetyNineRoute.page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            const Offset begin = Offset(0.0, 1.0);
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            Animatable<Offset> tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Animation<Offset> offsetAnimation = animation.drive(tween);
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
@@ -64,13 +70,15 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           path: AppRouteNames.thatOne,
           page: ThatOneRoute.page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            const Offset begin = Offset(0.0, 1.0);
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            Animatable<Offset> tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Animation<Offset> offsetAnimation = animation.drive(tween);
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
@@ -79,13 +87,15 @@ class AppRouter extends RootStackRouter {
         CustomRoute(
           path: AppRouteNames.startOrLevelUp,
           page: StartOrLevelUpRoute.page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            const Offset begin = Offset(0.0, 1.0);
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            Animatable<Offset> tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Animation<Offset> offsetAnimation = animation.drive(tween);
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
@@ -93,13 +103,15 @@ class AppRouter extends RootStackRouter {
         ),
         CustomRoute(
           page: TopIsThePlaceRoute.page,
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            const begin = Offset(0.0, 1.0);
-            const end = Offset.zero;
-            const curve = Curves.easeInOut;
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            const Offset begin = Offset(0.0, 1.0);
+            const Offset end = Offset.zero;
+            const Cubic curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            Animatable<Offset> tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Animation<Offset> offsetAnimation = animation.drive(tween);
 
             return SlideTransition(position: offsetAnimation, child: child);
           },
@@ -126,7 +138,7 @@ class AppRouter extends RootStackRouter {
           initial: true,
           page: NavigationRoute.page,
           path: AppRouteNames.navigation,
-          children: [
+          children: <AutoRoute>[
             AutoRoute(
               page: HomeRoute.page,
               path: AppRouteNames.home,
@@ -136,6 +148,10 @@ class AppRouter extends RootStackRouter {
               path: AppRouteNames.showChallengesList,
             ),
           ],
+        ),
+        AutoRoute(
+          page: SubmitActivityProofRoute.page,
+          path: AppRouteNames.submitActivityProof,
         ),
       ];
 }

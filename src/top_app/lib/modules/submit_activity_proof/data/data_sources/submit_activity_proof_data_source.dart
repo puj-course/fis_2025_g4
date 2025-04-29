@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/shared/image_helper/image_helper.dart';
@@ -14,19 +13,6 @@ class SubmitActivityProofDataSource {
     required ImageHelper imageHelper,
   })  : _firebaseProvider = firebaseProvider,
         _imageHelper = imageHelper;
-
-  Future<Map<String, dynamic>> getActivityTemplate({required String activityId}) async {
-    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await _firebaseProvider.firestore
-        .collection('activities')
-        .where('id', isEqualTo: activityId)
-        .get();
-
-    if (querySnapshot.docs.isEmpty) {
-      throw Exception('Activity with id $activityId not found');
-    }
-
-    return querySnapshot.docs.first.data();
-  }
 
   Future<void> submitActivityProof({
     required String userId,

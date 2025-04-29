@@ -69,7 +69,8 @@ class ChallengeModel {
       edgeReward: json['edgeReward'] != null ? int.parse(json['edgeReward']) : 0,
       authorName: json['authorName'],
       authorId: json['authorId'],
-      activities: (json['activities'] as List).map((a) => ActivityModel.fromJson(a)).toList(),
+      activities:
+          (json['activities'] as List).map((a) => ActivityModel.fromJson(a, json['id'])).toList(),
     );
   }
 
