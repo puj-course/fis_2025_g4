@@ -29,8 +29,21 @@ class SubmitActivityProofScreen extends StatelessWidget {
   }
 }
 
-class SubmitActivityProofScreenBody extends StatelessWidget {
+class SubmitActivityProofScreenBody extends StatefulWidget {
   const SubmitActivityProofScreenBody({super.key});
+
+  @override
+  State<SubmitActivityProofScreenBody> createState() => _SubmitActivityProofScreenBodyState();
+}
+
+class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScreenBody> {
+  final FocusNode _focusNode = FocusNode();
+  final TextEditingController _textController = TextEditingController();
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,12 +78,24 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border(
                         left: BorderSide(
-                          color: AppColors.grayMidLight,
+                          color: (_focusNode.hasFocus || _textController.text.isNotEmpty)
+                              ? AppColors.grayLight
+                              : AppColors.grayMidDark,
                           width: 4,
                         ),
                       ),
                     ),
-                    child: TextField(
+                    child: TextFormField(
+                      focusNode: _focusNode,
+                      controller: _textController,
+                      onTapOutside: (PointerDownEvent value) {
+                        _focusNode.unfocus();
+                        setState(() {});
+                      },
+                      onTap: () {
+                        // _focusNode.requestFocus();
+                        setState(() {});
+                      },
                       maxLines: null,
                       textAlignVertical: TextAlignVertical.top,
                       style: AppTextStyles.regular14,
