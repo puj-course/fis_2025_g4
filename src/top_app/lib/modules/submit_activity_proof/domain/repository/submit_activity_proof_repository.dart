@@ -1,3 +1,4 @@
+import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/user_specific/user_activity_progress.dart';
 import 'package:top_app/shared/entities/user_specific/user_proof.dart';
 
@@ -10,7 +11,7 @@ abstract class SubmitActivityProofRepository {
   });
 
   /// Retrieves the template for a specific activity.
-  Future<UserActivityProgress> getActivityTemplate({required String activityId});
+  Future<Activity> getActivityTemplate({required String activityId});
 
   /// Uploads a proof image to Firebase Storage and returns the download URL.
   Future<String> uploadImage(String imagePath);

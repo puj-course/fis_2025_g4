@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:top_app/shared/entities/templates/proof.dart';
 
 class UserProof extends Equatable {
-  final String type; // e.g. "text", "image", "text+image", "time-based"
+  final ProofType type;
   final String? submittedText;
   final List<String> submittedImageUrls;
   final DateTime submittedAt;
