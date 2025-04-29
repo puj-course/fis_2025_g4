@@ -178,6 +178,46 @@ class ProofSubmitted implements SubmitActivityProofState {
 
 /// @nodoc
 
+class UpdatingProof implements SubmitActivityProofState {
+  const UpdatingProof();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is UpdatingProof);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'SubmitActivityProofState.updatingProof()';
+  }
+}
+
+/// @nodoc
+
+class ProofUpdated implements SubmitActivityProofState {
+  const ProofUpdated();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is ProofUpdated);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'SubmitActivityProofState.proofUpdated()';
+  }
+}
+
+/// @nodoc
+
 class Error implements SubmitActivityProofState {
   const Error(this.message);
 

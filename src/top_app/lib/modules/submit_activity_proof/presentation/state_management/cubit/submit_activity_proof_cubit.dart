@@ -66,4 +66,10 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     }
     emit(SubmitActivityProofState.proofSubmitted());
   }
+
+  void updateProofText(String text) {
+    emit(SubmitActivityProofState.updatingProof());
+    userProof = userProof.copyWith(submittedText: text);
+    emit(SubmitActivityProofState.proofUpdated());
+  }
 }

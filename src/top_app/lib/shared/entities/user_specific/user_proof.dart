@@ -16,6 +16,21 @@ class UserProof extends Equatable {
     required this.isValid,
   });
 
+  UserProof copyWith({
+    String? submittedText,
+    List<String>? submittedImageUrls,
+    DateTime? submittedAt,
+    bool? isValid,
+  }) {
+    return UserProof(
+      type: type,
+      submittedText: submittedText ?? this.submittedText,
+      submittedImageUrls: submittedImageUrls ?? this.submittedImageUrls,
+      submittedAt: submittedAt ?? this.submittedAt,
+      isValid: isValid ?? this.isValid,
+    );
+  }
+
   @override
   List<Object?> get props => <Object?>[
         type,

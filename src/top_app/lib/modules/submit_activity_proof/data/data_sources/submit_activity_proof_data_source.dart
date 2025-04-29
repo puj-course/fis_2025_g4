@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/shared/image_helper/image_helper.dart';
 import 'package:top_app/shared/models/user_specific/user_proof_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 @injectable
 class SubmitActivityProofDataSource {
@@ -20,11 +21,13 @@ class SubmitActivityProofDataSource {
     required String activityId,
     required UserProofModel proof,
   }) async {
-    final DateTime now = DateTime.now();
-    final String proofPath =
-        'users/$userId/challenges/$challengeId/activities/$activityId/dailyProofs/${now.millisecondsSinceEpoch}';
+    final DocumentReference<Map<String, dynamic>> userDoc =
+        _firebaseProvider.firestore.collection('users').doc(userId);
 
-    await _firebaseProvider.firestore.doc(proofPath).set(proof.toJson());
+    await userDoc.update(<Object, Object?>{
+      'challenges.$challengeId.activities.$activityId.dailyProofs':
+          FieldValue.arrayUnion(<Map<String, dynamic>>[proof.toJson()])
+    });
   }
 
   Future<String> uploadImage(String path, String imagePath) async {

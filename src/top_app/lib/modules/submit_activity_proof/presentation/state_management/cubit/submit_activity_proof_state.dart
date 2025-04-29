@@ -16,5 +16,9 @@ class SubmitActivityProofState with _$SubmitActivityProofState {
 
   const factory SubmitActivityProofState.proofSubmitted() = ProofSubmitted;
 
+  const factory SubmitActivityProofState.updatingProof() = UpdatingProof;
+
+  const factory SubmitActivityProofState.proofUpdated() = ProofUpdated;
+
   const factory SubmitActivityProofState.error(String message) = Error;
 }
