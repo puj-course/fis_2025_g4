@@ -1,0 +1,44 @@
+{
+  "uid": "demo_user_123",
+  "name": "Demo User",
+  "email": "demo@example.com",
+  "bio": "This is a demo user for testing purposes",
+  "createdAt": "2024-03-19T10:00:00Z",
+  "profilePictureUrl": "https://example.com/profile.jpg",
+  "signUpSeconds": 1710842400,
+  "goals": [],
+  "badges": [],
+  "posts": [],
+  "challenges": {
+    "c1": {
+      "challengeId": "c1",
+      "dateStarted": "2024-03-19T10:00:00Z",
+      "currentStreak": 5,
+      "bestStreak": 10,
+      "completion": 0.5,
+      "activities": {
+        "ac1": {
+          "activityId": "ac1",
+          "currentStreak": 3,
+          "completion": 0.3,
+          "dailyProofs": {
+            "2024-03-19T10:00:00Z": {
+              "type": "text",
+              "submittedText": "Completed my daily activity!",
+              "submittedImageUrls": [],
+              "submittedAt": "2024-03-19T10:00:00Z",
+              "isValid": true
+            },
+            "2024-03-18T10:00:00Z": {
+              "type": "image",
+              "submittedText": null,
+              "submittedImageUrls": ["https://example.com/proof1.jpg"],
+              "submittedAt": "2024-03-18T10:00:00Z",
+              "isValid": true
+            }
+          }
+        }
+      }
+    }
+  }
+} 

@@ -9,7 +9,7 @@ class UserChallengeModel {
   final int currentStreak;
   final int bestStreak;
   final double completion;
-  final List<UserActivityProgressModel> activities;
+  final Map<String, UserActivityProgressModel> activities;
 
   UserChallengeModel({
     required this.challengeId,
@@ -27,9 +27,8 @@ class UserChallengeModel {
       currentStreak: entity.currentStreak,
       bestStreak: entity.bestStreak,
       completion: entity.completion,
-      activities: entity.activities
-          .map((UserActivityProgress a) => UserActivityProgressModel.fromEntity(a))
-          .toList(),
+      activities: Map.fromEntries(entity.activities.map((UserActivityProgress a) =>
+          MapEntry(a.activityId, UserActivityProgressModel.fromEntity(a)))),
     );
   }
 
@@ -40,7 +39,7 @@ class UserChallengeModel {
       currentStreak: currentStreak,
       bestStreak: bestStreak,
       completion: completion,
-      activities: activities.map((UserActivityProgressModel a) => a.toEntity()).toList(),
+      activities: activities.values.map((UserActivityProgressModel a) => a.toEntity()).toList(),
     );
   }
 
@@ -51,8 +50,12 @@ class UserChallengeModel {
       currentStreak: json['currentStreak'],
       bestStreak: json['bestStreak'],
       completion: json['completion'].toDouble(),
-      activities:
-          (json['activities'] as List).map((a) => UserActivityProgressModel.fromJson(a)).toList(),
+      activities: (json['activities'] as Map<String, dynamic>).map(
+        (String key, dynamic value) => MapEntry(
+          key,
+          UserActivityProgressModel.fromJson(value),
+        ),
+      ),
     );
   }
 
@@ -63,7 +66,9 @@ class UserChallengeModel {
       'currentStreak': currentStreak,
       'bestStreak': bestStreak,
       'completion': completion,
-      'activities': activities.map((UserActivityProgressModel a) => a.toJson()).toList(),
+      'activities': activities.map(
+        (String key, UserActivityProgressModel value) => MapEntry(key, value.toJson()),
+      ),
     };
   }
 }

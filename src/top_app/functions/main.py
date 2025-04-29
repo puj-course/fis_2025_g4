@@ -11,6 +11,7 @@ import google.cloud.firestore
 import logging
 import traceback
 import json
+from .submit_activity_proof import submit_activity_proof_handler
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -138,6 +139,59 @@ def get_users_with_challenge(req: https_fn.Request) -> https_fn.Response:
             error_response = json.dumps({'error': error_msg})
             return https_fn.Response(error_response, status=500, 
                                      content_type='application/json')
+        
+    except Exception as e:
+        error_msg = f"Unexpected error: {str(e)}"
+        logger.error(error_msg)
+        logger.error(traceback.format_exc())
+        error_response = json.dumps({'error': error_msg})
+        return https_fn.Response(error_response, status=500, 
+                                 content_type='application/json')
+
+@https_fn.on_request()
+def submit_activity_proof(req: https_fn.Request) -> https_fn.Response:
+    """
+    Cloud function to submit an activity proof.
+    
+    This function expects a POST request with JSON body containing:
+    {
+        "userId": "user123",
+        "challengeId": "challenge123",
+        "activityId": "activity456",
+        "proof": {
+            // proof data
+        }
+    }
+    """
+    try:
+        # Get JSON data from request
+        request_json = req.get_json(silent=True)
+        
+        if not request_json:
+            error_response = json.dumps({'error': 'Invalid request body'})
+            return https_fn.Response(error_response, status=400, 
+                                     content_type='application/json')
+        
+        required_fields = ['userId', 'challengeId', 'activityId', 'proof']
+        missing_fields = [field for field in required_fields if field not in request_json]
+        
+        if missing_fields:
+            error_response = json.dumps({'error': f'Missing required fields: {", ".join(missing_fields)}'})
+            return https_fn.Response(error_response, status=400, 
+                                     content_type='application/json')
+        
+        # Call the handler
+        result = submit_activity_proof_handler(
+            user_id=request_json['userId'],
+            challenge_id=request_json['challengeId'],
+            activity_id=request_json['activityId'],
+            proof=request_json['proof']
+        )
+        
+        # Return the result as an HTTP response
+        status_code = result.get('status', 500) if 'error' in result else 200
+        return https_fn.Response(json.dumps(result), status=status_code, 
+                                 content_type='application/json')
         
     except Exception as e:
         error_msg = f"Unexpected error: {str(e)}"

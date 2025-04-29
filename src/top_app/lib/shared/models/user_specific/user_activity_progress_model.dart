@@ -7,7 +7,7 @@ class UserActivityProgressModel {
   final String activityId;
   final int currentStreak;
   final double completion;
-  final Map<DateTime, UserProofModel> dailyProofs;
+  final Map<String, UserProofModel> dailyProofs;
 
   UserActivityProgressModel({
     required this.activityId,
@@ -22,7 +22,10 @@ class UserActivityProgressModel {
       currentStreak: entity.currentStreak,
       completion: entity.completion,
       dailyProofs: entity.dailyProofs.map(
-        (DateTime key, UserProof value) => MapEntry(key, UserProofModel.fromEntity(value)),
+        (DateTime key, UserProof value) => MapEntry(
+          key.toIso8601String(),
+          UserProofModel.fromEntity(value),
+        ),
       ),
     );
   }
@@ -33,7 +36,10 @@ class UserActivityProgressModel {
       currentStreak: currentStreak,
       completion: completion,
       dailyProofs: dailyProofs.map(
-        (DateTime key, UserProofModel value) => MapEntry(key, value.toEntity()),
+        (String key, UserProofModel value) => MapEntry(
+          DateTime.parse(key),
+          value.toEntity(),
+        ),
       ),
     );
   }
@@ -44,8 +50,8 @@ class UserActivityProgressModel {
       currentStreak: json['currentStreak'],
       completion: json['completion'].toDouble(),
       dailyProofs: (json['dailyProofs'] as Map<String, dynamic>).map(
-        (String key, dynamic value) => MapEntry<DateTime, UserProofModel>(
-          DateTime.parse(key),
+        (String key, dynamic value) => MapEntry(
+          key,
           UserProofModel.fromJson(value),
         ),
       ),
@@ -58,10 +64,7 @@ class UserActivityProgressModel {
       'currentStreak': currentStreak,
       'completion': completion,
       'dailyProofs': dailyProofs.map(
-        (DateTime key, UserProofModel value) => MapEntry<String, dynamic>(
-          key.toIso8601String(),
-          value.toJson(),
-        ),
+        (String key, UserProofModel value) => MapEntry(key, value.toJson()),
       ),
     };
   }

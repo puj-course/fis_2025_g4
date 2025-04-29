@@ -1,19 +1,18 @@
 import 'package:injectable/injectable.dart';
-import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/shared/image_helper/image_helper.dart';
 import 'package:top_app/shared/models/user_specific/user_proof_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:top_app/shared/cloud_functions/cloud_functions_helper.dart';
 
 @injectable
 class SubmitActivityProofDataSource {
-  final FirebaseProvider _firebaseProvider;
   final ImageHelper _imageHelper;
+  final CloudFunctionsHelper _cloudFunctionsHelper;
 
   SubmitActivityProofDataSource({
-    required FirebaseProvider firebaseProvider,
     required ImageHelper imageHelper,
-  })  : _firebaseProvider = firebaseProvider,
-        _imageHelper = imageHelper;
+    required CloudFunctionsHelper cloudFunctionsHelper,
+  })  : _imageHelper = imageHelper,
+        _cloudFunctionsHelper = cloudFunctionsHelper;
 
   Future<void> submitActivityProof({
     required String userId,
@@ -21,13 +20,16 @@ class SubmitActivityProofDataSource {
     required String activityId,
     required UserProofModel proof,
   }) async {
-    final DocumentReference<Map<String, dynamic>> userDoc =
-        _firebaseProvider.firestore.collection('users').doc(userId);
-
-    await userDoc.update(<Object, Object?>{
-      'challenges.$challengeId.activities.$activityId.dailyProofs':
-          FieldValue.arrayUnion(<Map<String, dynamic>>[proof.toJson()])
-    });
+    await _cloudFunctionsHelper.callFunction(
+      functionName: 'submit_activity_proof',
+      method: HttpMethod.post,
+      body: <String, dynamic>{
+        'userId': userId,
+        'challengeId': challengeId,
+        'activityId': activityId,
+        'proof': proof.toJson(),
+      },
+    );
   }
 
   Future<String> uploadImage(String path, String imagePath) async {

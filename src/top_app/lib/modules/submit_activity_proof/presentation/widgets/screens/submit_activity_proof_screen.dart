@@ -133,6 +133,9 @@ class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScree
                     child: WhiteFilledButton(
                       text: 'Submit Proof',
                       onPressed: () {
+                        context
+                            .read<SubmitActivityProofCubit>()
+                            .updateProofText(_textController.text);
                         context.read<SubmitActivityProofCubit>().submitProof();
                       },
                       isLoading: state is SubmittingProof,
