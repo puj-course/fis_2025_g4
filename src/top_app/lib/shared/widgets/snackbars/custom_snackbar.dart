@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 
 // List to track active snackbars
-final List<CustomSnackBar> _activeSnackBars = [];
+final List<CustomSnackBar> _activeSnackBars = <CustomSnackBar>[];
 
 class CustomSnackBar {
   // Static methods to show different types of snackbars
@@ -60,11 +60,11 @@ class CustomSnackBar {
     final OverlayState overlay = Overlay.of(context);
 
     // Create a new snackbar instance
-    final snackBar = CustomSnackBar._();
+    final CustomSnackBar snackBar = CustomSnackBar._();
 
     // Create the overlay entry
     snackBar._entry = OverlayEntry(
-      builder: (context) {
+      builder: (BuildContext context) {
         // Get the top padding for safe area inside the builder
         // This ensures we get the correct padding from the current context
         final double topPadding = MediaQuery.of(context).viewPadding.top;
@@ -95,7 +95,7 @@ class CustomSnackBar {
     overlay.insert(snackBar._entry);
 
     // Auto-dismiss after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (!snackBar._removed) {
         // Use the dismiss method to ensure animation plays
         snackBar._key.currentState?.dismiss();
@@ -105,7 +105,7 @@ class CustomSnackBar {
 
   // Remove all existing snackbars
   static void _removeExistingSnackBars() {
-    for (final snackBar in _activeSnackBars) {
+    for (final CustomSnackBar snackBar in _activeSnackBars) {
       if (!snackBar._removed) {
         snackBar._key.currentState?.dismiss();
       }
@@ -122,7 +122,7 @@ class CustomSnackBar {
 
   // Remove all snackbars
   static void removeAll() {
-    for (final snackBar in _activeSnackBars) {
+    for (final CustomSnackBar snackBar in _activeSnackBars) {
       if (!snackBar._removed) {
         snackBar._key.currentState?.dismiss();
       }
@@ -198,7 +198,7 @@ class _SnackBarContentState extends State<_SnackBarContent> with SingleTickerPro
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animation,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return Transform.translate(
           offset: Offset(0, -100 * (1 - _animation.value)),
           child: Opacity(
@@ -217,7 +217,7 @@ class _SnackBarContentState extends State<_SnackBarContent> with SingleTickerPro
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Row(
-              children: [
+              children: <Widget>[
                 Icon(widget.icon, color: widget.textColor),
                 const SizedBox(width: 10),
                 Expanded(
