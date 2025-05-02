@@ -34,6 +34,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
       proofId: proofTemplate.id,
       type: proofTemplate.type,
       submittedImageUrls: <String>[],
+      localImagePaths: <String>[],
       submittedText: '',
       submittedAt: DateTime.now(),
       isValid: false,
@@ -46,14 +47,42 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     emit(SubmitActivityProofState.uploadingImage());
     try {
       final String downloadUrl = await _submitActivityProofRepository.uploadImage(imagePath);
-      userProof.submittedImageUrls.add(downloadUrl);
+      userProof = userProof.copyWith(
+        submittedImageUrls: <String>[...userProof.submittedImageUrls, downloadUrl],
+        localImagePaths: <String>[...userProof.localImagePaths, imagePath],
+      );
       emit(SubmitActivityProofState.imageUploaded());
     } catch (e) {
       emit(SubmitActivityProofState.error(e.toString()));
     }
   }
 
+  Future<void> removeImage(String imagePath) async {
+    emit(SubmitActivityProofState.updatingProof());
+    userProof = userProof.copyWith(
+      submittedImageUrls:
+          userProof.submittedImageUrls.where((String url) => url != imagePath).toList(),
+      localImagePaths: userProof.localImagePaths.where((String path) => path != imagePath).toList(),
+    );
+    emit(SubmitActivityProofState.proofUpdated());
+  }
+
   Future<void> submitProof() async {
+    // Validate required fields based on proof type
+    if (proofTemplate.type == ProofType.text || proofTemplate.type == ProofType.textAndImage) {
+      if (userProof.submittedText?.isEmpty ?? true) {
+        emit(SubmitActivityProofState.error('Please enter your proof text'));
+        return;
+      }
+    }
+
+    if (proofTemplate.type == ProofType.image || proofTemplate.type == ProofType.textAndImage) {
+      if (userProof.submittedImageUrls.isEmpty) {
+        emit(SubmitActivityProofState.error('Please upload an image'));
+        return;
+      }
+    }
+
     emit(SubmitActivityProofState.submittingProof());
     try {
       await _submitActivityProofRepository.submitActivityProof(

@@ -36,6 +36,7 @@ class UserProofModel {
       type: type,
       submittedText: submittedText,
       submittedImageUrls: submittedImageUrls,
+      localImagePaths: <String>[],
       submittedAt: submittedAt,
       isValid: isValid,
     );

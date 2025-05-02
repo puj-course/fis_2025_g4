@@ -6,6 +6,7 @@ class UserProof extends Equatable {
   final ProofType type;
   final String? submittedText;
   final List<String> submittedImageUrls;
+  final List<String> localImagePaths;
   final DateTime submittedAt;
   final bool isValid;
 
@@ -14,6 +15,7 @@ class UserProof extends Equatable {
     required this.type,
     this.submittedText,
     required this.submittedImageUrls,
+    required this.localImagePaths,
     required this.submittedAt,
     required this.isValid,
   });
@@ -21,6 +23,7 @@ class UserProof extends Equatable {
   UserProof copyWith({
     String? submittedText,
     List<String>? submittedImageUrls,
+    List<String>? localImagePaths,
     DateTime? submittedAt,
     bool? isValid,
   }) {
@@ -29,6 +32,7 @@ class UserProof extends Equatable {
       type: type,
       submittedText: submittedText ?? this.submittedText,
       submittedImageUrls: submittedImageUrls ?? this.submittedImageUrls,
+      localImagePaths: localImagePaths ?? this.localImagePaths,
       submittedAt: submittedAt ?? this.submittedAt,
       isValid: isValid ?? this.isValid,
     );
@@ -40,6 +44,7 @@ class UserProof extends Equatable {
         type,
         submittedText,
         submittedImageUrls,
+        localImagePaths,
         submittedAt,
         isValid,
       ];

@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/submit_activity_proof/presentation/state_management/cubit/submit_activity_proof_cubit.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/proof.dart';
+import 'package:top_app/shared/image_helper/pick_image.dart';
 import 'package:top_app/shared/loaders/centered_loader.dart';
 import 'package:top_app/shared/widgets/buttons/white_filled_button.dart';
 import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
 import 'package:top_app/shared/widgets/tiles/proof_tile.dart';
+import 'package:top_app/modules/submit_activity_proof/presentation/widgets/organisms/text_proof_section.dart';
+import 'package:top_app/shared/widgets/image_picker/image_picker_widget.dart';
+import 'package:top_app/shared/image_helper/image_helper.dart';
 
 /// Screen for submitting a proof for an activity.
 ///
@@ -30,21 +33,8 @@ class SubmitActivityProofScreen extends StatelessWidget {
   }
 }
 
-class SubmitActivityProofScreenBody extends StatefulWidget {
+class SubmitActivityProofScreenBody extends StatelessWidget {
   const SubmitActivityProofScreenBody({super.key});
-
-  @override
-  State<SubmitActivityProofScreenBody> createState() => _SubmitActivityProofScreenBodyState();
-}
-
-class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScreenBody> {
-  final FocusNode _focusNode = FocusNode();
-  final TextEditingController _textController = TextEditingController();
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +53,8 @@ class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScree
           return const CenteredLoader();
         }
 
-        final Proof proofTemplate = context.read<SubmitActivityProofCubit>().proofTemplate;
+        final SubmitActivityProofCubit cubit = context.read<SubmitActivityProofCubit>();
+        final Proof proofTemplate = cubit.proofTemplate;
 
         return Scaffold(
           appBar: AppBar(
@@ -82,46 +73,32 @@ class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScree
                       ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
                       Text('Your submission', style: AppTextStyles.bold16),
                       const SizedBox(height: 10),
-                      if (proofTemplate.type == ProofType.text)
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: (_focusNode.hasFocus || _textController.text.isNotEmpty)
-                                    ? AppColors.grayLight
-                                    : AppColors.grayMidDark,
-                                width: 4,
-                              ),
-                            ),
-                          ),
-                          child: TextFormField(
-                            focusNode: _focusNode,
-                            controller: _textController,
-                            onTapOutside: (PointerDownEvent value) {
-                              _focusNode.unfocus();
-                              setState(() {});
-                            },
-                            onTap: () {
-                              setState(() {});
-                            },
-                            onEditingComplete: () {
-                              context
-                                  .read<SubmitActivityProofCubit>()
-                                  .updateProofText(_textController.text);
-                            },
-                            maxLines: null,
-                            textAlignVertical: TextAlignVertical.top,
-                            style: AppTextStyles.regular14,
-                            decoration: InputDecoration(
-                              hintText: 'Enter your proof',
-                              hintStyle:
-                                  AppTextStyles.regular14.copyWith(color: AppColors.grayNeutral),
-                              contentPadding:
-                                  const EdgeInsets.only(left: 16, right: 16, top: 12, bottom: 12),
-                              border: InputBorder.none,
-                              focusedBorder: InputBorder.none,
-                            ),
-                          ),
+                      if (proofTemplate.type == ProofType.text ||
+                          proofTemplate.type == ProofType.textAndImage)
+                        const TextProofSection(),
+                      const SizedBox(height: 20),
+                      if (proofTemplate.type == ProofType.image ||
+                          proofTemplate.type == ProofType.textAndImage)
+                        ImagePickerWidget(
+                          isLoading: state is UploadingImage,
+                          imageSourceType: ImageSourceType.camera,
+                          imagePath: cubit.userProof.localImagePaths.isNotEmpty
+                              ? cubit.userProof.localImagePaths.first
+                              : null,
+                          onImagePicked: (String path) async {
+                            try {
+                              await cubit.uploadImage(path);
+                            } catch (e) {
+                              CustomSnackBar.error(context, 'Error uploading image: $e');
+                            }
+                          },
+                          onImageRemoved: () {
+                            cubit.userProof = cubit.userProof.copyWith(
+                              submittedImageUrls: <String>[],
+                              localImagePaths: <String>[],
+                            );
+                          },
+                          imageHelper: getIt<ImageHelper>(),
                         ),
                     ],
                   ),
@@ -132,11 +109,8 @@ class _SubmitActivityProofScreenBodyState extends State<SubmitActivityProofScree
                     width: MediaQuery.of(context).size.width - 32,
                     child: WhiteFilledButton(
                       text: 'Submit Proof',
-                      onPressed: () {
-                        context
-                            .read<SubmitActivityProofCubit>()
-                            .updateProofText(_textController.text);
-                        context.read<SubmitActivityProofCubit>().submitProof();
+                      onPressed: () async {
+                        await cubit.submitProof();
                       },
                       isLoading: state is SubmittingProof,
                       isDone: state is ProofSubmitted,
