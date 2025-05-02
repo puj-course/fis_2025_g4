@@ -82,7 +82,7 @@ class GoalsCubit extends Cubit<GoalsState> {
       final UserEntity? user = await userPublicApi.getUser();
       if (user != null) {
         final UserEntity updatedUser = user.copyWith(goals: goals);
-        userPublicApi.updateUser(updatedUser);
+        await userPublicApi.updateUser(updatedUser);
       }
     } catch (e) {
       emit(GoalsState.goalsError(message: e.toString()));

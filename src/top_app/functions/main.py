@@ -147,7 +147,7 @@ def get_user_sign_up_rank(req: https_fn.Request) -> https_fn.Response:
 @https_fn.on_request()
 def get_users_with_challenge(req: https_fn.Request) -> https_fn.Response:
     """
-    Cloud function to get all users that have a specific challenge in their challenges list.
+    Cloud function to get all users that have a specific challenge in their challenges map.
     
     This function expects a POST request with JSON body containing:
     {
@@ -180,10 +180,10 @@ def get_users_with_challenge(req: https_fn.Request) -> https_fn.Response:
             matching_users = []
             for user in users:
                 user_data = user.to_dict()
-                challenges = user_data.get('challenges', [])
+                challenges = user_data.get('challenges', {})
                 
-                # Check if any challenge in the list matches the target challengeId
-                if any(challenge.get('challengeId') == challenge_id for challenge in challenges):
+                # Check if the challengeId exists in the challenges map
+                if challenge_id in challenges:
                     matching_users.append({
                         'userName': user_data.get('name', ''),
                         'userProfilePictureUrl': user_data.get('profilePictureUrl', '')

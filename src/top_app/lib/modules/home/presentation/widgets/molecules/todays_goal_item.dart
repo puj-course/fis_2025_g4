@@ -90,6 +90,7 @@ class _TodaysGoalItemState extends State<TodaysGoalItem> {
                   ? TextField(
                       controller: _controller,
                       focusNode: _focusNode,
+                      textCapitalization: TextCapitalization.sentences,
                       style: AppTextStyles.regular14,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
