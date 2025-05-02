@@ -61,57 +61,68 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
             title: Text('Complete the activity', style: AppTextStyles.bold18),
           ),
           body: SafeArea(
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Text('Required Proof', style: AppTextStyles.bold16),
-                        ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
-                        Text('Your submission', style: AppTextStyles.bold16),
-                        const SizedBox(height: 10),
-                        if (proofTemplate.type == ProofType.text ||
-                            proofTemplate.type == ProofType.textAndImage)
-                          const TextProofSection(),
-                        const SizedBox(height: 20),
-                        if (proofTemplate.type == ProofType.image ||
-                            proofTemplate.type == ProofType.textAndImage)
-                          ImagePickerWidget(
-                            height: 300,
-                            imageSourceType: ImageSourceType.camera,
-                            onImagePicked: (String path) async {
-                              try {
-                                await cubit.uploadImage(path);
-                              } catch (e) {
-                                CustomSnackBar.error(context, 'Error uploading image: $e');
-                              }
-                            },
-                            onImageRemoved: () {
-                              cubit.removeImage();
-                            },
-                            imageHelper: getIt<ImageHelper>(),
-                          ),
-                      ],
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text('Required Proof', style: AppTextStyles.bold16),
+                          ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
+                          Text('Your submission', style: AppTextStyles.bold16),
+                          const SizedBox(height: 10),
+                          if (proofTemplate.type == ProofType.text ||
+                              proofTemplate.type == ProofType.textAndImage)
+                            const TextProofSection(),
+                          const SizedBox(height: 20),
+                          if (proofTemplate.type == ProofType.image ||
+                              proofTemplate.type == ProofType.textAndImage)
+                            ImagePickerWidget(
+                              height: 300,
+                              imageSourceType: ImageSourceType.camera,
+                              onImagePicked: (String path) async {
+                                try {
+                                  await cubit.updateImage(path);
+                                } catch (e) {
+                                  CustomSnackBar.error(context, 'Error updating image: $e');
+                                }
+                              },
+                              onImageRemoved: () {
+                                cubit.removeImage();
+                              },
+                              imageHelper: getIt<ImageHelper>(),
+                            ),
+                          // Add bottom padding to ensure content doesn't get hidden behind the button
+                          const SizedBox(height: 80),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width - 32,
-                    child: WhiteFilledButton(
-                      text: 'Submit Proof',
-                      onPressed: () async {
-                        await cubit.submitProof();
-                      },
-                      isLoading: state is SubmittingProof,
-                      isDone: state is ProofSubmitted,
-                    ),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 4,
+                        offset: const Offset(0, -2),
+                      ),
+                    ],
+                  ),
+                  child: WhiteFilledButton(
+                    text: 'Submit Proof',
+                    onPressed: () async {
+                      await cubit.submitProof();
+                    },
+                    isLoading: state is SubmittingProof,
+                    isDone: state is ProofSubmitted,
                   ),
                 ),
               ],

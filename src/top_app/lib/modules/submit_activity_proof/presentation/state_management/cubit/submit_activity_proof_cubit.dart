@@ -43,18 +43,12 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     emit(SubmitActivityProofState.proofDetailsLoaded());
   }
 
-  Future<void> uploadImage(String imagePath) async {
-    emit(SubmitActivityProofState.uploadingImage());
-    try {
-      final String downloadUrl = await _submitActivityProofRepository.uploadImage(imagePath);
-      userProof = userProof.copyWith(
-        submittedImageUrls: <String>[...userProof.submittedImageUrls, downloadUrl],
-        localImagePaths: <String>[...userProof.localImagePaths, imagePath],
-      );
-      emit(SubmitActivityProofState.imageUploaded());
-    } catch (e) {
-      emit(SubmitActivityProofState.error(e.toString()));
-    }
+  Future<void> updateImage(String imagePath) async {
+    emit(SubmitActivityProofState.updatingProof());
+    userProof = userProof.copyWith(
+      localImagePaths: <String>[imagePath],
+    );
+    emit(SubmitActivityProofState.proofUpdated());
   }
 
   Future<void> removeImage() async {
@@ -76,7 +70,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     }
 
     if (proofTemplate.type == ProofType.image || proofTemplate.type == ProofType.textAndImage) {
-      if (userProof.submittedImageUrls.isEmpty) {
+      if (userProof.localImagePaths.isEmpty) {
         emit(SubmitActivityProofState.error('Please upload an image'));
         return;
       }
@@ -84,6 +78,16 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
 
     emit(SubmitActivityProofState.submittingProof());
     try {
+      // Upload image if there's a local path
+      if (userProof.localImagePaths.isNotEmpty) {
+        emit(SubmitActivityProofState.uploadingImage());
+        final String downloadUrl =
+            await _submitActivityProofRepository.uploadImage(userProof.localImagePaths.first);
+        userProof = userProof.copyWith(
+          submittedImageUrls: <String>[downloadUrl],
+        );
+      }
+
       await _submitActivityProofRepository.submitActivityProof(
         activityId: activityId,
         challengeId: challengeId,

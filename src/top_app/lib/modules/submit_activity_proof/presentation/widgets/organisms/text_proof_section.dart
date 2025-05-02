@@ -51,6 +51,13 @@ class _TextProofSectionState extends State<TextProofSection> {
         maxLines: null,
         textAlignVertical: TextAlignVertical.top,
         style: AppTextStyles.regular14,
+        textInputAction: TextInputAction.newline,
+        keyboardType: TextInputType.multiline,
+        onFieldSubmitted: (value) {
+          _focusNode.unfocus();
+          context.read<SubmitActivityProofCubit>().updateProofText(_textController.text);
+        },
+        textCapitalization: TextCapitalization.sentences,
         decoration: InputDecoration(
           hintText: 'Enter your proof',
           hintStyle: AppTextStyles.regular14.copyWith(color: AppColors.grayNeutral),
