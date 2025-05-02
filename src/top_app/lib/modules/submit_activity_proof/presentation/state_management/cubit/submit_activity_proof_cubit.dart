@@ -57,12 +57,11 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     }
   }
 
-  Future<void> removeImage(String imagePath) async {
+  Future<void> removeImage() async {
     emit(SubmitActivityProofState.updatingProof());
     userProof = userProof.copyWith(
-      submittedImageUrls:
-          userProof.submittedImageUrls.where((String url) => url != imagePath).toList(),
-      localImagePaths: userProof.localImagePaths.where((String path) => path != imagePath).toList(),
+      submittedImageUrls: <String>[],
+      localImagePaths: <String>[],
     );
     emit(SubmitActivityProofState.proofUpdated());
   }

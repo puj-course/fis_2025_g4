@@ -64,43 +64,40 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text('Required Proof', style: AppTextStyles.bold16),
-                      ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
-                      Text('Your submission', style: AppTextStyles.bold16),
-                      const SizedBox(height: 10),
-                      if (proofTemplate.type == ProofType.text ||
-                          proofTemplate.type == ProofType.textAndImage)
-                        const TextProofSection(),
-                      const SizedBox(height: 20),
-                      if (proofTemplate.type == ProofType.image ||
-                          proofTemplate.type == ProofType.textAndImage)
-                        ImagePickerWidget(
-                          isLoading: state is UploadingImage,
-                          imageSourceType: ImageSourceType.camera,
-                          imagePath: cubit.userProof.localImagePaths.isNotEmpty
-                              ? cubit.userProof.localImagePaths.first
-                              : null,
-                          onImagePicked: (String path) async {
-                            try {
-                              await cubit.uploadImage(path);
-                            } catch (e) {
-                              CustomSnackBar.error(context, 'Error uploading image: $e');
-                            }
-                          },
-                          onImageRemoved: () {
-                            cubit.userProof = cubit.userProof.copyWith(
-                              submittedImageUrls: <String>[],
-                              localImagePaths: <String>[],
-                            );
-                          },
-                          imageHelper: getIt<ImageHelper>(),
-                        ),
-                    ],
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        Text('Required Proof', style: AppTextStyles.bold16),
+                        ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
+                        Text('Your submission', style: AppTextStyles.bold16),
+                        const SizedBox(height: 10),
+                        if (proofTemplate.type == ProofType.text ||
+                            proofTemplate.type == ProofType.textAndImage)
+                          const TextProofSection(),
+                        const SizedBox(height: 20),
+                        if (proofTemplate.type == ProofType.image ||
+                            proofTemplate.type == ProofType.textAndImage)
+                          ImagePickerWidget(
+                            height: 300,
+                            imageSourceType: ImageSourceType.camera,
+                            onImagePicked: (String path) async {
+                              try {
+                                await cubit.uploadImage(path);
+                              } catch (e) {
+                                CustomSnackBar.error(context, 'Error uploading image: $e');
+                              }
+                            },
+                            onImageRemoved: () {
+                              cubit.removeImage();
+                            },
+                            imageHelper: getIt<ImageHelper>(),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
                 Positioned(
