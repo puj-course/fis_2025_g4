@@ -9,11 +9,12 @@ class ActivityCard extends StatelessWidget {
     super.key,
     required this.name,
     required this.streakEdge,
+    required this.icon,
   });
 
   final String name;
   final int streakEdge;
-
+  final AppIcon icon;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +32,7 @@ class ActivityCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Image.asset(
-              AppIcon.target.assetPath,
+              icon.assetPath,
               width: 24,
               height: 24,
             ),

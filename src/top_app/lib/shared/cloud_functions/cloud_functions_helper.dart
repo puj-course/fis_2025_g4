@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http/src/response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 
@@ -18,18 +19,18 @@ class CloudFunctionsHelper {
     Map<String, dynamic>? body,
   }) async {
     try {
-      final functionUrl = '$_baseFunctionUrl/$functionName';
+      final String functionUrl = '$_baseFunctionUrl/$functionName';
 
       // Create the request headers
-      final headers = {
+      final Map<String, String> headers = <String, String>{
         'Content-Type': 'application/json',
       };
 
       // Convert body to JSON string if it exists
-      final jsonBody = body != null ? jsonEncode(body) : null;
+      final String? jsonBody = body != null ? jsonEncode(body) : null;
 
       // Make the HTTP request based on the method
-      final response = switch (method) {
+      final Response response = switch (method) {
         HttpMethod.get =>
           await _firebaseProvider.httpClient.get(Uri.parse(functionUrl), headers: headers),
         HttpMethod.post => await _firebaseProvider.httpClient

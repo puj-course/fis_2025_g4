@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/molecules/proof_tile.dart';
+import 'package:top_app/shared/widgets/tiles/proof_tile.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 
 class ProofsList extends StatelessWidget {

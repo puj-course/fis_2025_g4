@@ -7,12 +7,9 @@ class TodaysActivitiesSection extends StatelessWidget {
   const TodaysActivitiesSection({
     super.key,
     required this.activities,
-    required this.onActivityTap,
   });
 
   final List<Activity> activities;
-  final Function(Activity) onActivityTap;
-
   @override
   Widget build(BuildContext context) {
     if (activities.isEmpty) {
@@ -29,13 +26,9 @@ class TodaysActivitiesSection extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: activities.length,
       padding: EdgeInsets.zero,
-      separatorBuilder: (context, index) => const SizedBox(height: 12),
-      itemBuilder: (context, index) {
-        final activity = activities[index];
-        return TodaysActivityCard(
-          activity: activity,
-          onTap: () => onActivityTap(activity),
-        );
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 12),
+      itemBuilder: (BuildContext context, int index) {
+        return TodaysActivityCard(activity: activities[index]);
       },
     );
   }

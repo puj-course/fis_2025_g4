@@ -1,46 +1,50 @@
 import 'package:equatable/equatable.dart';
+import 'package:top_app/shared/entities/templates/proof.dart';
 
 class UserProof extends Equatable {
-  final String proofName;
-  final String type;
+  final String proofId;
+  final ProofType type;
   final String? submittedText;
-  final String? submittedPictureUrl;
+  final List<String> submittedImageUrls;
+  final List<String> localImagePaths;
   final DateTime submittedAt;
   final bool isValid;
 
   const UserProof({
-    required this.proofName,
+    required this.proofId,
     required this.type,
     this.submittedText,
-    this.submittedPictureUrl,
+    required this.submittedImageUrls,
+    required this.localImagePaths,
     required this.submittedAt,
     required this.isValid,
   });
 
   UserProof copyWith({
-    String? proofName,
-    String? type,
     String? submittedText,
-    String? submittedPictureUrl,
+    List<String>? submittedImageUrls,
+    List<String>? localImagePaths,
     DateTime? submittedAt,
     bool? isValid,
   }) {
     return UserProof(
-      proofName: proofName ?? this.proofName,
-      type: type ?? this.type,
+      proofId: proofId,
+      type: type,
       submittedText: submittedText ?? this.submittedText,
-      submittedPictureUrl: submittedPictureUrl ?? this.submittedPictureUrl,
+      submittedImageUrls: submittedImageUrls ?? this.submittedImageUrls,
+      localImagePaths: localImagePaths ?? this.localImagePaths,
       submittedAt: submittedAt ?? this.submittedAt,
       isValid: isValid ?? this.isValid,
     );
   }
 
   @override
-  List<Object?> get props => [
-        proofName,
+  List<Object?> get props => <Object?>[
+        proofId,
         type,
         submittedText,
-        submittedPictureUrl,
+        submittedImageUrls,
+        localImagePaths,
         submittedAt,
         isValid,
       ];

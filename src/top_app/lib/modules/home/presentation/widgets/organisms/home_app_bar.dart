@@ -27,20 +27,20 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: Row(
-        children: [
+        children: <Widget>[
           ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: ShimmerImage(
               imageUrl: user.profilePictureUrl,
-              width: 40,
-              height: 40,
+              width: 45,
+              height: 45,
             ),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 const GreetingText(),
                 Text(
                   user.name,

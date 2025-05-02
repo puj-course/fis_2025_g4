@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/shared/cloud_functions/cloud_functions_helper.dart';
@@ -30,8 +31,9 @@ class UserDataProvider {
   /// Gets a user document from the database
   Future<UserEntity> getUserDocument(String uid) async {
     try {
-      final doc = await firebaseProvider.firestore.collection('users').doc(uid).get();
-      return UserModel.fromJson(doc.data() ?? {}).toEntity();
+      final DocumentSnapshot<Map<String, dynamic>> doc =
+          await firebaseProvider.firestore.collection('users').doc(uid).get();
+      return UserModel.fromJson(doc.data() ?? <String, dynamic>{}).toEntity();
     } catch (e) {
       rethrow;
     }
@@ -52,10 +54,10 @@ class UserDataProvider {
   /// Gets the rank of a user based on their sign up time
   Future<int> getUserSignUpRank(int signUpSeconds) async {
     try {
-      final response = await _cloudFunctionsHelper.callFunction(
+      final Map<String, dynamic> response = await _cloudFunctionsHelper.callFunction(
         functionName: 'get_user_sign_up_rank',
         method: HttpMethod.post,
-        body: {'signUpSeconds': signUpSeconds},
+        body: <String, dynamic>{'signUpSeconds': signUpSeconds},
       );
 
       return response['rank'];

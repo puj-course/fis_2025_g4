@@ -216,6 +216,44 @@ class StartOrLevelUpRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [SubmitActivityProofScreen]
+class SubmitActivityProofRoute
+    extends PageRouteInfo<SubmitActivityProofRouteArgs> {
+  SubmitActivityProofRoute({
+    Key? key,
+    required Activity activity,
+    List<PageRouteInfo>? children,
+  }) : super(
+         SubmitActivityProofRoute.name,
+         args: SubmitActivityProofRouteArgs(key: key, activity: activity),
+         initialChildren: children,
+       );
+
+  static const String name = 'SubmitActivityProofRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SubmitActivityProofRouteArgs>();
+      return SubmitActivityProofScreen(key: args.key, activity: args.activity);
+    },
+  );
+}
+
+class SubmitActivityProofRouteArgs {
+  const SubmitActivityProofRouteArgs({this.key, required this.activity});
+
+  final Key? key;
+
+  final Activity activity;
+
+  @override
+  String toString() {
+    return 'SubmitActivityProofRouteArgs{key: $key, activity: $activity}';
+  }
+}
+
+/// generated route for
 /// [ThatOneScreen]
 class ThatOneRoute extends PageRouteInfo<void> {
   const ThatOneRoute({List<PageRouteInfo>? children})

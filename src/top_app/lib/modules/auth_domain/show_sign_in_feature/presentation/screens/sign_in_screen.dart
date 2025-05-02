@@ -41,10 +41,10 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
   Future<void> _handleSignIn() async {
     if (_formKey.currentState?.validate() ?? false) {
       // Get form values and update cubit
-      final email = _formKey.currentState?.getEmail() ?? '';
-      final password = _formKey.currentState?.getPassword() ?? '';
+      final String email = _formKey.currentState?.getEmail() ?? '';
+      final String password = _formKey.currentState?.getPassword() ?? '';
 
-      final cubit = context.read<SignInCubit>();
+      final SignInCubit cubit = context.read<SignInCubit>();
       cubit.setEmail(email);
       cubit.setPassword(password);
 
@@ -58,16 +58,16 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignInCubit, SignInState>(
-      listener: (context, state) {
+      listener: (BuildContext context, SignInState state) {
         if (state is SignInError) {
           CustomSnackBar.error(context, state.message);
         } else if (state is SignInSuccess) {
           CustomSnackBar.success(context, 'Sign in successful!');
-
-          AutoRouter.of(context).replace(const HomeRoute());
+          Navigator.of(context).pop();
+          AutoRouter.of(context).replace(const NavigationRoute());
         }
       },
-      builder: (context, state) {
+      builder: (BuildContext context, SignInState state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
@@ -87,13 +87,14 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SingleChildScrollView(
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     const SignInHeader(),
                     const SizedBox(height: 40),
                     SignInForm(
                       key: _formKey,
-                      onEmailChanged: (value) => context.read<SignInCubit>().setEmail(value),
-                      onPasswordChanged: (value) => context.read<SignInCubit>().setPassword(value),
+                      onEmailChanged: (String value) => context.read<SignInCubit>().setEmail(value),
+                      onPasswordChanged: (String value) =>
+                          context.read<SignInCubit>().setPassword(value),
                     ),
                     const SizedBox(height: 100), // Add space for the button
                   ],

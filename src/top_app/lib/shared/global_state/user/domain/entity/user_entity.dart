@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:top_app/shared/entities/templates/goal.dart';
+import 'package:top_app/shared/entities/templates/post.dart';
 import '../../../../entities/user_specific/user_badge.dart';
 import '../../../../entities/user_specific/user_challenge.dart';
 
@@ -14,7 +15,7 @@ class UserEntity extends Equatable {
   final List<Goal> goals;
   final List<UserBadge> badges;
   final List<UserChallenge> challenges;
-  final List<String> posts;
+  final List<Post> posts;
 
   UserEntity({
     required this.uid,
@@ -27,11 +28,11 @@ class UserEntity extends Equatable {
     List<Goal>? goals,
     List<UserBadge>? badges,
     List<UserChallenge>? challenges,
-    List<String>? posts,
-  })  : goals = goals ?? [],
-        badges = badges ?? [],
-        challenges = challenges ?? [],
-        posts = posts ?? [];
+    List<Post>? posts,
+  })  : goals = goals ?? <Goal>[],
+        badges = badges ?? <UserBadge>[],
+        challenges = challenges ?? <UserChallenge>[],
+        posts = posts ?? <Post>[];
 
   UserEntity copyWith({
     String? uid,
@@ -44,7 +45,7 @@ class UserEntity extends Equatable {
     List<Goal>? goals,
     List<UserBadge>? badges,
     List<UserChallenge>? challenges,
-    List<String>? posts,
+    List<Post>? posts,
   }) {
     return UserEntity(
       uid: uid ?? this.uid,
@@ -62,7 +63,7 @@ class UserEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props => <Object?>[
         uid,
         name,
         email,

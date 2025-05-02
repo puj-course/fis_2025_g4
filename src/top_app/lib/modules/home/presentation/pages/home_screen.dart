@@ -2,13 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nested/nested.dart';
 import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
-import 'package:top_app/modules/home/presentation/cubit/home_cubit.dart';
+import 'package:top_app/modules/home/presentation/state_management/goals_cubit/goals_cubit.dart';
+import 'package:top_app/modules/home/presentation/state_management/activities_cubit/activities_cubit.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/home_app_bar.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_activities_section.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_goals_section.dart';
+import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
 
 @RoutePage()
@@ -18,12 +21,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(
+      providers: <SingleChildWidget>[
+        BlocProvider<UserCubit>.value(
           value: GetIt.I<UserCubit>()..fetchUser(),
         ),
-        BlocProvider.value(
-          value: GetIt.I<HomeCubit>(),
+        BlocProvider<ActivitiesCubit>.value(
+          value: GetIt.I<ActivitiesCubit>(),
+        ),
+        BlocProvider<GoalsCubit>.value(
+          value: GetIt.I<GoalsCubit>(),
         ),
       ],
       child: const HomeScreenContent(),
@@ -37,68 +43,60 @@ class HomeScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserCubit, UserState>(
-      listener: (context, state) {
+      listener: (BuildContext context, UserState state) {
         if (state is Unauthenticated) {
           AutoRouter.of(context).replace(const WelcomeRoute());
         }
       },
       child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
-        body: BlocBuilder<HomeCubit, HomeState>(
-          builder: (context, state) {
-            if (state is Loaded) {
-              return CustomScrollView(
-                slivers: [
-                  SliverAppBar(
-                    floating: true,
-                    pinned: true,
-                    expandedHeight: 0,
-                    flexibleSpace: HomeAppBar(user: state.user),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              floating: true,
+              pinned: true,
+              expandedHeight: 0,
+              flexibleSpace: BlocBuilder<UserCubit, UserState>(
+                builder: (BuildContext context, UserState userState) {
+                  if (userState is Authenticated) {
+                    return HomeAppBar(user: userState.user);
+                  }
+                  return const SizedBox.shrink();
+                },
+              ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  //? Activities Section
+                  Text(
+                    "Today's Activities",
+                    style: AppTextStyles.bold18,
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(16),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate([
-                        Text(
-                          "Today's Activities",
-                          style: AppTextStyles.bold18,
-                        ),
-                        const SizedBox(height: 16),
-                        TodaysActivitiesSection(
-                          activities: state.activities ?? [],
-                          onActivityTap: (activity) {
-                            print('Activity tapped: ${activity.name}');
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          "Today's Goals",
-                          style: AppTextStyles.bold18,
-                        ),
-                        const SizedBox(height: 16),
-                        TodaysGoalsSection(
-                          goals: state.goals ?? [],
-                          onGoalComplete: (goal) {
-                            context.read<HomeCubit>().toggleGoal(goal.id);
-                          },
-                        ),
-                      ]),
-                    ),
+                  const SizedBox(height: 16),
+                  BlocBuilder<ActivitiesCubit, ActivitiesState>(
+                    builder: (BuildContext context, ActivitiesState activitiesState) {
+                      return TodaysActivitiesSection(
+                        activities:
+                            context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                      );
+                    },
                   ),
-                ],
-              );
-            }
+                  const SizedBox(height: 24),
 
-            if (state is Error) {
-              return Center(
-                child: Text(state.message),
-              );
-            }
-
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
+                  //? Goals Section
+                  Text("Today's Goals", style: AppTextStyles.bold18),
+                  const SizedBox(height: 16),
+                  BlocBuilder<GoalsCubit, GoalsState>(
+                    builder: (BuildContext context, GoalsState goalsState) {
+                      return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                    },
+                  ),
+                ]),
+              ),
+            ),
+          ],
         ),
       ),
     );

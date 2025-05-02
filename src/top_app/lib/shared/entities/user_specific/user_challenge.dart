@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'user_activity.dart';
+import 'user_activity_progress.dart';
 
 class UserChallenge extends Equatable {
   final String challengeId;
@@ -7,7 +7,7 @@ class UserChallenge extends Equatable {
   final int currentStreak;
   final int bestStreak;
   final double completion;
-  final List<UserActivity> activities;
+  final List<UserActivityProgress> activities;
 
   const UserChallenge({
     required this.challengeId,
@@ -24,7 +24,7 @@ class UserChallenge extends Equatable {
     int? currentStreak,
     int? bestStreak,
     double? completion,
-    List<UserActivity>? activities,
+    List<UserActivityProgress>? activities,
   }) {
     return UserChallenge(
       challengeId: challengeId ?? this.challengeId,

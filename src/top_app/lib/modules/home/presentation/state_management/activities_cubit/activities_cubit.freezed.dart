@@ -4,7 +4,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_cubit.dart';
+part of 'activities_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ part of 'home_cubit.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$HomeState {
+mixin _$ActivitiesState {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is HomeState);
+        (other.runtimeType == runtimeType && other is ActivitiesState);
   }
 
   @override
@@ -26,18 +26,19 @@ mixin _$HomeState {
 
   @override
   String toString() {
-    return 'HomeState()';
+    return 'ActivitiesState()';
   }
 }
 
 /// @nodoc
-class $HomeStateCopyWith<$Res> {
-  $HomeStateCopyWith(HomeState _, $Res Function(HomeState) __);
+class $ActivitiesStateCopyWith<$Res> {
+  $ActivitiesStateCopyWith(
+      ActivitiesState _, $Res Function(ActivitiesState) __);
 }
 
 /// @nodoc
 
-class _Initial implements HomeState {
+class _Initial implements ActivitiesState {
   const _Initial();
 
   @override
@@ -51,13 +52,13 @@ class _Initial implements HomeState {
 
   @override
   String toString() {
-    return 'HomeState.initial()';
+    return 'ActivitiesState.initial()';
   }
 }
 
 /// @nodoc
 
-class LoadingUser implements HomeState {
+class LoadingUser implements ActivitiesState {
   const LoadingUser();
 
   @override
@@ -71,13 +72,13 @@ class LoadingUser implements HomeState {
 
   @override
   String toString() {
-    return 'HomeState.loadingUser()';
+    return 'ActivitiesState.loadingUser()';
   }
 }
 
 /// @nodoc
 
-class LoadingChallenges implements HomeState {
+class LoadingChallenges implements ActivitiesState {
   const LoadingChallenges();
 
   @override
@@ -91,21 +92,19 @@ class LoadingChallenges implements HomeState {
 
   @override
   String toString() {
-    return 'HomeState.loadingChallenges()';
+    return 'ActivitiesState.loadingChallenges()';
   }
 }
 
 /// @nodoc
 
-class Loaded implements HomeState {
+class Loaded implements ActivitiesState {
   const Loaded(
       {required this.user,
       final List<Challenge>? challenges,
-      final List<Activity>? activities,
-      final List<Goal>? goals})
+      final List<Activity>? activities})
       : _challenges = challenges,
-        _activities = activities,
-        _goals = goals;
+        _activities = activities;
 
   final UserEntity user;
   final List<Challenge>? _challenges;
@@ -126,16 +125,7 @@ class Loaded implements HomeState {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<Goal>? _goals;
-  List<Goal>? get goals {
-    final value = _goals;
-    if (value == null) return null;
-    if (_goals is EqualUnmodifiableListView) return _goals;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  /// Create a copy of HomeState
+  /// Create a copy of ActivitiesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -151,8 +141,7 @@ class Loaded implements HomeState {
             const DeepCollectionEquality()
                 .equals(other._challenges, _challenges) &&
             const DeepCollectionEquality()
-                .equals(other._activities, _activities) &&
-            const DeepCollectionEquality().equals(other._goals, _goals));
+                .equals(other._activities, _activities));
   }
 
   @override
@@ -160,25 +149,24 @@ class Loaded implements HomeState {
       runtimeType,
       user,
       const DeepCollectionEquality().hash(_challenges),
-      const DeepCollectionEquality().hash(_activities),
-      const DeepCollectionEquality().hash(_goals));
+      const DeepCollectionEquality().hash(_activities));
 
   @override
   String toString() {
-    return 'HomeState.loaded(user: $user, challenges: $challenges, activities: $activities, goals: $goals)';
+    return 'ActivitiesState.loaded(user: $user, challenges: $challenges, activities: $activities)';
   }
 }
 
 /// @nodoc
-abstract mixin class $LoadedCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
+abstract mixin class $LoadedCopyWith<$Res>
+    implements $ActivitiesStateCopyWith<$Res> {
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) =
       _$LoadedCopyWithImpl;
   @useResult
   $Res call(
       {UserEntity user,
       List<Challenge>? challenges,
-      List<Activity>? activities,
-      List<Goal>? goals});
+      List<Activity>? activities});
 }
 
 /// @nodoc
@@ -188,14 +176,13 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
   final Loaded _self;
   final $Res Function(Loaded) _then;
 
-  /// Create a copy of HomeState
+  /// Create a copy of ActivitiesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({
     Object? user = null,
     Object? challenges = freezed,
     Object? activities = freezed,
-    Object? goals = freezed,
   }) {
     return _then(Loaded(
       user: null == user
@@ -210,24 +197,20 @@ class _$LoadedCopyWithImpl<$Res> implements $LoadedCopyWith<$Res> {
           ? _self._activities
           : activities // ignore: cast_nullable_to_non_nullable
               as List<Activity>?,
-      goals: freezed == goals
-          ? _self._goals
-          : goals // ignore: cast_nullable_to_non_nullable
-              as List<Goal>?,
     ));
   }
 }
 
 /// @nodoc
 
-class Error implements HomeState {
+class Error implements ActivitiesState {
   const Error({required this.message, this.isUserError = false});
 
   final String message;
   @JsonKey()
   final bool isUserError;
 
-  /// Create a copy of HomeState
+  /// Create a copy of ActivitiesState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
@@ -249,12 +232,13 @@ class Error implements HomeState {
 
   @override
   String toString() {
-    return 'HomeState.error(message: $message, isUserError: $isUserError)';
+    return 'ActivitiesState.error(message: $message, isUserError: $isUserError)';
   }
 }
 
 /// @nodoc
-abstract mixin class $ErrorCopyWith<$Res> implements $HomeStateCopyWith<$Res> {
+abstract mixin class $ErrorCopyWith<$Res>
+    implements $ActivitiesStateCopyWith<$Res> {
   factory $ErrorCopyWith(Error value, $Res Function(Error) _then) =
       _$ErrorCopyWithImpl;
   @useResult
@@ -268,7 +252,7 @@ class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
   final Error _self;
   final $Res Function(Error) _then;
 
-  /// Create a copy of HomeState
+  /// Create a copy of ActivitiesState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   $Res call({

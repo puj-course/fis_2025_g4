@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
+import 'package:top_app/shared/entities/templates/goal.dart';
 import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart';
 
 import '../../repository/user_repository.dart';
@@ -19,10 +20,21 @@ class UserCubit extends Cubit<UserState> {
   /// User with active session
   UserEntity? user;
 
+  /// Get the goals of the current user
+  List<Goal> getUserGoals() {
+    if (state is Authenticated) {
+      return (state as Authenticated).user.goals;
+    }
+    return <Goal>[];
+  }
+
   /// Initialize the user cubit
   Future<UserEntity?> fetchUser() async {
+    if (state is Authenticated && user != null) {
+      return user;
+    }
     try {
-      final uid = firebaseProvider.firebaseAuth.currentUser?.uid;
+      final String? uid = firebaseProvider.firebaseAuth.currentUser?.uid;
       if (uid == null) {
         await signOut();
         emit(UserState.unauthenticated());
@@ -46,6 +58,7 @@ class UserCubit extends Cubit<UserState> {
 
   /// Push the user changes to the database
   Future<void> updateUser(UserEntity user) async {
+    this.user = user;
     await userRepository.updateUserDocument(user);
   }
 

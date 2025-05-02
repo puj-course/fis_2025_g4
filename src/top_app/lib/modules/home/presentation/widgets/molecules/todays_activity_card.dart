@@ -1,4 +1,6 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
@@ -9,16 +11,13 @@ class TodaysActivityCard extends StatelessWidget {
   const TodaysActivityCard({
     super.key,
     required this.activity,
-    required this.onTap,
   });
 
   final Activity activity;
-  final VoidCallback onTap;
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () => AutoRouter.of(context).push(SubmitActivityProofRoute(activity: activity)),
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
