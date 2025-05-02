@@ -80,7 +80,6 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     try {
       // Upload image if there's a local path
       if (userProof.localImagePaths.isNotEmpty) {
-        emit(SubmitActivityProofState.uploadingImage());
         final String downloadUrl =
             await _submitActivityProofRepository.uploadImage(userProof.localImagePaths.first);
         userProof = userProof.copyWith(

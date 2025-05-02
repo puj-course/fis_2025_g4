@@ -20,12 +20,12 @@ class ShowChallengeDetailCubit extends Cubit<ShowChallengeDetailState> {
     try {
       emit(const ShowChallengeDetailState.loadingCompetitors());
 
-      final competitors = await _repository.getCompetitorsInfo(challengeId);
+      final List<CompetitorInfo> competitors = await _repository.getCompetitorsInfo(challengeId);
 
       emit(ShowChallengeDetailState.loadedCompetitors(competitors: competitors));
       return competitors;
     } catch (e) {
-      final errorMessage = e.toString().replaceAll('Exception: ', '');
+      final String errorMessage = e.toString().replaceAll('Exception: ', '');
       emit(ShowChallengeDetailState.errorLoadingCompetitors(errorMessage: errorMessage));
       return null;
     }
