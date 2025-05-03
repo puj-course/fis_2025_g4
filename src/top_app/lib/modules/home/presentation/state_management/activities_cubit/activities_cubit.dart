@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/modules/home/domain/usecases/activities/get_todays_activities_usecase.dart';
+import 'package:top_app/modules/home/domain/usecases/activities/is_activity_completed_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/challenges/get_user_challenges_usecase.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
@@ -18,10 +19,12 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
   ActivitiesCubit({
     required GetUserChallengesUsecase getUserChallengesUsecase,
     required GetTodaysActivitiesUsecase getTodaysActivitiesUsecase,
+    required IsActivityCompletedUsecase isActivityCompletedUsecase,
     required UserPublicApi userPublicApi,
     required UserCubit userCubit,
   })  : _getUserChallengesUsecase = getUserChallengesUsecase,
         _getTodaysActivitiesUsecase = getTodaysActivitiesUsecase,
+        _isActivityCompletedUsecase = isActivityCompletedUsecase,
         _userPublicApi = userPublicApi,
         _userCubit = userCubit,
         super(const ActivitiesState.initial()) {
@@ -37,6 +40,7 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
   // Usecases
   final GetUserChallengesUsecase _getUserChallengesUsecase;
   final GetTodaysActivitiesUsecase _getTodaysActivitiesUsecase;
+  final IsActivityCompletedUsecase _isActivityCompletedUsecase;
 
   // Repositories
   final UserPublicApi _userPublicApi;
@@ -100,5 +104,16 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
         isUserError: false,
       ));
     }
+  }
+
+  bool isActivityCompleted(String activityId) {
+    if (_user == null || _user!.challenges.isEmpty) {
+      return false;
+    }
+
+    return _isActivityCompletedUsecase.call(
+      activityId: activityId,
+      userChallenges: _user!.challenges,
+    );
   }
 }

@@ -20,5 +20,5 @@ class SubmitActivityProofState with _$SubmitActivityProofState {
 
   const factory SubmitActivityProofState.proofUpdated() = ProofUpdated;
 
-  const factory SubmitActivityProofState.error(String message) = Error;
+  const factory SubmitActivityProofState.error(String message, bool isInformational) = Error;
 }

@@ -51,34 +51,28 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             height: widget.height ?? 200,
             width: widget.width ?? double.infinity,
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.grayMidLight),
+              border: Border.all(color: AppColors.grayNeutral),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                if (widget.isLoading)
-                  const CenteredLoader()
-                else if (_localImagePath != null)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      File(_localImagePath!),
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                      height: double.infinity,
-                    ),
-                  )
-                else
-                  Icon(
-                    widget.imageSourceType == ImageSourceType.camera
-                        ? Icons.camera_alt_outlined
-                        : Icons.image_outlined,
-                    size: 48,
-                    color: AppColors.grayMidLight,
-                  ),
-              ],
-            ),
+            child: widget.isLoading
+                ? const CenteredLoader()
+                : _localImagePath != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.file(
+                          File(_localImagePath!),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                      )
+                    : Icon(
+                        widget.imageSourceType == ImageSourceType.camera
+                            ? Icons.camera_alt_outlined
+                            : Icons.image_outlined,
+                        size: 48,
+                        color: AppColors.grayMidLight,
+                      ),
           ),
         ),
         if (_localImagePath != null)

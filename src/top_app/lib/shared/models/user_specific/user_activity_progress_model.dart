@@ -6,13 +6,11 @@ import 'user_proof_model.dart';
 class UserActivityProgressModel {
   final String activityId;
   final int currentStreak;
-  final double completion;
   final Map<String, UserProofModel> dailyProofs;
 
   UserActivityProgressModel({
     required this.activityId,
     required this.currentStreak,
-    required this.completion,
     required this.dailyProofs,
   });
 
@@ -20,7 +18,6 @@ class UserActivityProgressModel {
     return UserActivityProgressModel(
       activityId: entity.activityId,
       currentStreak: entity.currentStreak,
-      completion: entity.completion,
       dailyProofs: entity.dailyProofs.map(
         (DateTime key, UserProof value) => MapEntry(
           key.toIso8601String(),
@@ -34,7 +31,6 @@ class UserActivityProgressModel {
     return UserActivityProgress(
       activityId: activityId,
       currentStreak: currentStreak,
-      completion: completion,
       dailyProofs: dailyProofs.map(
         (String key, UserProofModel value) => MapEntry(
           DateTime.parse(key),
@@ -48,7 +44,6 @@ class UserActivityProgressModel {
     return UserActivityProgressModel(
       activityId: json['activityId'],
       currentStreak: json['currentStreak'],
-      completion: json['completion'].toDouble(),
       dailyProofs: (json['dailyProofs'] as Map<String, dynamic>).map(
         (String key, dynamic value) => MapEntry(
           key,
@@ -62,7 +57,6 @@ class UserActivityProgressModel {
     return <String, dynamic>{
       'activityId': activityId,
       'currentStreak': currentStreak,
-      'completion': completion,
       'dailyProofs': dailyProofs.map(
         (String key, UserProofModel value) => MapEntry(key, value.toJson()),
       ),

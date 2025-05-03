@@ -39,12 +39,13 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SubmitActivityProofCubit, SubmitActivityProofState>(
       listener: (BuildContext context, SubmitActivityProofState state) {
-        if (state is Error) {
+        if (state is Error && !state.isInformational) {
           CustomSnackBar.error(context, 'Ocurrió un error: ${state.message}. Intenta nuevamente.');
-        }
-        if (state is ProofSubmitted) {
+        } else if (state is Error && state.isInformational) {
+          CustomSnackBar.info(context, state.message);
+        } else if (state is ProofSubmitted) {
           CustomSnackBar.success(context, 'Proof submitted successfully');
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
         }
       },
       builder: (BuildContext context, SubmitActivityProofState state) {

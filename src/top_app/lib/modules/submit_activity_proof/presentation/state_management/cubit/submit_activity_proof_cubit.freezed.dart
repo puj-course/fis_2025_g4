@@ -219,9 +219,10 @@ class ProofUpdated implements SubmitActivityProofState {
 /// @nodoc
 
 class Error implements SubmitActivityProofState {
-  const Error(this.message);
+  const Error(this.message, this.isInformational);
 
   final String message;
+  final bool isInformational;
 
   /// Create a copy of SubmitActivityProofState
   /// with the given fields replaced by the non-null parameter values.
@@ -235,15 +236,17 @@ class Error implements SubmitActivityProofState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is Error &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.isInformational, isInformational) ||
+                other.isInformational == isInformational));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, message);
+  int get hashCode => Object.hash(runtimeType, message, isInformational);
 
   @override
   String toString() {
-    return 'SubmitActivityProofState.error(message: $message)';
+    return 'SubmitActivityProofState.error(message: $message, isInformational: $isInformational)';
   }
 }
 
@@ -253,7 +256,7 @@ abstract mixin class $ErrorCopyWith<$Res>
   factory $ErrorCopyWith(Error value, $Res Function(Error) _then) =
       _$ErrorCopyWithImpl;
   @useResult
-  $Res call({String message});
+  $Res call({String message, bool isInformational});
 }
 
 /// @nodoc
@@ -268,12 +271,17 @@ class _$ErrorCopyWithImpl<$Res> implements $ErrorCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   $Res call({
     Object? message = null,
+    Object? isInformational = null,
   }) {
     return _then(Error(
       null == message
           ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
+      null == isInformational
+          ? _self.isInformational
+          : isInformational // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }

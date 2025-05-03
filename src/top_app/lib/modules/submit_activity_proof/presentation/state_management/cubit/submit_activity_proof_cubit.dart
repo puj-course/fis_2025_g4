@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -37,7 +38,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
       localImagePaths: <String>[],
       submittedText: '',
       submittedAt: DateTime.now(),
-      isValid: false,
+      isValid: true,
     );
 
     emit(SubmitActivityProofState.proofDetailsLoaded());
@@ -64,14 +65,14 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
     // Validate required fields based on proof type
     if (proofTemplate.type == ProofType.text || proofTemplate.type == ProofType.textAndImage) {
       if (userProof.submittedText?.isEmpty ?? true) {
-        emit(SubmitActivityProofState.error('Please enter your proof text'));
+        emit(SubmitActivityProofState.error('Please enter your proof text', true));
         return;
       }
     }
 
     if (proofTemplate.type == ProofType.image || proofTemplate.type == ProofType.textAndImage) {
       if (userProof.localImagePaths.isEmpty) {
-        emit(SubmitActivityProofState.error('Please upload an image'));
+        emit(SubmitActivityProofState.error('Please upload an image', true));
         return;
       }
     }
@@ -87,6 +88,18 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
         );
       }
 
+      // Time based check
+      if (proofTemplate.timeBased) {
+        final TimeOfDay now = TimeOfDay.fromDateTime(DateTime.now());
+
+        if (now.isBefore(proofTemplate.proofStartTime!) ||
+            now.isAfter(proofTemplate.proofEndTime!)) {
+          emit(SubmitActivityProofState.error('Proof submitted outside of time window', true));
+
+          userProof = userProof.copyWith(isValid: false);
+        }
+      }
+
       await _submitActivityProofRepository.submitActivityProof(
         activityId: activityId,
         challengeId: challengeId,
@@ -94,7 +107,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
       );
       emit(SubmitActivityProofState.proofSubmitted());
     } catch (e) {
-      emit(SubmitActivityProofState.error(e.toString()));
+      emit(SubmitActivityProofState.error(e.toString(), false));
     }
   }
 
