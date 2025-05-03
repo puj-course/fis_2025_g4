@@ -4,13 +4,11 @@ import 'user_proof.dart';
 class UserActivityProgress extends Equatable {
   final String activityId;
   final int currentStreak;
-  final double completion;
   final Map<DateTime, UserProof> dailyProofs;
 
   const UserActivityProgress({
     required this.activityId,
     required this.currentStreak,
-    required this.completion,
     required this.dailyProofs,
   });
 
@@ -23,11 +21,10 @@ class UserActivityProgress extends Equatable {
     return UserActivityProgress(
       activityId: activityId ?? this.activityId,
       currentStreak: currentStreak ?? this.currentStreak,
-      completion: completion ?? this.completion,
       dailyProofs: dailyProofs ?? this.dailyProofs,
     );
   }
 
   @override
-  List<Object?> get props => [activityId, currentStreak, completion, dailyProofs];
+  List<Object?> get props => [activityId, currentStreak, dailyProofs];
 }
