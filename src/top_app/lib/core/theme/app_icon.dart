@@ -6,6 +6,7 @@ enum AppIcon {
   silhouette('silhouette'),
   target('target'),
   clock('clock'),
+  sandClock('sand_clock'),
   bell('bell'),
   ;
 
@@ -16,13 +17,13 @@ enum AppIcon {
 
   static AppIcon fromCode(String code) {
     return AppIcon.values.firstWhere(
-      (icon) => icon.iconCode == code,
+      (AppIcon icon) => icon.iconCode == code,
       orElse: () => throw ArgumentError('No icon found with code: $code'),
     );
   }
 
   static AppIcon fromPath(String path) {
-    final iconCode = path.split('/').last.replaceAll('.svg', '');
+    final String iconCode = path.split('/').last.replaceAll('.svg', '');
     return fromCode(iconCode);
   }
 }
