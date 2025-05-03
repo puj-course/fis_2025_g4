@@ -8,6 +8,7 @@ import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/home/presentation/state_management/activities_cubit/activities_cubit.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/atoms/challenge_chip.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
+import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
 
 class TodaysActivityCard extends StatelessWidget {
   const TodaysActivityCard({
@@ -22,7 +23,13 @@ class TodaysActivityCard extends StatelessWidget {
     return GestureDetector(
       onTap: isCompleted
           ? null
-          : () => AutoRouter.of(context).push(SubmitActivityProofRoute(activity: activity)),
+          : () async {
+              final Object? wasCompleted =
+                  await AutoRouter.of(context).push(SubmitActivityProofRoute(activity: activity));
+              if (wasCompleted != null && wasCompleted == true) {
+                context.read<UserCubit>().getUser();
+              }
+            },
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

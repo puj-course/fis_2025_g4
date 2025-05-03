@@ -45,7 +45,7 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
           CustomSnackBar.info(context, state.message);
         } else if (state is ProofSubmitted) {
           CustomSnackBar.success(context, 'Proof submitted successfully');
-          Navigator.of(context).pop();
+          Navigator.of(context).pop(true);
         }
       },
       builder: (BuildContext context, SubmitActivityProofState state) {

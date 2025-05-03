@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:top_app/modules/home/domain/usecases/activities/get_todays_activities_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/activities/is_activity_completed_usecase.dart';
 import 'package:top_app/modules/home/domain/usecases/challenges/get_user_challenges_usecase.dart';
-import 'package:top_app/modules/submit_activity_proof/presentation/state_management/cubit/submit_activity_proof_cubit.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
@@ -23,7 +22,6 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     required IsActivityCompletedUsecase isActivityCompletedUsecase,
     required UserPublicApi userPublicApi,
     required UserCubit userCubit,
-    required SubmitActivityProofCubit submitActivityProofCubit,
   })  : _getUserChallengesUsecase = getUserChallengesUsecase,
         _getTodaysActivitiesUsecase = getTodaysActivitiesUsecase,
         _isActivityCompletedUsecase = isActivityCompletedUsecase,
@@ -34,13 +32,6 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
     _userCubit.stream.listen((UserState userState) {
       if (userState is Authenticated) {
         _user = userState.user;
-        getUserChallenges();
-      }
-    });
-
-    // Listen to SubmitActivityProofCubit state changes
-    submitActivityProofCubit.stream.listen((SubmitActivityProofState state) {
-      if (state is ProofSubmitted) {
         getUserChallenges();
       }
     });

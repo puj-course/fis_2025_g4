@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
         BlocProvider<UserCubit>.value(
-          value: GetIt.I<UserCubit>()..fetchUser(),
+          value: GetIt.I<UserCubit>()..getUser(),
         ),
         BlocProvider<ActivitiesCubit>.value(
           value: GetIt.I<ActivitiesCubit>(),
@@ -49,54 +49,52 @@ class HomeScreenContent extends StatelessWidget {
         }
       },
       child: Scaffold(
+        appBar: context.read<UserCubit>().user != null
+            ? HomeAppBar(user: context.read<UserCubit>().user!)
+            : null,
         backgroundColor: AppColors.blackPrimary,
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              floating: true,
-              pinned: true,
-              expandedHeight: 0,
-              flexibleSpace: BlocBuilder<UserCubit, UserState>(
-                builder: (BuildContext context, UserState userState) {
-                  if (userState is Authenticated) {
-                    return HomeAppBar(user: userState.user);
-                  }
-                  return const SizedBox.shrink();
-                },
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.all(16),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(<Widget>[
-                  //? Activities Section
-                  Text(
-                    "Today's Activities",
-                    style: AppTextStyles.bold18,
-                  ),
-                  const SizedBox(height: 16),
-                  BlocBuilder<ActivitiesCubit, ActivitiesState>(
-                    builder: (BuildContext context, ActivitiesState activitiesState) {
-                      return TodaysActivitiesSection(
-                        activities:
-                            context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 24),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            print('Refreshing...');
+            await context.read<UserCubit>().getUser();
+            context.read<ActivitiesCubit>().getUserChallenges();
+            context.read<GoalsCubit>().loadGoals();
+          },
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverPadding(
+                padding: const EdgeInsets.all(16),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate(<Widget>[
+                    //? Activities Section
+                    Text(
+                      "Today's Activities",
+                      style: AppTextStyles.bold18,
+                    ),
+                    const SizedBox(height: 16),
+                    BlocBuilder<ActivitiesCubit, ActivitiesState>(
+                      builder: (BuildContext context, ActivitiesState activitiesState) {
+                        return TodaysActivitiesSection(
+                          activities:
+                              context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 24),
 
-                  //? Goals Section
-                  Text("Today's Goals", style: AppTextStyles.bold18),
-                  const SizedBox(height: 16),
-                  BlocBuilder<GoalsCubit, GoalsState>(
-                    builder: (BuildContext context, GoalsState goalsState) {
-                      return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
-                    },
-                  ),
-                ]),
+                    //? Goals Section
+                    Text("Today's Goals", style: AppTextStyles.bold18),
+                    const SizedBox(height: 16),
+                    BlocBuilder<GoalsCubit, GoalsState>(
+                      builder: (BuildContext context, GoalsState goalsState) {
+                        return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                      },
+                    ),
+                  ]),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
