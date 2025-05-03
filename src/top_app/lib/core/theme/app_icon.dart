@@ -8,6 +8,7 @@ enum AppIcon {
   clock('clock'),
   sandClock('sand_clock'),
   bell('bell'),
+  bed('bed'),
   ;
 
   final String iconCode;
