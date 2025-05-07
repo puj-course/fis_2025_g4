@@ -49,9 +49,17 @@ class HomeScreenContent extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: context.read<UserCubit>().user != null
-            ? HomeAppBar(user: context.read<UserCubit>().user!)
-            : null,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocBuilder<UserCubit, UserState>(
+            builder: (BuildContext context, UserState state) {
+              if (state is Authenticated) {
+                return HomeAppBar(user: state.user);
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
         backgroundColor: AppColors.blackPrimary,
         body: RefreshIndicator(
           onRefresh: () async {
