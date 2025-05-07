@@ -1,12 +1,12 @@
 import 'package:injectable/injectable.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/data/models/competitor_info_model.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/data/models/competitor_info_model.dart';
 import 'package:top_app/shared/cloud_functions/cloud_functions_helper.dart';
 
 @injectable
-class ShowChallengeDetailDataProvider {
+class ChallengeDetailDataProvider {
   final CloudFunctionsHelper _cloudFunctionsHelper;
 
-  ShowChallengeDetailDataProvider({
+  ChallengeDetailDataProvider({
     required CloudFunctionsHelper cloudFunctionsHelper,
   }) : _cloudFunctionsHelper = cloudFunctionsHelper;
 

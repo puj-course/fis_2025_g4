@@ -1,18 +1,18 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/domain/entities/competitor_info.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/domain/repository/show_challenge_detail_repository.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/domain/entities/competitor_info.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/domain/repository/challenge_detail_repository.dart';
 
 part 'show_challenge_detail_state.dart';
 part 'show_challenge_detail_cubit.freezed.dart';
 
 @injectable
 class ShowChallengeDetailCubit extends Cubit<ShowChallengeDetailState> {
-  final ShowChallengeDetailRepository _repository;
+  final ChallengeDetailRepository _repository;
 
   ShowChallengeDetailCubit({
-    required ShowChallengeDetailRepository repository,
+    required ChallengeDetailRepository repository,
   })  : _repository = repository,
         super(const ShowChallengeDetailState.initial());
 

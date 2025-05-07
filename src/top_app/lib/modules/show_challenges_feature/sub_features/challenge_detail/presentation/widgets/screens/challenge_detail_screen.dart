@@ -4,18 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/atoms/custom_divider.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/molecules/challenge_description.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/activities_list.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/challenge_header.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/competitors_grid.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/widgets/organisms/proofs_list.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/atoms/custom_divider.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/molecules/challenge_description.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/activities_list.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/challenge_header.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/competitors_grid.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/proofs_list.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 
 @RoutePage()
-class ShowChallengeDetailScreen extends StatelessWidget {
-  const ShowChallengeDetailScreen({
+class ChallengeDetailScreen extends StatelessWidget {
+  const ChallengeDetailScreen({
     super.key,
     required this.challenge,
   });

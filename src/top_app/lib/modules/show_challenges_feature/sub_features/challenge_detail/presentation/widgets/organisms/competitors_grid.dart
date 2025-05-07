@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
 import 'package:top_app/shared/loaders/centered_loader.dart';
 import 'package:top_app/shared/loaders/shimmer_image.dart';
 

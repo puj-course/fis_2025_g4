@@ -11,6 +11,43 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [ChallengeDetailScreen]
+class ChallengeDetailRoute extends PageRouteInfo<ChallengeDetailRouteArgs> {
+  ChallengeDetailRoute({
+    Key? key,
+    required Challenge challenge,
+    List<PageRouteInfo>? children,
+  }) : super(
+         ChallengeDetailRoute.name,
+         args: ChallengeDetailRouteArgs(key: key, challenge: challenge),
+         initialChildren: children,
+       );
+
+  static const String name = 'ChallengeDetailRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ChallengeDetailRouteArgs>();
+      return ChallengeDetailScreen(key: args.key, challenge: args.challenge);
+    },
+  );
+}
+
+class ChallengeDetailRouteArgs {
+  const ChallengeDetailRouteArgs({this.key, required this.challenge});
+
+  final Key? key;
+
+  final Challenge challenge;
+
+  @override
+  String toString() {
+    return 'ChallengeDetailRouteArgs{key: $key, challenge: $challenge}';
+  }
+}
+
+/// generated route for
 /// [CountdownRecordScreen]
 class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
   CountdownRecordRoute({
@@ -108,47 +145,6 @@ class NinetyNineRoute extends PageRouteInfo<void> {
       return const NinetyNineScreen();
     },
   );
-}
-
-/// generated route for
-/// [ShowChallengeDetailScreen]
-class ShowChallengeDetailRoute
-    extends PageRouteInfo<ShowChallengeDetailRouteArgs> {
-  ShowChallengeDetailRoute({
-    Key? key,
-    required Challenge challenge,
-    List<PageRouteInfo>? children,
-  }) : super(
-         ShowChallengeDetailRoute.name,
-         args: ShowChallengeDetailRouteArgs(key: key, challenge: challenge),
-         initialChildren: children,
-       );
-
-  static const String name = 'ShowChallengeDetailRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<ShowChallengeDetailRouteArgs>();
-      return ShowChallengeDetailScreen(
-        key: args.key,
-        challenge: args.challenge,
-      );
-    },
-  );
-}
-
-class ShowChallengeDetailRouteArgs {
-  const ShowChallengeDetailRouteArgs({this.key, required this.challenge});
-
-  final Key? key;
-
-  final Challenge challenge;
-
-  @override
-  String toString() {
-    return 'ShowChallengeDetailRouteArgs{key: $key, challenge: $challenge}';
-  }
 }
 
 /// generated route for

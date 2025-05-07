@@ -1,4 +1,4 @@
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenge_detail/domain/entities/competitor_info.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/domain/entities/competitor_info.dart';
 
 class CompetitorInfoModel {
   final String userName;
