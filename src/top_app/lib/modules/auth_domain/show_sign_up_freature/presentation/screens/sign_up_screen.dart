@@ -61,7 +61,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
         isValid = _nameQuestionKey.currentState?.validate() ?? false;
         if (isValid) {
           // Save name to cubit
-          final name = _nameQuestionKey.currentState?.getName() ?? '';
+          final String name = _nameQuestionKey.currentState?.getName() ?? '';
           context.read<SignUpCubit>().setName(name);
         }
         break;
@@ -69,7 +69,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
         isValid = _emailQuestionKey.currentState?.validate() ?? false;
         if (isValid) {
           // Save email to cubit
-          final email = _emailQuestionKey.currentState?.getEmail() ?? '';
+          final String email = _emailQuestionKey.currentState?.getEmail() ?? '';
           context.read<SignUpCubit>().setEmail(email);
         }
         break;
@@ -77,8 +77,9 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
         isValid = _passwordQuestionKey.currentState?.validate() ?? false;
         if (isValid) {
           // Save password and confirmPassword to cubit
-          final password = _passwordQuestionKey.currentState?.getPassword() ?? '';
-          final confirmPassword = _passwordQuestionKey.currentState?.getConfirmPassword() ?? '';
+          final String password = _passwordQuestionKey.currentState?.getPassword() ?? '';
+          final String confirmPassword =
+              _passwordQuestionKey.currentState?.getConfirmPassword() ?? '';
           context.read<SignUpCubit>().setPassword(password);
           context.read<SignUpCubit>().setConfirmPassword(confirmPassword);
         }
@@ -114,7 +115,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpCubit, SignUpState>(
-      listener: (context, state) {
+      listener: (BuildContext context, SignUpState state) {
         if (state is SignUpError) {
           CustomSnackBar.error(context, state.message);
         }
@@ -126,13 +127,13 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           ));
         }
       },
-      builder: (context, state) {
+      builder: (BuildContext context, SignUpState state) {
         return Scaffold(
           body: SafeArea(
             child:
                 // Main content
                 Column(
-              children: [
+              children: <Widget>[
                 const HeaderWithCounter(),
                 const SizedBox(height: 30),
                 Expanded(
@@ -141,12 +142,12 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
                     child: PageView(
                       controller: _pageController,
                       physics: const NeverScrollableScrollPhysics(),
-                      onPageChanged: (page) {
+                      onPageChanged: (int page) {
                         setState(() {
                           _currentPage = page;
                         });
                       },
-                      children: [
+                      children: <Widget>[
                         NameQuestion(key: _nameQuestionKey),
                         EmailQuestion(key: _emailQuestionKey),
                         PasswordQuestion(key: _passwordQuestionKey),
@@ -160,6 +161,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           bottomNavigationBar: SafeArea(
             child: SignupBottomNavigation(
               isLoading: state is SignUpLoading,
+              isDone: state is SignUpSuccess,
               pageController: _pageController,
               currentPage: _currentPage,
               totalPages: _totalPages,
