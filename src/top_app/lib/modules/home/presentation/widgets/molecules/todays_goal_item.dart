@@ -37,6 +37,15 @@ class _TodaysGoalItemState extends State<TodaysGoalItem> {
   }
 
   @override
+  void didUpdateWidget(TodaysGoalItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.goal.id != widget.goal.id) {
+      _controller.text = widget.goal.name;
+      _isEditing = false;
+    }
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     _focusNode.dispose();

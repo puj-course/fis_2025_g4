@@ -20,15 +20,15 @@ class ActivityCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.blackSecondary,
+        color: AppColors.blackTertiary,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
-        children: [
+        children: <Widget>[
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.blackTertiary,
+              color: AppColors.grayDark,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Image.asset(
@@ -41,7 +41,7 @@ class ActivityCard extends StatelessWidget {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: <Widget>[
                 Text(
                   name,
                   style: AppTextStyles.bold14,
