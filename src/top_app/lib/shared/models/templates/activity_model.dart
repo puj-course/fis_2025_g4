@@ -10,7 +10,7 @@ class ActivityModel {
   final int streakEdge;
   final AppIcon icon;
   final List<int> daysOfWeek;
-  final List<ProofModel> proof;
+  final Map<String, ProofModel> proof;
   final String challengeId;
 
   ActivityModel({
@@ -30,7 +30,9 @@ class ActivityModel {
       streakEdge: entity.streakEdge,
       icon: entity.icon,
       daysOfWeek: entity.daysOfWeek,
-      proof: entity.proof.map((Proof p) => ProofModel.fromEntity(p)).toList(),
+      proof: Map.fromEntries(
+        entity.proof.map((Proof p) => MapEntry<String, ProofModel>(p.id, ProofModel.fromEntity(p))),
+      ),
       challengeId: entity.challengeId,
     );
   }
@@ -42,19 +44,23 @@ class ActivityModel {
       streakEdge: streakEdge,
       icon: icon,
       daysOfWeek: daysOfWeek,
-      proof: proof.map((ProofModel p) => p.toEntity()).toList(),
+      proof: proof.values.map((ProofModel p) => p.toEntity()).toList(),
       challengeId: challengeId,
     );
   }
 
   factory ActivityModel.fromJson(Map<String, dynamic> json, String challengeId) {
+    final Map<String, dynamic> proofMap = json['proof'] as Map<String, dynamic>;
     return ActivityModel(
       id: json['id'],
       name: json['name'],
       streakEdge: json['streakEdge'] as int,
       icon: AppIcon.fromCode(json['iconCode']),
-      daysOfWeek: List<int>.from(json['daysOfWeek'].map((e) => e as int)),
-      proof: (json['proof'] as List).map((p) => ProofModel.fromJson(p)).toList(),
+      daysOfWeek: List<int>.from(json['daysOfWeek'].map((dynamic e) => e as int)),
+      proof: Map<String, ProofModel>.fromEntries(
+        proofMap.entries.map((MapEntry<String, dynamic> e) =>
+            MapEntry<String, ProofModel>(e.key, ProofModel.fromJson(e.value))),
+      ),
       challengeId: challengeId,
     );
   }
@@ -66,7 +72,10 @@ class ActivityModel {
       'streakEdge': streakEdge,
       'iconCode': icon.iconCode,
       'daysOfWeek': daysOfWeek,
-      'proof': proof.map((ProofModel p) => p.toJson()).toList(),
+      'proof': Map<String, dynamic>.fromEntries(
+        proof.entries.map(
+            (MapEntry<String, ProofModel> e) => MapEntry<String, dynamic>(e.key, e.value.toJson())),
+      ),
     };
   }
 }

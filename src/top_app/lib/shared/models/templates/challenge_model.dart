@@ -1,4 +1,5 @@
 import 'package:top_app/core/theme/app_icon.dart';
+import 'package:top_app/shared/entities/templates/activity.dart';
 
 import '../../entities/templates/challenge.dart';
 import 'activity_model.dart';
@@ -13,7 +14,7 @@ class ChallengeModel {
   final int edgeReward;
   final String authorName;
   final String authorId;
-  final List<ActivityModel> activities;
+  final Map<String, ActivityModel> activities;
 
   ChallengeModel({
     required this.id,
@@ -39,7 +40,9 @@ class ChallengeModel {
       edgeReward: entity.edgeReward,
       authorName: entity.authorName,
       authorId: entity.authorId,
-      activities: entity.activities.map((a) => ActivityModel.fromEntity(a)).toList(),
+      activities: Map.fromEntries(
+        entity.activities.map((Activity a) => MapEntry(a.id, ActivityModel.fromEntity(a))),
+      ),
     );
   }
 
@@ -54,11 +57,12 @@ class ChallengeModel {
       edgeReward: edgeReward,
       authorName: authorName,
       authorId: authorId,
-      activities: activities.map((a) => a.toEntity()).toList(),
+      activities: activities.values.map((ActivityModel a) => a.toEntity()).toList(),
     );
   }
 
   factory ChallengeModel.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> activitiesMap = json['activities'] as Map<String, dynamic>;
     return ChallengeModel(
       id: json['id'],
       name: json['name'],
@@ -69,13 +73,17 @@ class ChallengeModel {
       edgeReward: json['edgeReward'] ?? 0,
       authorName: json['authorName'],
       authorId: json['authorId'],
-      activities:
-          (json['activities'] as List).map((a) => ActivityModel.fromJson(a, json['id'])).toList(),
+      activities: Map<String, ActivityModel>.fromEntries(
+        activitiesMap.entries.map(
+          (MapEntry<String, dynamic> e) =>
+              MapEntry<String, ActivityModel>(e.key, ActivityModel.fromJson(e.value, json['id'])),
+        ),
+      ),
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'id': id,
       'name': name,
       'description': description,
@@ -85,7 +93,10 @@ class ChallengeModel {
       'edgeReward': edgeReward,
       'authorName': authorName,
       'authorId': authorId,
-      'activities': activities.map((a) => a.toJson()).toList(),
+      'activities': Map.fromEntries(
+        activities.entries
+            .map((MapEntry<String, ActivityModel> e) => MapEntry(e.key, e.value.toJson())),
+      ),
     };
   }
 }

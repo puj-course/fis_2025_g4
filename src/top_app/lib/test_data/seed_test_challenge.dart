@@ -14,15 +14,15 @@ Future<void> seedTestChallenge() async {
     'edgeReward': 1000,
     'duration': 90,
     'name': '3 A.M. BEAST',
-    'activities': <Map<String, Object>>[
-      <String, Object>{
+    'activities': <String, Map<String, Object>>{
+      'wake-up-3am': <String, Object>{
         'name': 'Wake up at 3:30a.m.',
         'daysOfWeek': <int>[1, 2, 3, 4, 5, 6, 7],
         'iconCode': 'bed',
         'id': 'wake-up-3am',
         'streakEdge': 10,
-        'proof': <Map<String, Object>>[
-          <String, Object>{
+        'proof': <String, Map<String, Object>>{
+          '3am-pic-time-based': <String, Object>{
             'iconCode': 'camera',
             'id': '3am-pic-time-based',
             'name': 'Take a picture before 3:40a.m.',
@@ -31,9 +31,9 @@ Future<void> seedTestChallenge() async {
             'proofStartTime': '03:30',
             'proofEndTime': '03:40',
           },
-        ],
+        },
       },
-    ],
+    },
   };
 
   try {

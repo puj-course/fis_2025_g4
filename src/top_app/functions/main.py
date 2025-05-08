@@ -308,15 +308,12 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
         if not challenge_doc.exists:
             return https_fn.Response(json.dumps({'error': 'Challenge not found'}), status=404, content_type='application/json')
         challenge_data = challenge_doc.to_dict()
-        activities_array = challenge_data.get('activities', [])
+        activities_map = challenge_data.get('activities', {})
 
         # Build activities map for the user
-        activities_map = {}
-        for activity in activities_array:
-            activity_id = activity.get('id')
-            if not activity_id:
-                continue
-            activities_map[activity_id] = {
+        user_activities_map = {}
+        for activity_id, activity in activities_map.items():
+            user_activities_map[activity_id] = {
                 'currentStreak': 0,
                 'bestStreak': 0,
                 'completion': 0,
@@ -334,7 +331,7 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
             'currentStreak': 0,
             'bestStreak': 0,
             'completion': 0,
-            'activities': activities_map
+            'activities': user_activities_map
         }
 
         # Add the challenge to the user's challenges map
