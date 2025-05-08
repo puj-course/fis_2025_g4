@@ -21,7 +21,7 @@ class CustomSnackBar {
     _show(
       context,
       message,
-      Colors.green,
+      const Color.fromARGB(255, 46, 171, 51),
       Colors.white,
       Icons.check_circle_outline,
     );

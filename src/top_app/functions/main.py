@@ -320,7 +320,8 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
                 'currentStreak': 0,
                 'bestStreak': 0,
                 'completion': 0,
-                'dailyProofs': {}
+                'dailyProofs': {},
+                'activityId': activity_id
             }
 
         # Get current UTC time in ISO format

@@ -48,6 +48,9 @@ class ShowChallengeDetailBody extends StatelessWidget {
         if (state is ErrorJoiningChallenge) {
           CustomSnackBar.error(context, state.errorMessage);
         }
+        if (state is JoinedChallenge) {
+          CustomSnackBar.success(context, 'You have joined the challenge: ${challenge.name}');
+        }
       },
       child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
