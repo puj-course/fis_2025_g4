@@ -13,7 +13,7 @@ class NinetyNineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: OnboardingPage(
@@ -23,7 +23,7 @@ class NinetyNineScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               TypeWriter.text(
                 'Because you don\'t want to be part of the 99% of people',
                 style: AppTextStyles.regular16,
