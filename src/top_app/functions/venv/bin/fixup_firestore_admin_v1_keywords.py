@@ -1,4 +1,4 @@
-#!/Users/alejoparrado/Documents/fis_2025_g4/src/top_app/functions/venv/bin/python3.11
+#!/Users/alejoparrado/Documents/fis_2025_g4/src/top_app/functions/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 # Copyright 2024 Google LLC
 #

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/state_management/cubit/show_challenge_detail_cubit.dart';
+import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/state_management/cubit/challenge_detail_cubit.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/atoms/custom_divider.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/molecules/challenge_description.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/activities_list.dart';
@@ -50,7 +50,7 @@ class ShowChallengeDetailBody extends StatelessWidget {
           challenge.name,
           style: AppTextStyles.bold18.copyWith(color: AppColors.whitePrimary),
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.share),
@@ -62,7 +62,7 @@ class ShowChallengeDetailBody extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               ChallengeHeader(challenge: challenge),
               const CustomDivider(),
               ChallengeDescription(description: challenge.description),

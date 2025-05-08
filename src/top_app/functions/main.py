@@ -11,6 +11,8 @@ import google.cloud.firestore
 import logging
 import traceback
 import json
+from datetime import datetime
+from dateutil import tz
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -264,3 +266,85 @@ def submit_activity_proof(req: https_fn.Request) -> https_fn.Response:
         error_response = json.dumps({'error': error_msg})
         return https_fn.Response(error_response, status=500, 
                                  content_type='application/json')
+
+@https_fn.on_request()
+def join_challenge(req: https_fn.Request) -> https_fn.Response:
+    """
+    Cloud function to join a challenge for a user.
+    Expects a POST request with JSON body containing:
+    {
+        "userId": "user123",
+        "challengeId": "challenge123"
+    }
+    Adds the challenge to the user's 'challenges' map with the correct structure.
+    """
+    try:
+        request_json = req.get_json(silent=True)
+        if not request_json or 'userId' not in request_json or 'challengeId' not in request_json:
+            error_response = json.dumps({'error': 'userId and challengeId are required'})
+            return https_fn.Response(error_response, status=400, content_type='application/json')
+
+        user_id = request_json['userId']
+        challenge_id = request_json['challengeId']
+        logger.info(f"User {user_id} joining challenge {challenge_id}")
+
+        firestore_client: google.cloud.firestore.Client = firestore.client()
+
+        # Get user document
+        user_ref = firestore_client.collection('users').document(user_id)
+        user_doc = user_ref.get()
+        if not user_doc.exists:
+            return https_fn.Response(json.dumps({'error': 'User not found'}), status=404, content_type='application/json')
+        user_data = user_doc.to_dict()
+        challenges = user_data.get('challenges', {})
+
+        # Check if user already joined the challenge
+        if challenge_id in challenges:
+            return https_fn.Response(json.dumps({'error': 'User already joined this challenge'}), status=400, content_type='application/json')
+
+        # Get challenge document from 'challenges' collection
+        challenge_ref = firestore_client.collection('challenges').document(challenge_id)
+        challenge_doc = challenge_ref.get()
+        if not challenge_doc.exists:
+            return https_fn.Response(json.dumps({'error': 'Challenge not found'}), status=404, content_type='application/json')
+        challenge_data = challenge_doc.to_dict()
+        activities_array = challenge_data.get('activities', [])
+
+        # Build activities map for the user
+        activities_map = {}
+        for activity in activities_array:
+            activity_id = activity.get('id')
+            if not activity_id:
+                continue
+            activities_map[activity_id] = {
+                'currentStreak': 0,
+                'bestStreak': 0,
+                'completion': 0,
+                'dailyProofs': {}
+            }
+
+        # Get current UTC time in ISO format
+        now_utc = datetime.now(tz=tz.UTC).isoformat()
+
+        # Build the challenge entry for the user
+        user_challenge_entry = {
+            'challengeId': challenge_id,
+            'dateStarted': now_utc,
+            'currentStreak': 0,
+            'bestStreak': 0,
+            'completion': 0,
+            'activities': activities_map
+        }
+
+        # Add the challenge to the user's challenges map
+        challenges[challenge_id] = user_challenge_entry
+        user_ref.update({'challenges': challenges})
+
+        return https_fn.Response(json.dumps({'status': 'success', 'message': 'Challenge joined successfully'}), status=200, content_type='application/json')
+
+    except Exception as e:
+        error_msg = f"Error joining challenge: {str(e)}"
+        logger.error(error_msg)
+        logger.error(traceback.format_exc())
+        error_response = json.dumps({'error': error_msg})
+        return https_fn.Response(error_response, status=500, content_type='application/json')

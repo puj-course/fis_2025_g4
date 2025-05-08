@@ -2,4 +2,6 @@ import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_d
 
 abstract class ChallengeDetailRepository {
   Future<List<CompetitorInfo>> getCompetitorsInfo(String challengeId);
+
+  Future<void> joinChallenge(String challengeId);
 }

@@ -19,7 +19,7 @@ class ChallengeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         SizedBox(
           width: double.infinity,
           height: 220,
@@ -36,7 +36,7 @@ class ChallengeHeader extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Row(
-          children: [
+          children: <Widget>[
             ChallengeChip(
               icon: Image.asset(
                 AppIcon.clock.assetPath,

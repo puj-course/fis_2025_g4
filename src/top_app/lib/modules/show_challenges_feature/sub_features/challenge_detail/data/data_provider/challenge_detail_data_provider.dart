@@ -12,10 +12,10 @@ class ChallengeDetailDataProvider {
 
   Future<List<CompetitorInfoModel>> getCompetitorInfo(String challengeId) async {
     try {
-      final response = await _cloudFunctionsHelper.callFunction(
+      final Map<String, dynamic> response = await _cloudFunctionsHelper.callFunction(
         functionName: 'get_users_with_challenge',
         method: HttpMethod.post,
-        body: {'challengeId': challengeId},
+        body: <String, dynamic>{'challengeId': challengeId},
       );
 
       // Extract the users list from the response
@@ -25,6 +25,18 @@ class ChallengeDetailDataProvider {
       return usersList.map((userMap) => CompetitorInfoModel.fromJson(userMap)).toList();
     } catch (e) {
       throw Exception('Failed to get competitor info: $e');
+    }
+  }
+
+  Future<void> joinChallenge(String userId, String challengeId) async {
+    try {
+      await _cloudFunctionsHelper.callFunction(
+        functionName: 'join_challenge',
+        method: HttpMethod.post,
+        body: <String, dynamic>{'userId': userId, 'challengeId': challengeId},
+      );
+    } catch (e) {
+      throw Exception('Failed to join challenge: $e');
     }
   }
 }
