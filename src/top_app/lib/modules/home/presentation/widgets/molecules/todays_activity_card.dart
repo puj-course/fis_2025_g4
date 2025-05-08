@@ -31,9 +31,9 @@ class TodaysActivityCard extends StatelessWidget {
               }
             },
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: AppColors.blackSecondary,
+          color: AppColors.blackTertiary,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -41,7 +41,7 @@ class TodaysActivityCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.blackTertiary,
+                color: AppColors.grayDark,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Image.asset(
@@ -76,13 +76,13 @@ class TodaysActivityCard extends StatelessWidget {
                 return isCompleted
                     ? Image.asset(
                         AppIcon.checkCompleted.assetPath,
-                        width: 20,
-                        height: 20,
+                        width: 15,
+                        height: 15,
                       )
                     : Icon(
                         Icons.arrow_forward_ios,
                         color: AppColors.whitePrimary,
-                        size: 20,
+                        size: 15,
                       );
               },
             ),

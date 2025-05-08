@@ -20,7 +20,7 @@ class ChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AutoRouter.of(context).push(ShowChallengeDetailRoute(challenge: challenge));
+        AutoRouter.of(context).push(ChallengeDetailRoute(challenge: challenge));
       },
       child: Container(
         padding: const EdgeInsets.all(16),

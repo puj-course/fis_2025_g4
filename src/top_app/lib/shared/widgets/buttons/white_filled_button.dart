@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
+import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
 
 class WhiteFilledButton extends StatefulWidget {
   const WhiteFilledButton({
@@ -15,6 +16,7 @@ class WhiteFilledButton extends StatefulWidget {
     this.borderRadius = 10,
     this.doneIcon,
     this.isDone = false,
+    this.doneInfoMessage,
   });
 
   final String text;
@@ -26,7 +28,7 @@ class WhiteFilledButton extends StatefulWidget {
   final double borderRadius;
   final Widget? doneIcon;
   final bool isDone;
-
+  final String? doneInfoMessage;
   @override
   State<WhiteFilledButton> createState() => _WhiteFilledButtonState();
 }
@@ -74,7 +76,12 @@ class _WhiteFilledButtonState extends State<WhiteFilledButton> with SingleTicker
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: ElevatedButton(
-          onPressed: widget.onPressed,
+          onPressed: widget.isLoading || widget.isDone
+              ? () {
+                  CustomSnackBar.info(
+                      context, widget.doneInfoMessage ?? 'This action is already done');
+                }
+              : widget.onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.whitePrimary,
             foregroundColor: AppColors.blackPrimary,

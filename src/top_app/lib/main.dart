@@ -5,6 +5,8 @@ import 'package:top_app/core/di/injector.dart';
 import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_theme.dart';
 import 'package:top_app/firebase_options.dart';
+import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
+import 'package:top_app/test_data/seed_test_challenge.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -33,6 +35,9 @@ void main() async {
   // Set up BlocObserver
   Bloc.observer = AppBlocObserver();
 
+  //TODO: Remove this on production
+  await seedTestChallenge();
+
   runApp(MyApp(appRouter: appRouter));
 }
 
@@ -43,11 +48,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'T.O.P',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTheme,
-      routerConfig: appRouter.config(),
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => getIt<UserCubit>()..getUser(),
+      child: MaterialApp.router(
+        title: 'T.O.P',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.darkTheme,
+        routerConfig: appRouter.config(),
+      ),
     );
   }
 }

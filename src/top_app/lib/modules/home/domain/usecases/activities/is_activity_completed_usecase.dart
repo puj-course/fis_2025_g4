@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:injectable/injectable.dart';
-import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
+
 import 'package:top_app/shared/entities/user_specific/user_activity_progress.dart';
+import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
 
 @injectable
 class IsActivityCompletedUsecase {
@@ -18,8 +20,8 @@ class IsActivityCompletedUsecase {
     // Check each challenge for the activity
     for (final UserChallenge challenge in userChallenges) {
       // Find the activity progress for this activity
-      final UserActivityProgress? activityProgress =
-          challenge.activities.firstWhere((UserActivityProgress a) => a.activityId == activityId);
+      final UserActivityProgress? activityProgress = challenge.activities
+          .firstWhereOrNull((UserActivityProgress a) => a.activityId == activityId);
 
       if (activityProgress != null) {
         // Check if there's a proof for today

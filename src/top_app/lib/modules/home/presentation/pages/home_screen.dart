@@ -20,11 +20,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<UserCubit>().getUser();
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<UserCubit>.value(
-          value: GetIt.I<UserCubit>()..getUser(),
-        ),
         BlocProvider<ActivitiesCubit>.value(
           value: GetIt.I<ActivitiesCubit>(),
         ),
@@ -49,9 +47,17 @@ class HomeScreenContent extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: context.read<UserCubit>().user != null
-            ? HomeAppBar(user: context.read<UserCubit>().user!)
-            : null,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocBuilder<UserCubit, UserState>(
+            builder: (BuildContext context, UserState state) {
+              if (state is Authenticated) {
+                return HomeAppBar(user: state.user);
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
         backgroundColor: AppColors.blackPrimary,
         body: RefreshIndicator(
           onRefresh: () async {
@@ -68,7 +74,7 @@ class HomeScreenContent extends StatelessWidget {
                   delegate: SliverChildListDelegate(<Widget>[
                     //? Activities Section
                     Text(
-                      "Today's Activities",
+                      'Activities',
                       style: AppTextStyles.bold18,
                     ),
                     const SizedBox(height: 16),
@@ -83,7 +89,7 @@ class HomeScreenContent extends StatelessWidget {
                     const SizedBox(height: 24),
 
                     //? Goals Section
-                    Text("Today's Goals", style: AppTextStyles.bold18),
+                    Text('Goals', style: AppTextStyles.bold18),
                     const SizedBox(height: 16),
                     BlocBuilder<GoalsCubit, GoalsState>(
                       builder: (BuildContext context, GoalsState goalsState) {
