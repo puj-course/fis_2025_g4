@@ -17,7 +17,7 @@ class ChallengesCubit extends Cubit<ChallengesState> {
 
   Future<void> getChallenges() async {
     try {
-      final challenges = await _repository.getChallenges();
+      final List<Challenge> challenges = await _repository.getChallenges();
       emit(ChallengesState.loadedChallenges(challenges));
     } catch (e) {
       emit(ChallengesState.errorLoadingChallenges(e.toString()));

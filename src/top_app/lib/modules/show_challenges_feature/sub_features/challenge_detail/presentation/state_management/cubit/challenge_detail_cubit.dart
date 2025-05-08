@@ -8,10 +8,10 @@ part 'challenge_detail_state.dart';
 part 'challenge_detail_cubit.freezed.dart';
 
 @injectable
-class ShowChallengeDetailCubit extends Cubit<ChallengeDetailState> {
+class ChallengeDetailCubit extends Cubit<ChallengeDetailState> {
   final ChallengeDetailRepository _repository;
 
-  ShowChallengeDetailCubit({
+  ChallengeDetailCubit({
     required ChallengeDetailRepository repository,
   })  : _repository = repository,
         super(const ChallengeDetailState.initial());
@@ -34,6 +34,8 @@ class ShowChallengeDetailCubit extends Cubit<ChallengeDetailState> {
   Future<void> joinChallenge(String challengeId) async {
     try {
       emit(const ChallengeDetailState.joiningChallenge());
+      await _repository.joinChallenge(challengeId);
+      emit(const ChallengeDetailState.joinedChallenge());
     } catch (e) {
       emit(ChallengeDetailState.errorJoiningChallenge(errorMessage: e.toString()));
     }

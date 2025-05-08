@@ -236,6 +236,26 @@ class JoiningChallenge implements ChallengeDetailState {
 
 /// @nodoc
 
+class JoinedChallenge implements ChallengeDetailState {
+  const JoinedChallenge();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is JoinedChallenge);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  String toString() {
+    return 'ChallengeDetailState.joinedChallenge()';
+  }
+}
+
+/// @nodoc
+
 class ErrorJoiningChallenge implements ChallengeDetailState {
   const ErrorJoiningChallenge({required this.errorMessage});
 

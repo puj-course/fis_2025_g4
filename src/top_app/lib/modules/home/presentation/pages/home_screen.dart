@@ -20,11 +20,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<UserCubit>().getUser();
     return MultiBlocProvider(
       providers: <SingleChildWidget>[
-        BlocProvider<UserCubit>.value(
-          value: GetIt.I<UserCubit>()..getUser(),
-        ),
         BlocProvider<ActivitiesCubit>.value(
           value: GetIt.I<ActivitiesCubit>(),
         ),

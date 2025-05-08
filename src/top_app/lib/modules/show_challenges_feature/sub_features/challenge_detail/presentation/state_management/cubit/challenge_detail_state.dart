@@ -14,6 +14,8 @@ class ChallengeDetailState with _$ChallengeDetailState {
 
   const factory ChallengeDetailState.joiningChallenge() = JoiningChallenge;
 
+  const factory ChallengeDetailState.joinedChallenge() = JoinedChallenge;
+
   const factory ChallengeDetailState.errorJoiningChallenge({
     required String errorMessage,
   }) = ErrorJoiningChallenge;

@@ -11,7 +11,7 @@ class CompetitorsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShowChallengeDetailCubit, ChallengeDetailState>(
+    return BlocBuilder<ChallengeDetailCubit, ChallengeDetailState>(
       builder: (context, state) {
         if (state is LoadingCompetitors) {
           return const CenteredLoader();

@@ -12,6 +12,7 @@ import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_d
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/competitors_grid.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/organisms/proofs_list.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
+import 'package:top_app/shared/widgets/snackbars/custom_snackbar.dart';
 
 @RoutePage()
 class ChallengeDetailScreen extends StatelessWidget {
@@ -24,8 +25,9 @@ class ChallengeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: getIt<ShowChallengeDetailCubit>()..getChallengeCompetitors(challenge.id),
+    return BlocProvider<ChallengeDetailCubit>(
+      create: (BuildContext context) =>
+          getIt<ChallengeDetailCubit>()..getChallengeCompetitors(challenge.id),
       child: ShowChallengeDetailBody(challenge: challenge),
     );
   }
@@ -41,38 +43,45 @@ class ShowChallengeDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.blackPrimary,
-      appBar: AppBar(
+    return BlocListener<ChallengeDetailCubit, ChallengeDetailState>(
+      listener: (BuildContext context, ChallengeDetailState state) {
+        if (state is ErrorJoiningChallenge) {
+          CustomSnackBar.error(context, state.errorMessage);
+        }
+      },
+      child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
-        foregroundColor: AppColors.whitePrimary,
-        title: Text(
-          challenge.name,
-          style: AppTextStyles.bold18.copyWith(color: AppColors.whitePrimary),
-        ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.share),
+        appBar: AppBar(
+          backgroundColor: AppColors.blackPrimary,
+          foregroundColor: AppColors.whitePrimary,
+          title: Text(
+            challenge.name,
+            style: AppTextStyles.bold18.copyWith(color: AppColors.whitePrimary),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              ChallengeHeader(challenge: challenge),
-              const CustomDivider(),
-              ChallengeDescription(description: challenge.description),
-              const CustomDivider(),
-              ActivitiesList(challenge: challenge),
-              const CustomDivider(),
-              ProofsList(challenge: challenge),
-              const CustomDivider(),
-              const CompetitorsGrid(),
-            ],
+          actions: <Widget>[
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.share),
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                ChallengeHeader(challenge: challenge),
+                const CustomDivider(),
+                ChallengeDescription(description: challenge.description),
+                const CustomDivider(),
+                ActivitiesList(challenge: challenge),
+                const CustomDivider(),
+                ProofsList(challenge: challenge),
+                const CustomDivider(),
+                const CompetitorsGrid(),
+              ],
+            ),
           ),
         ),
       ),

@@ -65,8 +65,8 @@ class ChallengeModel {
       description: json['description'],
       thumbnailUrl: json['thumbnailUrl'],
       icon: AppIcon.fromCode(json['iconCode']),
-      duration: json['duration'] != null ? int.parse(json['duration']) : 0,
-      edgeReward: json['edgeReward'] != null ? int.parse(json['edgeReward']) : 0,
+      duration: json['duration'] ?? 0,
+      edgeReward: json['edgeReward'] ?? 0,
       authorName: json['authorName'],
       authorId: json['authorId'],
       activities:
