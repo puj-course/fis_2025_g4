@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/modules/submit_activity_proof/domain/repository/submit_activity_proof_repository.dart';
+import 'package:top_app/modules/submit_activity_proof/domain/use_cases/validate_proof_fields_use_case.dart';
+import 'package:top_app/modules/submit_activity_proof/domain/use_cases/validate_proof_time_window_use_case.dart';
 import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/entities/templates/proof.dart';
 import 'package:top_app/shared/entities/user_specific/user_proof.dart';
@@ -14,8 +16,14 @@ part 'submit_activity_proof_cubit.freezed.dart';
 class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
   final SubmitActivityProofRepository _submitActivityProofRepository;
 
+  // Use cases
+  ValidateProofFieldsUseCase _validateProofFieldsUseCase;
+  ValidateProofTimeWindowUseCase _validateProofTimeWindowUseCase;
+
   SubmitActivityProofCubit({required SubmitActivityProofRepository submitActivityProofRepository})
       : _submitActivityProofRepository = submitActivityProofRepository,
+        _validateProofFieldsUseCase = ValidateProofFieldsUseCase(),
+        _validateProofTimeWindowUseCase = ValidateProofTimeWindowUseCase(),
         super(SubmitActivityProofState.initial());
 
   late UserProof userProof;
@@ -63,18 +71,11 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
 
   Future<void> submitProof() async {
     // Validate required fields based on proof type
-    if (proofTemplate.type == ProofType.text || proofTemplate.type == ProofType.textAndImage) {
-      if (userProof.submittedText?.isEmpty ?? true) {
-        emit(SubmitActivityProofState.error('Please enter your proof text', true));
-        return;
-      }
-    }
+    final String? error = _validateProofFieldsUseCase(proof: userProof, template: proofTemplate);
 
-    if (proofTemplate.type == ProofType.image || proofTemplate.type == ProofType.textAndImage) {
-      if (userProof.localImagePaths.isEmpty) {
-        emit(SubmitActivityProofState.error('Please upload an image', true));
-        return;
-      }
+    if (error != null) {
+      emit(SubmitActivityProofState.error(error, true));
+      return;
     }
 
     emit(SubmitActivityProofState.submittingProof());
@@ -89,15 +90,15 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
       }
 
       // Time based check
-      if (proofTemplate.timeBased) {
-        final TimeOfDay now = TimeOfDay.fromDateTime(DateTime.now());
+      final bool isWithinTimeWindow = _validateProofTimeWindowUseCase.call(
+        now: TimeOfDay.fromDateTime(DateTime.now()),
+        start: proofTemplate.proofStartTime!,
+        end: proofTemplate.proofEndTime!,
+      );
 
-        if (now.isBefore(proofTemplate.proofStartTime!) ||
-            now.isAfter(proofTemplate.proofEndTime!)) {
-          emit(SubmitActivityProofState.error('Proof submitted outside of time window', true));
-
-          userProof = userProof.copyWith(isValid: false);
-        }
+      if (!isWithinTimeWindow) {
+        emit(SubmitActivityProofState.error('Proof submitted outside of time window', true));
+        return;
       }
 
       await _submitActivityProofRepository.submitActivityProof(

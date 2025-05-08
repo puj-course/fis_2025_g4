@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:top_app/core/router/app_router.dart';
@@ -17,11 +16,11 @@ class CountdownRecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: [
+        children: <Widget>[
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: <Widget>[
                 RecordWithConfetti(seconds: remainingSeconds),
                 CongratsTexts(rank: rank),
               ],
@@ -30,6 +29,7 @@ class CountdownRecordScreen extends StatelessWidget {
           BottomNavigationButton(
             buttonText: 'Start',
             onPressed: () {
+              Navigator.of(context).pop();
               AutoRouter.of(context).replace(const HomeRoute());
             },
           ),

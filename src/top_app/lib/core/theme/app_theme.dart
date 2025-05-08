@@ -5,14 +5,14 @@ import 'app_colors.dart';
 class AppTheme {
   static ThemeData get darkTheme => ThemeData(
         fontFamily: 'Roboto',
-        textSelectionTheme: const TextSelectionThemeData(
+        textSelectionTheme: TextSelectionThemeData(
           cursorColor: Colors.white,
-          selectionColor: Colors.white,
+          selectionColor: Colors.white.withValues(alpha: 0.2),
         ),
         scaffoldBackgroundColor: AppColors.blackPrimary,
         brightness: Brightness.dark,
-        highlightColor: Colors.white,
         splashColor: Colors.white,
+        highlightColor: Colors.white.withValues(alpha: 0.5),
         colorScheme: ColorScheme.dark(
           primary: Colors.white,
           secondary: Colors.white,
