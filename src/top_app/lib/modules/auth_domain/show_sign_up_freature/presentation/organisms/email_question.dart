@@ -49,12 +49,13 @@ class EmailQuestionState extends State<EmailQuestion> {
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             TextFieldWithLabel(
               label: 'Email',
               hint: 'Enter your main email address',
               controller: _emailController,
               validator: EmailValidator.validate,
+              keyboardType: TextInputType.emailAddress,
             ),
             const SizedBox(height: 20),
             UnderlinedTextButton(

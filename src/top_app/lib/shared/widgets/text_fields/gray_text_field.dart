@@ -13,7 +13,11 @@ class GrayTextField extends StatefulWidget {
     this.isEnabled = true,
     this.isObscured = false,
     this.validator,
+    this.keyboardType,
   });
+
+  // Keyboard type
+  final TextInputType? keyboardType;
 
   // Text related properties
   final String? label;
@@ -52,6 +56,7 @@ class _GrayTextFieldState extends State<GrayTextField> {
       obscureText: _obscureText,
       validator: widget.validator,
       style: AppTextStyles.regular14,
+      keyboardType: widget.keyboardType ?? TextInputType.text,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         labelText: widget.label,

@@ -18,9 +18,9 @@ class SignInForm extends StatefulWidget {
 }
 
 class SignInFormState extends State<SignInForm> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
@@ -54,17 +54,18 @@ class SignInFormState extends State<SignInForm> {
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           GrayTextField(
             controller: _emailController,
             label: 'Email',
             hint: 'Enter your email',
+            keyboardType: TextInputType.emailAddress,
             onChanged: widget.onEmailChanged,
-            validator: (value) {
+            validator: (String? value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your email';
               }
-              final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+              final RegExp emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
               if (!emailRegex.hasMatch(value)) {
                 return 'Please enter a valid email';
               }
@@ -78,7 +79,7 @@ class SignInFormState extends State<SignInForm> {
             hint: 'Enter your password',
             isObscured: true,
             onChanged: widget.onPasswordChanged,
-            validator: (value) {
+            validator: (String? value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your password';
               }
