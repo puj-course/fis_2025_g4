@@ -49,12 +49,14 @@ class NameQuestionState extends State<NameQuestion> {
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             TextFieldWithLabel(
               label: 'Name',
               hint: 'Enter your full name',
               controller: _nameController,
               validator: NameValidator.validate,
+              keyboardType: TextInputType.name,
+              textCapitalization: TextCapitalization.words,
             ),
             const SizedBox(height: 20),
             UnderlinedTextButton(

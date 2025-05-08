@@ -14,10 +14,12 @@ class GrayTextField extends StatefulWidget {
     this.isObscured = false,
     this.validator,
     this.keyboardType,
+    this.textCapitalization,
   });
 
-  // Keyboard type
+  // Keyboard type and text capitalization
   final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
 
   // Text related properties
   final String? label;
@@ -57,6 +59,7 @@ class _GrayTextFieldState extends State<GrayTextField> {
       validator: widget.validator,
       style: AppTextStyles.regular14,
       keyboardType: widget.keyboardType ?? TextInputType.text,
+      textCapitalization: widget.textCapitalization ?? TextCapitalization.none,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         labelText: widget.label,

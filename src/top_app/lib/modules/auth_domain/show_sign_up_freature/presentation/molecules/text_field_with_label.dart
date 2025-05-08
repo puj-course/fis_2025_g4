@@ -13,9 +13,11 @@ class TextFieldWithLabel extends StatelessWidget {
     this.validator,
     this.obscure = false,
     this.keyboardType,
+    this.textCapitalization,
   });
 
   final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
   final String label;
   final String hint;
   final TextEditingController controller;
@@ -39,6 +41,7 @@ class TextFieldWithLabel extends StatelessWidget {
           validator: validator,
           isObscured: obscure,
           keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
         ),
       ],
     );
