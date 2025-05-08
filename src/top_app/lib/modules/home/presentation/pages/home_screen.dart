@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nested/nested.dart';
-import 'package:top_app/core/router/app_router.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/home/presentation/state_management/goals_cubit/goals_cubit.dart';
@@ -40,67 +39,60 @@ class HomeScreenContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserCubit, UserState>(
-      listener: (BuildContext context, UserState state) {
-        if (state is Unauthenticated) {
-          AutoRouter.of(context).replace(const WelcomeRoute());
-        }
-      },
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: BlocBuilder<UserCubit, UserState>(
-            builder: (BuildContext context, UserState state) {
-              if (state is Authenticated) {
-                return HomeAppBar(user: state.user);
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        ),
-        backgroundColor: AppColors.blackPrimary,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            print('Refreshing...');
-            await context.read<UserCubit>().getUser();
-            context.read<ActivitiesCubit>().getUserChallenges();
-            context.read<GoalsCubit>().loadGoals();
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: BlocBuilder<UserCubit, UserState>(
+          builder: (BuildContext context, UserState state) {
+            if (state is Authenticated) {
+              return HomeAppBar(user: state.user);
+            }
+            return const SizedBox.shrink();
           },
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverPadding(
-                padding: const EdgeInsets.all(16),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate(<Widget>[
-                    //? Activities Section
-                    Text(
-                      'Activities',
-                      style: AppTextStyles.bold18,
-                    ),
-                    const SizedBox(height: 16),
-                    BlocBuilder<ActivitiesCubit, ActivitiesState>(
-                      builder: (BuildContext context, ActivitiesState activitiesState) {
-                        return TodaysActivitiesSection(
-                          activities:
-                              context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 24),
+        ),
+      ),
+      backgroundColor: AppColors.blackPrimary,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          print('Refreshing...');
+          await context.read<UserCubit>().getUser();
+          context.read<ActivitiesCubit>().getUserChallenges();
+          context.read<GoalsCubit>().loadGoals();
+        },
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate(<Widget>[
+                  //? Activities Section
+                  Text(
+                    'Activities',
+                    style: AppTextStyles.bold18,
+                  ),
+                  const SizedBox(height: 16),
+                  BlocBuilder<ActivitiesCubit, ActivitiesState>(
+                    builder: (BuildContext context, ActivitiesState activitiesState) {
+                      return TodaysActivitiesSection(
+                        activities:
+                            context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 24),
 
-                    //? Goals Section
-                    Text('Goals', style: AppTextStyles.bold18),
-                    const SizedBox(height: 16),
-                    BlocBuilder<GoalsCubit, GoalsState>(
-                      builder: (BuildContext context, GoalsState goalsState) {
-                        return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
-                      },
-                    ),
-                  ]),
-                ),
+                  //? Goals Section
+                  Text('Goals', style: AppTextStyles.bold18),
+                  const SizedBox(height: 16),
+                  BlocBuilder<GoalsCubit, GoalsState>(
+                    builder: (BuildContext context, GoalsState goalsState) {
+                      return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                    },
+                  ),
+                ]),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
