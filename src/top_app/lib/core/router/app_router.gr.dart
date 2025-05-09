@@ -48,6 +48,22 @@ class ChallengeDetailRouteArgs {
 }
 
 /// generated route for
+/// [ChallengesListScreen]
+class ChallengesListRoute extends PageRouteInfo<void> {
+  const ChallengesListRoute({List<PageRouteInfo>? children})
+    : super(ChallengesListRoute.name, initialChildren: children);
+
+  static const String name = 'ChallengesListRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ChallengesListScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [CountdownRecordScreen]
 class CountdownRecordRoute extends PageRouteInfo<CountdownRecordRouteArgs> {
   CountdownRecordRoute({
@@ -143,22 +159,6 @@ class NinetyNineRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const NinetyNineScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [ShowChallengesListScreen]
-class ShowChallengesListRoute extends PageRouteInfo<void> {
-  const ShowChallengesListRoute({List<PageRouteInfo>? children})
-    : super(ShowChallengesListRoute.name, initialChildren: children);
-
-  static const String name = 'ShowChallengesListRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const ShowChallengesListScreen();
     },
   );
 }

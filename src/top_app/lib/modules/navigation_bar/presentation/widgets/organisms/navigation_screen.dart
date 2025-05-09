@@ -17,7 +17,7 @@ class NavigationScreen extends StatelessWidget {
       homeIndex: 0,
       routes: const <PageRouteInfo<Object?>>[
         HomeRoute(),
-        ShowChallengesListRoute(),
+        ChallengesListRoute(),
         HomeRoute(), // Placeholder for Tribe
         HomeRoute(), // Placeholder for Profile
       ],
