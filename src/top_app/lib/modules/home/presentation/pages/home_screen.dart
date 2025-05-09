@@ -59,7 +59,7 @@ class HomeScreenContent extends StatelessWidget {
         onRefresh: () async {
           print('Refreshing...');
           await context.read<UserCubit>().getUser();
-          context.read<ActivitiesCubit>().getUserChallenges();
+          await context.read<ActivitiesCubit>().getUserChallenges();
           context.read<GoalsCubit>().loadGoals();
         },
         child: CustomScrollView(
@@ -93,7 +93,7 @@ class HomeScreenContent extends StatelessWidget {
                   BlocBuilder<GoalsCubit, GoalsState>(
                     builder: (BuildContext context, GoalsState goalsState) {
                       if (goalsState is LoadedGoals) {
-                        return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                        return TodaysGoalsSection(goals: goalsState.goals);
                       }
                       return const GoalsShimmer();
                     },

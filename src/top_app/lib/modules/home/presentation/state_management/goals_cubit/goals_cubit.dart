@@ -16,7 +16,7 @@ import 'package:top_app/shared/global_state/user/domain/state_management/cubit/u
 part 'goals_state.dart';
 part 'goals_cubit.freezed.dart';
 
-@injectable
+@lazySingleton
 class GoalsCubit extends Cubit<GoalsState> {
   final CreateGoalUsecase createGoalUsecase;
   final DeleteGoalUsecase deleteGoalUsecase;
@@ -42,6 +42,12 @@ class GoalsCubit extends Cubit<GoalsState> {
         loadGoals();
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    userSubscription?.cancel();
+    return super.close();
   }
 
   List<Goal> goals = <Goal>[];
