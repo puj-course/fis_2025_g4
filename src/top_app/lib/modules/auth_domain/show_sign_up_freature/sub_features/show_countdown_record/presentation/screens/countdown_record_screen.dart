@@ -21,7 +21,7 @@ class CountdownRecordScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RecordWithConfetti(seconds: remainingSeconds),
+                RecordWithConfetti(seconds: 60 - remainingSeconds),
                 CongratsTexts(rank: rank),
               ],
             ),
@@ -29,7 +29,9 @@ class CountdownRecordScreen extends StatelessWidget {
           BottomNavigationButton(
             buttonText: 'Start',
             onPressed: () {
-              Navigator.of(context).pop();
+              while (Navigator.canPop(context)) {
+                Navigator.of(context).pop();
+              }
               AutoRouter.of(context).replace(const HomeRoute());
             },
           ),

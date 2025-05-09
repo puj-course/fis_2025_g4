@@ -75,14 +75,14 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
         await _userPublicApi.createUser(user);
 
         // Get the rank of the user
-        rank = await _userPublicApi.getUserSignUpRank(freezedRemainingSeconds);
+        rank = await _userPublicApi.getUserSignUpRank(60 - freezedRemainingSeconds);
 
         emit(SignUpState.success(user));
       } else {
         emit(const SignUpState.error('Something went wrong, please try again later'));
       }
     } catch (e) {
-      final errorMessage =
+      final String errorMessage =
           e.toString().replaceAll(RegExp(r'\[.*?\]'), '').replaceAll('Exception: ', '').trim();
       emit(SignUpState.error(errorMessage));
       print(errorMessage);
