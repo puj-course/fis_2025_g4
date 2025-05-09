@@ -7,6 +7,9 @@ import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/modules/home/presentation/state_management/goals_cubit/goals_cubit.dart';
 import 'package:top_app/modules/home/presentation/state_management/activities_cubit/activities_cubit.dart';
+import 'package:top_app/modules/home/presentation/widgets/molecules/activities_shimmer.dart';
+import 'package:top_app/modules/home/presentation/widgets/molecules/app_bar_shimmer.dart';
+import 'package:top_app/modules/home/presentation/widgets/molecules/goals_shimmer.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/home_app_bar.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_activities_section.dart';
 import 'package:top_app/modules/home/presentation/widgets/organisms/todays_goals_section.dart';
@@ -47,7 +50,7 @@ class HomeScreenContent extends StatelessWidget {
             if (state is Authenticated) {
               return HomeAppBar(user: state.user);
             }
-            return const SizedBox.shrink();
+            return const AppBarShimmer();
           },
         ),
       ),
@@ -73,10 +76,13 @@ class HomeScreenContent extends StatelessWidget {
                   const SizedBox(height: 16),
                   BlocBuilder<ActivitiesCubit, ActivitiesState>(
                     builder: (BuildContext context, ActivitiesState activitiesState) {
-                      return TodaysActivitiesSection(
-                        activities:
-                            context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
-                      );
+                      if (activitiesState is Loaded) {
+                        return TodaysActivitiesSection(
+                          activities:
+                              context.read<ActivitiesCubit>().todaysActivities ?? <Activity>[],
+                        );
+                      }
+                      return const ActivitiesShimmer();
                     },
                   ),
                   const SizedBox(height: 24),
@@ -86,7 +92,10 @@ class HomeScreenContent extends StatelessWidget {
                   const SizedBox(height: 16),
                   BlocBuilder<GoalsCubit, GoalsState>(
                     builder: (BuildContext context, GoalsState goalsState) {
-                      return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                      if (goalsState is LoadedGoals) {
+                        return TodaysGoalsSection(goals: context.read<GoalsCubit>().goals);
+                      }
+                      return const GoalsShimmer();
                     },
                   ),
                 ]),
