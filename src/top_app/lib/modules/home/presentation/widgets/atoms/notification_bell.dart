@@ -13,16 +13,19 @@ class NotificationBell extends StatelessWidget {
       onTap: () {
         context.read<UserCubit>().signOut();
       },
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColors.blackTertiary, width: 1),
-        ),
-        child: Image.asset(
-          AppIcon.bell.assetPath,
-          width: 26,
-          height: 26,
+      child: SizedBox(
+        width: 50,
+        height: 50,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.blackTertiary, width: 1),
+          ),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.notifications_none,
+            size: 25,
+          ),
         ),
       ),
     );
