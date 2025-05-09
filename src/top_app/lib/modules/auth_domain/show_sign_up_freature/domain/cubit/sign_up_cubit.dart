@@ -26,33 +26,23 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   int rank = 0;
 
   void setName(String value) {
-    savingOperation(() {
-      name = value.trim();
-    });
+    name = value.trim();
   }
 
   void setEmail(String value) {
-    savingOperation(() {
-      email = value.trim();
-    });
+    email = value.trim();
   }
 
   void setPassword(String value) {
-    savingOperation(() {
-      password = value.trim();
-    });
+    password = value.trim();
   }
 
   void setConfirmPassword(String value) {
-    savingOperation(() {
-      confirmPassword = value.trim();
-    });
+    confirmPassword = value.trim();
   }
 
   void setRemainingSeconds(int value) {
-    savingOperation(() {
-      remainingSeconds = value;
-    });
+    remainingSeconds = value;
   }
 
   Future<void> signUp() async {

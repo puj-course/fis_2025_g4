@@ -15,26 +15,24 @@ class CompetitorsGridShimmer extends StatelessWidget {
         mainAxisSpacing: 16,
       ),
       children: <Widget>[
+        _buildShimmerContainer(),
+        _buildShimmerContainer(),
+        _buildShimmerContainer(),
+        _buildShimmerContainer(),
+      ],
+    );
+  }
+
+  Widget _buildShimmerContainer() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
         ShimmerContainer(
           width: 60,
           height: 60,
           isCircle: true,
         ),
-        ShimmerContainer(
-          width: 60,
-          height: 60,
-          isCircle: true,
-        ),
-        ShimmerContainer(
-          width: 60,
-          height: 60,
-          isCircle: true,
-        ),
-        ShimmerContainer(
-          width: 60,
-          height: 60,
-          isCircle: true,
-        ),
+        Spacer()
       ],
     );
   }
