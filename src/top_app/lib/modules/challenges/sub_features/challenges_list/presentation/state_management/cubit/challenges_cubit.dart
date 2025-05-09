@@ -7,7 +7,7 @@ import 'package:top_app/modules/challenges/sub_features/challenges_list/domain/r
 part 'challenges_state.dart';
 part 'challenges_cubit.freezed.dart';
 
-@lazySingleton
+@injectable
 class ChallengesCubit extends Cubit<ChallengesState> {
   final ChallengesListRepository _repository;
 

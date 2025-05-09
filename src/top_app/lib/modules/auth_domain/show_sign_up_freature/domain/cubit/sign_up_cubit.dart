@@ -10,7 +10,7 @@ import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart'
 part 'sign_up_state.dart';
 part 'sign_up_cubit.freezed.dart';
 
-@LazySingleton()
+@injectable
 class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   final SignUpRepository _signUpRepository;
   final UserPublicApi _userPublicApi;

@@ -14,7 +14,7 @@ import 'package:top_app/shared/global_state/user/domain/state_management/cubit/u
 part 'activities_cubit.freezed.dart';
 part 'activities_state.dart';
 
-@lazySingleton
+@injectable
 class ActivitiesCubit extends Cubit<ActivitiesState> {
   ActivitiesCubit({
     required GetUserChallengesUsecase getUserChallengesUsecase,

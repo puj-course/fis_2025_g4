@@ -16,9 +16,9 @@ class ProofTemplateSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text('Required Proof', style: AppTextStyles.bold16),
+        Text('Required Proof', style: AppTextStyles.bold18),
         ProofTile(name: proofTemplate.name, icon: proofTemplate.icon),
-        Text('Your submission', style: AppTextStyles.bold16),
+        Text('Your submission', style: AppTextStyles.bold18),
         const SizedBox(height: 10),
       ],
     );
