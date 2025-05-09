@@ -90,15 +90,13 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
       }
 
       // Time based check
-      final bool isWithinTimeWindow = _validateProofTimeWindowUseCase.call(
-        now: TimeOfDay.fromDateTime(DateTime.now()),
-        start: proofTemplate.proofStartTime!,
-        end: proofTemplate.proofEndTime!,
-      );
-
-      if (!isWithinTimeWindow) {
-        emit(SubmitActivityProofState.error('Proof submitted outside of time window', true));
-        return;
+      bool isWithinTimeWindow = true;
+      if (proofTemplate.timeBased) {
+        isWithinTimeWindow = _validateProofTimeWindowUseCase.call(
+          now: TimeOfDay.fromDateTime(DateTime.now()),
+          start: proofTemplate.proofStartTime!,
+          end: proofTemplate.proofEndTime!,
+        );
       }
 
       await _submitActivityProofRepository.submitActivityProof(
@@ -106,7 +104,7 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
         challengeId: challengeId,
         proof: userProof,
       );
-      emit(SubmitActivityProofState.proofSubmitted());
+      emit(SubmitActivityProofState.proofSubmitted(isWithinTimeWindow));
     } catch (e) {
       emit(SubmitActivityProofState.error(e.toString(), false));
     }

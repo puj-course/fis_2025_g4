@@ -14,7 +14,7 @@ class SubmitActivityProofState with _$SubmitActivityProofState {
 
   const factory SubmitActivityProofState.imageUploaded() = ImageUploaded;
 
-  const factory SubmitActivityProofState.proofSubmitted() = ProofSubmitted;
+  const factory SubmitActivityProofState.proofSubmitted(bool isWithinTimeWindow) = ProofSubmitted;
 
   const factory SubmitActivityProofState.updatingProof() = UpdatingProof;
 
