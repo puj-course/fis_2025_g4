@@ -21,27 +21,30 @@ class GoalCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: _handleTap,
-      child: Container(
-        alignment: Alignment.center,
-        width: 20,
-        height: 20,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: isCompleted ? AppColors.whitePrimary : Colors.transparent,
-          border: Border.all(
-            color: isCompleted ? AppColors.whitePrimary : AppColors.grayMidDark,
-            width: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Container(
+          alignment: Alignment.center,
+          width: 20,
+          height: 20,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isCompleted ? AppColors.whitePrimary : Colors.transparent,
+            border: Border.all(
+              color: isCompleted ? AppColors.whitePrimary : AppColors.grayMidDark,
+              width: 2,
+            ),
           ),
+          child: isCompleted
+              ? Center(
+                  child: Icon(
+                    Icons.check,
+                    color: AppColors.blackPrimary,
+                    size: 16,
+                  ),
+                )
+              : null,
         ),
-        child: isCompleted
-            ? Center(
-                child: Icon(
-                  Icons.check,
-                  color: AppColors.blackPrimary,
-                  size: 16,
-                ),
-              )
-            : null,
       ),
     );
   }

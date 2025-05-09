@@ -118,8 +118,7 @@ class _TodaysGoalItemState extends State<TodaysGoalItem> {
                       child: Text(
                         widget.goal.name,
                         style: AppTextStyles.regular14.copyWith(
-                          color: isCompleted ? AppColors.grayMidLight : null,
-                          decoration: isCompleted ? TextDecoration.lineThrough : null,
+                          color: isCompleted ? AppColors.grayNeutral : null,
                         ),
                       ),
                     ),

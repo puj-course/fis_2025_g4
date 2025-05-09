@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 
-class ChallengeChip extends StatelessWidget {
-  const ChallengeChip({
+class IconTextChip extends StatelessWidget {
+  const IconTextChip({
     super.key,
     required this.icon,
     required this.text,
@@ -22,7 +22,7 @@ class ChallengeChip extends StatelessWidget {
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           icon,
           const SizedBox(width: 4),
           Text(

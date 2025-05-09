@@ -18,7 +18,7 @@ class ProofsList extends StatelessWidget {
       children: [
         Text(
           'Proof of completion',
-          style: AppTextStyles.bold16,
+          style: AppTextStyles.bold18,
         ),
         const SizedBox(height: 10),
         ListView.separated(

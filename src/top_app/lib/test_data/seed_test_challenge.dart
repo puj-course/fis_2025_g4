@@ -33,6 +33,23 @@ Future<void> seedTestChallenge() async {
           },
         },
       },
+      'first-thing-of-day': <String, Object>{
+        'name': 'Do something important first thing in the morning',
+        'daysOfWeek': <int>[1, 2, 3, 4, 5, 6, 7],
+        'iconCode': 'laptop',
+        'id': 'first-thing-of-day',
+        'streakEdge': 5,
+        'proof': <String, Map<String, Object>>{
+          'first-thing-proof': <String, Object>{
+            'iconCode': 'open_book',
+            'id': 'first-thing-proof',
+            'name':
+                'Write a brief description and upload a picture of what you did, that moved you closer to your goals',
+            'timeBased': false,
+            'type': 'text-and-image',
+          },
+        },
+      },
     },
   };
 

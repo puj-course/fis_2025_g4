@@ -15,9 +15,9 @@ class ChallengesList extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: challenges.length,
-      separatorBuilder: (context, index) => const SizedBox(height: 16),
-      itemBuilder: (context, index) {
-        final challenge = challenges[index];
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 16),
+      itemBuilder: (BuildContext context, int index) {
+        final Challenge challenge = challenges[index];
         return ChallengeCard(challenge: challenge);
       },
     );

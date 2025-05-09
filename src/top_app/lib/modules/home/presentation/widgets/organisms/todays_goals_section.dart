@@ -21,15 +21,16 @@ class TodaysGoalsSection extends StatelessWidget {
         goals.isEmpty
             ? Center(
                 child: Text(
-                  'No goals for today',
+                  'No goals for today, start creating some! 🎯',
                   style: AppTextStyles.regular14,
+                  textAlign: TextAlign.center,
                 ),
               )
             : ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: goals.length,
-                padding: EdgeInsets.zero,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 separatorBuilder: (BuildContext context, int index) => const Divider(
                   color: AppColors.blackTertiary,
                 ),

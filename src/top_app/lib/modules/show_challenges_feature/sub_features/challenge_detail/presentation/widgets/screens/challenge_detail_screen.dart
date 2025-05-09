@@ -48,9 +48,6 @@ class ShowChallengeDetailBody extends StatelessWidget {
         if (state is ErrorJoiningChallenge) {
           CustomSnackBar.error(context, state.errorMessage);
         }
-        if (state is JoinedChallenge) {
-          CustomSnackBar.success(context, 'You have joined the challenge: ${challenge.name}');
-        }
       },
       child: Scaffold(
         backgroundColor: AppColors.blackPrimary,
@@ -69,22 +66,32 @@ class ShowChallengeDetailBody extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ChallengeHeader(challenge: challenge),
-                const CustomDivider(),
-                ChallengeDescription(description: challenge.description),
-                const CustomDivider(),
-                ActivitiesList(challenge: challenge),
-                const CustomDivider(),
-                ProofsList(challenge: challenge),
-                const CustomDivider(),
-                const CompetitorsGrid(),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              ChallengeHeader(challenge: challenge),
+              const CustomDivider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ChallengeDescription(description: challenge.description),
+              ),
+              const CustomDivider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ActivitiesList(challenge: challenge),
+              ),
+              const CustomDivider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ProofsList(challenge: challenge),
+              ),
+              const CustomDivider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: const CompetitorsGrid(),
+              ),
+              const SizedBox(height: 100),
+            ],
           ),
         ),
       ),

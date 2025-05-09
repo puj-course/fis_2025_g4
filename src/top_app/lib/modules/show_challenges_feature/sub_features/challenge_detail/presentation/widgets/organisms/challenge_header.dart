@@ -4,7 +4,7 @@ import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/state_management/cubit/challenge_detail_cubit.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/atoms/challenge_chip.dart';
+import 'package:top_app/shared/widgets/chips/challenge_chip.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
 import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
@@ -34,7 +34,7 @@ class ChallengeHeader extends StatelessWidget {
       children: <Widget>[
         SizedBox(
           width: double.infinity,
-          height: 220,
+          height: 250,
           child: ShimmerImage(
             imageUrl: challenge.thumbnailUrl,
             width: double.infinity,
@@ -42,57 +42,66 @@ class ChallengeHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        Text(
-          challenge.name,
-          style: AppTextStyles.bold18,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            challenge.name,
+            style: AppTextStyles.bold20,
+          ),
         ),
         const SizedBox(height: 8),
-        Row(
-          children: <Widget>[
-            ChallengeChip(
-              icon: Image.asset(
-                AppIcon.clock.assetPath,
-                width: 16,
-                height: 16,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: <Widget>[
+              IconTextChip(
+                icon: Image.asset(
+                  AppIcon.clock.assetPath,
+                  width: 16,
+                  height: 16,
+                ),
+                text: '${challenge.duration} days',
               ),
-              text: '${challenge.duration} days',
-            ),
-            const SizedBox(width: 8),
-            ChallengeChip(
-              icon: Image.asset(
-                AppIcon.diamond.assetPath,
-                width: 16,
-                height: 16,
+              const SizedBox(width: 8),
+              IconTextChip(
+                icon: Image.asset(
+                  AppIcon.diamond.assetPath,
+                  width: 16,
+                  height: 16,
+                ),
+                text: '+${challenge.edgeReward} Edge',
               ),
-              text: '+${challenge.edgeReward} Edge',
-            ),
-            const Spacer(),
-            BlocBuilder<ChallengeDetailCubit, ChallengeDetailState>(
-              builder: (BuildContext context, ChallengeDetailState state) {
-                return WhiteFilledButton(
-                  text: 'Join Now',
-                  onPressed: () {
-                    context.read<ChallengeDetailCubit>().joinChallenge(challenge.id);
-                  },
-                  isLoading: state is JoiningChallenge,
-                  isDone: hasJoined || state is JoinedChallenge,
-                  doneInfoMessage: 'You have already joined this challenge',
-                  doneIcon: const Icon(
-                    Icons.check,
-                    color: AppColors.blackPrimary,
-                    size: 20,
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
-                );
-              },
-            ),
-          ],
+              const Spacer(),
+              BlocBuilder<ChallengeDetailCubit, ChallengeDetailState>(
+                builder: (BuildContext context, ChallengeDetailState state) {
+                  return WhiteFilledButton(
+                    text: 'Join Now',
+                    onPressed: () {
+                      context.read<ChallengeDetailCubit>().joinChallenge(challenge.id);
+                    },
+                    isLoading: state is JoiningChallenge,
+                    isDone: hasJoined || state is JoinedChallenge,
+                    doneInfoMessage: 'You have already joined this challenge',
+                    doneIcon: const Icon(
+                      Icons.check,
+                      color: AppColors.blackPrimary,
+                      size: 20,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 10),
-        Text(
-          'Created by ${challenge.authorName}',
-          style: AppTextStyles.regular14.copyWith(color: AppColors.grayMidLight),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            'Created by ${challenge.authorName}',
+            style: AppTextStyles.regular14.copyWith(color: AppColors.grayMidLight),
+          ),
         ),
       ],
     );

@@ -10,15 +10,15 @@ class ChallengeDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           'Description',
-          style: AppTextStyles.bold16,
+          style: AppTextStyles.bold18,
         ),
         const SizedBox(height: 8),
         Text(
           description,
-          style: AppTextStyles.regular12,
+          style: AppTextStyles.regular14,
         ),
       ],
     );

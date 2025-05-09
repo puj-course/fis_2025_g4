@@ -17,7 +17,7 @@ class ShowChallengesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ChallengesCubit>()..getChallenges(),
+      create: (BuildContext context) => getIt<ChallengesCubit>()..getChallenges(),
       child: const ShowChallengesListScreenBody(),
     );
   }
@@ -36,7 +36,7 @@ class ShowChallengesListScreenBody extends StatelessWidget {
           'Browse Challenges',
           style: AppTextStyles.bold18,
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
             icon: Icon(Icons.filter_list, color: AppColors.whitePrimary),
             onPressed: () {
@@ -46,7 +46,7 @@ class ShowChallengesListScreenBody extends StatelessWidget {
         ],
       ),
       body: BlocBuilder<ChallengesCubit, ChallengesState>(
-        builder: (context, ChallengesState state) {
+        builder: (BuildContext context, ChallengesState state) {
           if (state is LoadingChallenges) {
             return const CenteredLoader();
           }
