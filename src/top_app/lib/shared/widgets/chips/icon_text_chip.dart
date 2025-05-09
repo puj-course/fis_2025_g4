@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
+import 'package:top_app/shared/utils/numbers/prettify_number.dart';
 
-class IconTextChip extends StatelessWidget {
-  const IconTextChip({
+class IconNumberChip extends StatelessWidget {
+  const IconNumberChip({
     super.key,
     required this.icon,
-    required this.text,
+    required this.number,
+    this.text,
   });
 
   final Widget icon;
-  final String text;
+  final int number;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class IconTextChip extends StatelessWidget {
           icon,
           const SizedBox(width: 4),
           Text(
-            text,
+            '${prettifyNumber(number)} $text',
             style: AppTextStyles.bold12,
           ),
         ],

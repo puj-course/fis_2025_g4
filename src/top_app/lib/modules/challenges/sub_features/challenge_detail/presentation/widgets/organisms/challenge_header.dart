@@ -4,7 +4,7 @@ import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/challenges/sub_features/challenge_detail/presentation/state_management/cubit/challenge_detail_cubit.dart';
-import 'package:top_app/shared/widgets/chips/challenge_chip.dart';
+import 'package:top_app/shared/widgets/chips/icon_text_chip.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 import 'package:top_app/shared/entities/user_specific/user_challenge.dart';
 import 'package:top_app/shared/global_state/user/domain/state_management/cubit/user_cubit.dart';
@@ -54,22 +54,24 @@ class ChallengeHeader extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: <Widget>[
-              IconTextChip(
+              IconNumberChip(
                 icon: Image.asset(
                   AppIcon.clock.assetPath,
                   width: 16,
                   height: 16,
                 ),
-                text: '${challenge.duration} days',
+                number: challenge.duration,
+                text: 'Days',
               ),
               const SizedBox(width: 8),
-              IconTextChip(
+              IconNumberChip(
                 icon: Image.asset(
                   AppIcon.diamond.assetPath,
                   width: 16,
                   height: 16,
                 ),
-                text: '+${challenge.edgeReward} Edge',
+                number: challenge.edgeReward,
+                text: 'Edge',
               ),
               const Spacer(),
               BlocBuilder<ChallengeDetailCubit, ChallengeDetailState>(

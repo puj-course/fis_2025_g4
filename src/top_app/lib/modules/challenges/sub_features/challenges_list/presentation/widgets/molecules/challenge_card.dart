@@ -5,7 +5,7 @@ import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
-import 'package:top_app/shared/widgets/chips/challenge_chip.dart';
+import 'package:top_app/shared/widgets/chips/icon_text_chip.dart';
 import 'package:top_app/shared/loaders/shimmer_image.dart';
 
 class ChallengeCard extends StatelessWidget {
@@ -50,20 +50,22 @@ class ChallengeCard extends StatelessWidget {
                   const SizedBox(height: 16),
                   Row(
                     children: <Widget>[
-                      IconTextChip(
+                      IconNumberChip(
                         icon: Image.asset(
                           AppIcon.clock.assetPath,
                           width: 15.0,
                         ),
-                        text: '${challenge.duration} days',
+                        number: challenge.duration,
+                        text: 'Days',
                       ),
                       const SizedBox(width: 8),
-                      IconTextChip(
+                      IconNumberChip(
                         icon: Image.asset(
                           AppIcon.diamond.assetPath,
                           width: 15.0,
                         ),
-                        text: '+${challenge.edgeReward} Edge',
+                        number: challenge.edgeReward,
+                        text: 'Edge',
                       ),
                     ],
                   ),

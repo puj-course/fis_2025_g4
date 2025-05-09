@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_icon.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
-import 'package:top_app/shared/widgets/chips/challenge_chip.dart';
+import 'package:top_app/shared/widgets/chips/icon_text_chip.dart';
 
 class ActivityCard extends StatelessWidget {
   const ActivityCard({
@@ -58,13 +58,14 @@ class ActivityCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   if (streakEdge != null)
-                    IconTextChip(
+                    IconNumberChip(
                       icon: Image.asset(
                         AppIcon.diamond.assetPath,
                         width: 16,
                         height: 16,
                       ),
-                      text: '+$streakEdge Edge',
+                      number: streakEdge!,
+                      text: 'Edge',
                     ),
                 ],
               ),

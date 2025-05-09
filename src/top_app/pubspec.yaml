@@ -62,6 +62,7 @@ dev_dependencies:
     sdk: flutter
   freezed: ^3.0.3
   injectable_generator: ^2.7.0
+  intl: ^0.20.2
   mocktail: ^1.0.4
 
 # For information on the generic Dart part of this file, see the
