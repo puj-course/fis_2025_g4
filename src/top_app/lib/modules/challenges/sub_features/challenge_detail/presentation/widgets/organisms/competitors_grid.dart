@@ -4,7 +4,7 @@ import 'package:top_app/core/theme/app_colors.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/modules/challenges/sub_features/challenge_detail/domain/entities/competitor_info.dart';
 import 'package:top_app/modules/challenges/sub_features/challenge_detail/presentation/state_management/cubit/challenge_detail_cubit.dart';
-import 'package:top_app/shared/loaders/centered_loader.dart';
+import 'package:top_app/modules/challenges/sub_features/challenge_detail/presentation/widgets/molecules/competitors_grid_shimmer.dart';
 import 'package:top_app/shared/loaders/shimmer_image.dart';
 
 class CompetitorsGrid extends StatelessWidget {
@@ -15,7 +15,14 @@ class CompetitorsGrid extends StatelessWidget {
     return BlocBuilder<ChallengeDetailCubit, ChallengeDetailState>(
       builder: (BuildContext context, ChallengeDetailState state) {
         if (state is LoadingCompetitors) {
-          return const CenteredLoader();
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('Competitors', style: AppTextStyles.bold18),
+              const SizedBox(height: 16),
+              const CompetitorsGridShimmer(),
+            ],
+          );
         }
 
         if (state is LoadedCompetitors) {
