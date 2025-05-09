@@ -14,4 +14,6 @@ class AppColors {
 
   // Accent Colors
   static const Color greenPrimary = Color(0xFF2ECC71);
+  static const Color redPrimary = Color(0xFFE74C3C);
+  static const Color orangePrimary = Color(0xFFF39C12);
 }

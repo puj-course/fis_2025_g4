@@ -21,8 +21,8 @@ class CustomSnackBar {
     _show(
       context,
       message,
-      const Color.fromARGB(255, 46, 171, 51),
-      Colors.white,
+      AppColors.greenPrimary,
+      AppColors.whitePrimary,
       Icons.check_circle_outline,
     );
   }
@@ -31,9 +31,19 @@ class CustomSnackBar {
     _show(
       context,
       message,
-      Colors.red,
-      Colors.white,
+      AppColors.redPrimary,
+      AppColors.whitePrimary,
       Icons.error_outline,
+    );
+  }
+
+  static void warning(BuildContext context, String message) {
+    _show(
+      context,
+      message,
+      AppColors.orangePrimary,
+      AppColors.whitePrimary,
+      Icons.warning_amber,
     );
   }
 
