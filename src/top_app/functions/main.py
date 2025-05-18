@@ -295,8 +295,14 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
         user_doc = user_ref.get()
         if not user_doc.exists:
             return https_fn.Response(json.dumps({'error': 'User not found'}), status=404, content_type='application/json')
+        
         user_data = user_doc.to_dict()
+        logger.info(f"User data type: {type(user_data)}")
+        logger.info(f"User data: {user_data}")
+        
         challenges = user_data.get('challenges', {})
+        logger.info(f"Challenges type: {type(challenges)}")
+        logger.info(f"Challenges: {challenges}")
 
         # Check if user already joined the challenge
         if challenge_id in challenges:
@@ -307,16 +313,19 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
         challenge_doc = challenge_ref.get()
         if not challenge_doc.exists:
             return https_fn.Response(json.dumps({'error': 'Challenge not found'}), status=404, content_type='application/json')
+        
         challenge_data = challenge_doc.to_dict()
-        activities_array = challenge_data.get('activities', [])
+        logger.info(f"Challenge data type: {type(challenge_data)}")
+        logger.info(f"Challenge data: {challenge_data}")
+        
+        activities_map = challenge_data.get('activities', {})
+        logger.info(f"Activities map type: {type(activities_map)}")
+        logger.info(f"Activities map: {activities_map}")
 
         # Build activities map for the user
-        activities_map = {}
-        for activity in activities_array:
-            activity_id = activity.get('id')
-            if not activity_id:
-                continue
-            activities_map[activity_id] = {
+        user_activities_map = {}
+        for activity_id, activity in activities_map.items():
+            user_activities_map[activity_id] = {
                 'currentStreak': 0,
                 'bestStreak': 0,
                 'completion': 0,
@@ -334,7 +343,7 @@ def join_challenge(req: https_fn.Request) -> https_fn.Response:
             'currentStreak': 0,
             'bestStreak': 0,
             'completion': 0,
-            'activities': activities_map
+            'activities': user_activities_map
         }
 
         # Add the challenge to the user's challenges map

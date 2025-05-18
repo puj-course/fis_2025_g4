@@ -159,20 +159,65 @@ class ImageUploaded implements SubmitActivityProofState {
 /// @nodoc
 
 class ProofSubmitted implements SubmitActivityProofState {
-  const ProofSubmitted();
+  const ProofSubmitted(this.isWithinTimeWindow);
+
+  final bool isWithinTimeWindow;
+
+  /// Create a copy of SubmitActivityProofState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  $ProofSubmittedCopyWith<ProofSubmitted> get copyWith =>
+      _$ProofSubmittedCopyWithImpl<ProofSubmitted>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is ProofSubmitted);
+        (other.runtimeType == runtimeType &&
+            other is ProofSubmitted &&
+            (identical(other.isWithinTimeWindow, isWithinTimeWindow) ||
+                other.isWithinTimeWindow == isWithinTimeWindow));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, isWithinTimeWindow);
 
   @override
   String toString() {
-    return 'SubmitActivityProofState.proofSubmitted()';
+    return 'SubmitActivityProofState.proofSubmitted(isWithinTimeWindow: $isWithinTimeWindow)';
+  }
+}
+
+/// @nodoc
+abstract mixin class $ProofSubmittedCopyWith<$Res>
+    implements $SubmitActivityProofStateCopyWith<$Res> {
+  factory $ProofSubmittedCopyWith(
+          ProofSubmitted value, $Res Function(ProofSubmitted) _then) =
+      _$ProofSubmittedCopyWithImpl;
+  @useResult
+  $Res call({bool isWithinTimeWindow});
+}
+
+/// @nodoc
+class _$ProofSubmittedCopyWithImpl<$Res>
+    implements $ProofSubmittedCopyWith<$Res> {
+  _$ProofSubmittedCopyWithImpl(this._self, this._then);
+
+  final ProofSubmitted _self;
+  final $Res Function(ProofSubmitted) _then;
+
+  /// Create a copy of SubmitActivityProofState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? isWithinTimeWindow = null,
+  }) {
+    return _then(ProofSubmitted(
+      null == isWithinTimeWindow
+          ? _self.isWithinTimeWindow
+          : isWithinTimeWindow // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
   }
 }
 

@@ -3,16 +3,21 @@ import 'package:top_app/core/theme/app_texts_styles.dart';
 import 'package:top_app/shared/widgets/text_fields/gray_text_field.dart';
 
 class TextFieldWithLabel extends StatelessWidget {
-  const TextFieldWithLabel(
-      {super.key,
-      required this.label,
-      required this.hint,
-      required this.controller,
-      this.onChanged,
-      this.onSubmitted,
-      this.validator,
-      this.obscure = false});
+  const TextFieldWithLabel({
+    super.key,
+    required this.label,
+    required this.hint,
+    required this.controller,
+    this.onChanged,
+    this.onSubmitted,
+    this.validator,
+    this.obscure = false,
+    this.keyboardType,
+    this.textCapitalization,
+  });
 
+  final TextInputType? keyboardType;
+  final TextCapitalization? textCapitalization;
   final String label;
   final String hint;
   final TextEditingController controller;
@@ -25,7 +30,7 @@ class TextFieldWithLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(label, style: AppTextStyles.bold18),
         const SizedBox(height: 12),
         GrayTextField(
@@ -35,6 +40,8 @@ class TextFieldWithLabel extends StatelessWidget {
           onSubmitted: onSubmitted,
           validator: validator,
           isObscured: obscure,
+          keyboardType: keyboardType,
+          textCapitalization: textCapitalization,
         ),
       ],
     );

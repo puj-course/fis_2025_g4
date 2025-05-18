@@ -44,7 +44,12 @@ class SubmitActivityProofScreenBody extends StatelessWidget {
         } else if (state is Error && state.isInformational) {
           CustomSnackBar.info(context, state.message);
         } else if (state is ProofSubmitted) {
-          CustomSnackBar.success(context, 'Proof submitted successfully');
+          if (state.isWithinTimeWindow) {
+            CustomSnackBar.success(context, 'Proof submitted successfully');
+          } else {
+            CustomSnackBar.warning(
+                context, 'Proof submitted outside of time window. Effort still counts though!');
+          }
           Navigator.of(context).pop(true);
         }
       },

@@ -22,8 +22,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: getIt<SignUpCubit>(),
+    return BlocProvider<SignUpCubit>(
+      create: (BuildContext context) => getIt<SignUpCubit>(),
       child: const SignUpScreenContent(),
     );
   }
@@ -120,7 +120,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           CustomSnackBar.error(context, state.message);
         }
         if (state is SignUpSuccess) {
-          CustomSnackBar.success(context, 'Your account has been created successfully! Welcome!');
+          Navigator.of(context).pop();
           AutoRouter.of(context).replace(CountdownRecordRoute(
             remainingSeconds: context.read<SignUpCubit>().freezedRemainingSeconds,
             rank: context.read<SignUpCubit>().rank,
@@ -160,7 +160,7 @@ class _SignUpScreenContentState extends State<SignUpScreenContent> {
           ),
           bottomNavigationBar: SafeArea(
             child: SignupBottomNavigation(
-              isLoading: state is SignUpLoading,
+              isLoading: state is SignUpLoading || state is SignUpSuccess || state is SignUpSaving,
               isDone: state is SignUpSuccess,
               pageController: _pageController,
               currentPage: _currentPage,

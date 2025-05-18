@@ -10,7 +10,7 @@ import 'package:top_app/shared/global_state/user/domain/entity/user_entity.dart'
 part 'sign_up_state.dart';
 part 'sign_up_cubit.freezed.dart';
 
-@LazySingleton()
+@injectable
 class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   final SignUpRepository _signUpRepository;
   final UserPublicApi _userPublicApi;
@@ -26,33 +26,23 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
   int rank = 0;
 
   void setName(String value) {
-    savingOperation(() {
-      name = value.trim();
-    });
+    name = value.trim();
   }
 
   void setEmail(String value) {
-    savingOperation(() {
-      email = value.trim();
-    });
+    email = value.trim();
   }
 
   void setPassword(String value) {
-    savingOperation(() {
-      password = value.trim();
-    });
+    password = value.trim();
   }
 
   void setConfirmPassword(String value) {
-    savingOperation(() {
-      confirmPassword = value.trim();
-    });
+    confirmPassword = value.trim();
   }
 
   void setRemainingSeconds(int value) {
-    savingOperation(() {
-      remainingSeconds = value;
-    });
+    remainingSeconds = value;
   }
 
   Future<void> signUp() async {
@@ -75,14 +65,14 @@ class SignUpCubit extends Cubit<SignUpState> with SignUpCubitMixin {
         await _userPublicApi.createUser(user);
 
         // Get the rank of the user
-        rank = await _userPublicApi.getUserSignUpRank(freezedRemainingSeconds);
+        rank = await _userPublicApi.getUserSignUpRank(60 - freezedRemainingSeconds);
 
         emit(SignUpState.success(user));
       } else {
         emit(const SignUpState.error('Something went wrong, please try again later'));
       }
     } catch (e) {
-      final errorMessage =
+      final String errorMessage =
           e.toString().replaceAll(RegExp(r'\[.*?\]'), '').replaceAll('Exception: ', '').trim();
       emit(SignUpState.error(errorMessage));
       print(errorMessage);

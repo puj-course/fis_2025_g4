@@ -22,23 +22,26 @@ class ProofTile extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
-          children: [
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: AppColors.blackSecondary,
+                color: AppColors.blackTertiary,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Image.asset(
                 icon.assetPath,
-                width: 20,
-                height: 20,
+                width: 22,
+                height: 22,
               ),
             ),
             const SizedBox(width: 16),
-            Text(
-              name,
-              style: AppTextStyles.regular14,
+            Expanded(
+              child: Text(
+                name,
+                style: AppTextStyles.regular14,
+              ),
             ),
           ],
         ),

@@ -21,8 +21,8 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: getIt<SignInCubit>(),
+    return BlocProvider<SignInCubit>(
+      create: (BuildContext context) => getIt<SignInCubit>(),
       child: const SignInScreenContent(),
     );
   }
@@ -62,7 +62,6 @@ class _SignInScreenContentState extends State<SignInScreenContent> {
         if (state is SignInError) {
           CustomSnackBar.error(context, state.message);
         } else if (state is SignInSuccess) {
-          CustomSnackBar.success(context, 'Sign in successful!');
           Navigator.of(context).pop();
           AutoRouter.of(context).replace(const NavigationRoute());
         }

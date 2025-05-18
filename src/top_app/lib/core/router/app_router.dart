@@ -1,9 +1,11 @@
+// ignore_for_file: always_specify_types
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:top_app/modules/home/presentation/pages/home_screen.dart';
 import 'package:top_app/modules/navigation_bar/presentation/widgets/organisms/navigation_screen.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/challenge_detail/presentation/widgets/screens/challenge_detail_screen.dart';
-import 'package:top_app/modules/show_challenges_feature/sub_features/show_challenges_list/presentation/widgets/screens/show_challenges_list_screen.dart';
+import 'package:top_app/modules/challenges/sub_features/challenge_detail/presentation/widgets/screens/challenge_detail_screen.dart';
+import 'package:top_app/modules/challenges/sub_features/challenges_list/presentation/widgets/screens/challenges_list_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/ninety_nine_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/start_or_level_up_screen.dart';
 import 'package:top_app/modules/show_onboarding_feature/presentation/screens/that_one_screen.dart';
@@ -28,10 +30,14 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-        AutoRoute(
+        CustomRoute(
           path: AppRouteNames.welcome,
           page: WelcomeRoute.page,
-          // initial: true,
+          transitionsBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation, Widget child) {
+            return child;
+          },
+          duration: Duration.zero,
         ),
         CustomRoute(
           path: AppRouteNames.yourLiveChanges,
@@ -132,7 +138,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: ChallengeDetailRoute.page,
-          path: AppRouteNames.showChallengeDetail,
+          path: AppRouteNames.challengeDetail,
         ),
         AutoRoute(
           initial: true,
@@ -144,8 +150,8 @@ class AppRouter extends RootStackRouter {
               path: AppRouteNames.home,
             ),
             AutoRoute(
-              page: ShowChallengesListRoute.page,
-              path: AppRouteNames.showChallengesList,
+              page: ChallengesListRoute.page,
+              path: AppRouteNames.challengesList,
             ),
           ],
         ),

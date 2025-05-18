@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -35,6 +37,14 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
         getUserChallenges();
       }
     });
+  }
+
+  StreamSubscription<UserState>? _userSubscription;
+
+  @override
+  Future<void> close() {
+    _userSubscription?.cancel();
+    return super.close();
   }
 
   // Usecases
@@ -77,15 +87,11 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
 
   Future<void> getUserChallenges() async {
     try {
-      emit(const ActivitiesState.loadingChallenges());
-
-      if (_user == null) {
-        emit(const ActivitiesState.error(
-          message: 'User not found',
-          isUserError: true,
-        ));
-        return;
+      if (state is! Loaded) {
+        emit(const ActivitiesState.loadingChallenges());
       }
+
+      _user ??= await _userCubit.getUser();
 
       final List<Challenge> challenges = await _getUserChallengesUsecase.call(
         _user!.challenges.map((UserChallenge e) => e.challengeId).toList(),

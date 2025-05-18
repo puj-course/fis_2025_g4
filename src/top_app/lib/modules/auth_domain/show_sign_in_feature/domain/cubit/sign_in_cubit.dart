@@ -19,15 +19,11 @@ class SignInCubit extends Cubit<SignInState> with SignInCubitMixin {
   String _password = '';
 
   void setEmail(String value) {
-    savingOperation(() {
-      _email = value.trim();
-    });
+    _email = value.trim();
   }
 
   void setPassword(String value) {
-    savingOperation(() {
-      _password = value;
-    });
+    _password = value;
   }
 
   String get email => _email;
@@ -39,7 +35,10 @@ class SignInCubit extends Cubit<SignInState> with SignInCubitMixin {
       await _signInRepository.signIn(_email, _password);
       emit(const SignInState.success());
     } catch (e) {
-      emit(SignInState.error(e.toString()));
+      final String errorMessage = e.toString().contains('[firebase_auth/invalid-credential]')
+          ? 'Wrong email or password'
+          : e.toString();
+      emit(SignInState.error(errorMessage));
     }
   }
 }

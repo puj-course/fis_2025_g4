@@ -10,6 +10,8 @@ enum AppIcon {
   bell('bell'),
   bed('bed'),
   camera('camera'),
+  openBook('open_book'),
+  laptop('laptop'),
   ;
 
   final String iconCode;

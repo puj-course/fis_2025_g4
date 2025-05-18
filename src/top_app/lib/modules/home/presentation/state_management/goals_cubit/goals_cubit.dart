@@ -44,6 +44,12 @@ class GoalsCubit extends Cubit<GoalsState> {
     });
   }
 
+  @override
+  Future<void> close() {
+    userSubscription?.cancel();
+    return super.close();
+  }
+
   List<Goal> goals = <Goal>[];
 
   void loadGoals() {
