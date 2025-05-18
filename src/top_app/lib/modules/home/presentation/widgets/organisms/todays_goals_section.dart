@@ -30,7 +30,7 @@ class TodaysGoalsSection extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: goals.length,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 separatorBuilder: (BuildContext context, int index) => const Divider(
                   color: AppColors.blackTertiary,
                 ),

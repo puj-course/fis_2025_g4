@@ -87,7 +87,9 @@ class ActivitiesCubit extends Cubit<ActivitiesState> {
 
   Future<void> getUserChallenges() async {
     try {
-      emit(const ActivitiesState.loadingChallenges());
+      if (state is! Loaded) {
+        emit(const ActivitiesState.loadingChallenges());
+      }
 
       _user ??= await _userCubit.getUser();
 
