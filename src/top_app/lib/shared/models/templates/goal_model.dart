@@ -51,7 +51,7 @@ class GoalModel {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, >{
+    return <String, dynamic>{
       'uid': id,
       'name': name,
       'createdAt': createdAt.toIso8601String(),

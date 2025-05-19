@@ -36,7 +36,7 @@ class BadgeModel {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, >{
+    return <String, dynamic>{
       'iconUrl': iconUrl,
       'name': name,
       'challengeId': challengeId,

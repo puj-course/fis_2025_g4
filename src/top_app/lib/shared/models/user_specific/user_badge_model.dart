@@ -36,7 +36,7 @@ class UserBadgeModel {
   }
 
   Map<String, dynamic> toJson() {
-    return <String, >{
+    return <String, dynamic>{
       'userId': userId,
       'badgeId': badgeId,
       'earnedDate': earnedDate.toIso8601String(),
