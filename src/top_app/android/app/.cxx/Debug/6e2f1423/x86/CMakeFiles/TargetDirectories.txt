@@ -1,0 +1,2 @@
+C:/Users/USUARIO/Documents/PUJ/fis_2025_g4/src/top_app/android/app/.cxx/Debug/6e2f1423/x86/CMakeFiles/edit_cache.dir
+C:/Users/USUARIO/Documents/PUJ/fis_2025_g4/src/top_app/android/app/.cxx/Debug/6e2f1423/x86/CMakeFiles/rebuild_cache.dir
