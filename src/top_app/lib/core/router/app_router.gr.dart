@@ -11,6 +11,22 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [Add2faScreen]
+class Add2faRoute extends PageRouteInfo<void> {
+  const Add2faRoute({List<PageRouteInfo>? children})
+    : super(Add2faRoute.name, initialChildren: children);
+
+  static const String name = 'Add2faRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const Add2faScreen();
+    },
+  );
+}
+
+/// generated route for
 /// [ChallengeDetailScreen]
 class ChallengeDetailRoute extends PageRouteInfo<ChallengeDetailRouteArgs> {
   ChallengeDetailRoute({

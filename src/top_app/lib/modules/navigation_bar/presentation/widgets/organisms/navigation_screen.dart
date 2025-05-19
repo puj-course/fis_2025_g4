@@ -19,7 +19,8 @@ class NavigationScreen extends StatelessWidget {
         HomeRoute(),
         ChallengesListRoute(),
         HomeRoute(), // Placeholder for Tribe
-        HomeRoute(), // Placeholder for Profile
+        // Placeholder for Profile
+        Add2faRoute(),
       ],
       builder: (BuildContext context, Widget child, TabController controller) {
         final TabsRouter tabsRouter = AutoTabsRouter.of(context);
@@ -34,7 +35,7 @@ class NavigationScreen extends StatelessWidget {
             bottomNavigationBar: CustomBottomNavigationBar(
               currentIndex: tabsRouter.activeIndex,
               onTap: (int index) {
-                if (index == 2 || index == 3) {
+                if (index == 2) {
                   CustomSnackBar.info(context, 'Coming soon!');
                   return;
                 }
