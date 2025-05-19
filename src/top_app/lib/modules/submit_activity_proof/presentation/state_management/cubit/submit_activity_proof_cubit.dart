@@ -17,8 +17,8 @@ class SubmitActivityProofCubit extends Cubit<SubmitActivityProofState> {
   final SubmitActivityProofRepository _submitActivityProofRepository;
 
   // Use cases
-  ValidateProofFieldsUseCase _validateProofFieldsUseCase;
-  ValidateProofTimeWindowUseCase _validateProofTimeWindowUseCase;
+  final ValidateProofFieldsUseCase _validateProofFieldsUseCase;
+  final ValidateProofTimeWindowUseCase _validateProofTimeWindowUseCase;
 
   SubmitActivityProofCubit({required SubmitActivityProofRepository submitActivityProofRepository})
       : _submitActivityProofRepository = submitActivityProofRepository,

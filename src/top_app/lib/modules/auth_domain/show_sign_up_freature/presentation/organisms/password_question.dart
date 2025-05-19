@@ -55,7 +55,7 @@ class PasswordQuestionState extends State<PasswordQuestion> {
         key: _formKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             TextFieldWithLabel(
               label: 'Password',
               hint: 'Create a secure password',
@@ -68,7 +68,7 @@ class PasswordQuestionState extends State<PasswordQuestion> {
               label: 'Confirm Password',
               hint: 'Confirm your password',
               controller: _confirmPasswordController,
-              validator: (value) => PasswordValidator.validateConfirmation(
+              validator: (String? value) => PasswordValidator.validateConfirmation(
                 value,
                 _passwordController.text,
               ),

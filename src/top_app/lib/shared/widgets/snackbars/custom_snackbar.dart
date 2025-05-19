@@ -150,13 +150,13 @@ class _SnackBarContent extends StatefulWidget {
   final VoidCallback onDismiss;
 
   const _SnackBarContent({
-    Key? key,
+    super.key,
     required this.message,
     required this.backgroundColor,
     required this.textColor,
     required this.icon,
     required this.onDismiss,
-  }) : super(key: key);
+  });
 
   @override
   State<_SnackBarContent> createState() => _SnackBarContentState();

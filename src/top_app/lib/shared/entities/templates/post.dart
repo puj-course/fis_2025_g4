@@ -40,7 +40,7 @@ class Post extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
+  List<Object?> get props => <Object?>[
         userId,
         date,
         fires,

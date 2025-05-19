@@ -17,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
         nextRoute: const YourLiveChangesRoute(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Text('Welcome to', style: AppTextStyles.regular20),
             const SizedBox(height: 10),
             Text('T.O.P',

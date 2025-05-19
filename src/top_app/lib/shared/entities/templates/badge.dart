@@ -24,5 +24,5 @@ class Badge extends Equatable {
   }
 
   @override
-  List<Object?> get props => [iconUrl, name, challengeId];
+  List<Object?> get props => <Object?>[iconUrl, name, challengeId];
 }

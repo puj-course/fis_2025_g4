@@ -12,7 +12,7 @@ class ThatOneScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: OnboardingPage(
@@ -22,7 +22,7 @@ class ThatOneScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               TypeWriter.text(
                 'You chose to be that one',
                 style: AppTextStyles.regular16,

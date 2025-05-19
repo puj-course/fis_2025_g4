@@ -36,5 +36,5 @@ class Goal extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, createdAt, type, dueDate, completion];
+  List<Object?> get props => <Object?>[id, name, createdAt, type, dueDate, completion];
 }

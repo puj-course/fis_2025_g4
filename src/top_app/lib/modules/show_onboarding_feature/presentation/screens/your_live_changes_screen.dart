@@ -16,7 +16,7 @@ class YourLiveChangesScreen extends StatelessWidget {
         nextRoute: const NinetyNineRoute(),
         indicatorDelay: const Duration(seconds: 3),
         child: Stack(
-          children: [
+          children: <Widget>[
             Positioned(
               top: MediaQuery.of(context).size.height * 0.2,
               left: 0,

@@ -25,7 +25,7 @@ class ShimmerImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: [
+      children: <Widget>[
         if (width != null && height != null)
           Shimmer.fromColors(
             baseColor: shimmerBaseColor,
@@ -47,7 +47,7 @@ class ShimmerImage extends StatelessWidget {
                   width: width,
                   height: height,
                   fit: fit,
-                  loadingBuilder: (context, child, loadingProgress) {
+                  loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Shimmer.fromColors(
                       baseColor: shimmerBaseColor,

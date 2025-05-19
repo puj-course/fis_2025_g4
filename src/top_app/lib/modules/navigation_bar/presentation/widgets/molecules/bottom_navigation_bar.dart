@@ -27,7 +27,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       child: SafeArea(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+          children: <Widget>[
             NavigationItem(
               icon: Icons.home,
               label: 'Home',

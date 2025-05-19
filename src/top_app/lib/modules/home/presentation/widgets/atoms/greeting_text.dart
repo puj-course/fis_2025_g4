@@ -5,7 +5,7 @@ class GreetingText extends StatelessWidget {
   const GreetingText({super.key});
 
   String _getGreeting() {
-    final hour = DateTime.now().hour;
+    final int hour = DateTime.now().hour;
     if (hour < 12) {
       return 'Good morning';
     } else if (hour < 17) {

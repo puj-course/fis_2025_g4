@@ -12,7 +12,7 @@ class CustomDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         SizedBox(height: spacing),
         const Divider(color: AppColors.grayDark),
         SizedBox(height: spacing),

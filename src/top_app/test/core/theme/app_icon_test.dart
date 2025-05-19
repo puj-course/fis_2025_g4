@@ -89,7 +89,7 @@ void main() {
 
       test('should have unique icon codes', () {
         // Arrange
-        final Set<String> iconCodes = AppIcon.values.map((e) => e.iconCode).toSet();
+        final Set<String> iconCodes = AppIcon.values.map((AppIcon e) => e.iconCode).toSet();
 
         // Assert
         expect(iconCodes.length, equals(AppIcon.values.length));

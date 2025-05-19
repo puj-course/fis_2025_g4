@@ -9,7 +9,7 @@ class EmptyChallengesContent extends StatelessWidget {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           const Text(
             '🎯',
             style: TextStyle(fontSize: 48),
