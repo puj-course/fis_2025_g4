@@ -20,15 +20,15 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       scrollDirection: Axis.vertical,
-      onPageChanged: (index) {
+      onPageChanged: (int index) {
         if (index == 1) {
           AutoRouter.of(context).navigate(nextRoute);
         }
       },
-      children: [
+      children: <Widget>[
         SafeArea(
           child: Column(
-            children: [
+            children: <Widget>[
               Expanded(child: child),
               if (showSwipeIndicator)
                 Padding(

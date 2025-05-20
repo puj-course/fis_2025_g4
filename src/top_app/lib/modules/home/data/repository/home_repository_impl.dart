@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:top_app/core/providers/firebase_provider.dart';
 import 'package:top_app/modules/home/domain/repository/home_repository.dart';
@@ -12,11 +13,11 @@ class HomeRepositoryImpl implements HomeRepository {
 
   @override
   Future<List<ChallengeModel>> getUserChallenges(List<String> challengeIds) async {
-    final challenges = await _firebaseProvider.firestore
+    final QuerySnapshot<Map<String, dynamic>> challenges = await _firebaseProvider.firestore
         .collection('challenges')
         .where('id', whereIn: challengeIds)
         .get();
 
-    return challenges.docs.map((doc) => ChallengeModel.fromJson(doc.data())).toList();
+    return challenges.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => ChallengeModel.fromJson(doc.data())).toList();
   }
 }

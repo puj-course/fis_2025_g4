@@ -9,7 +9,7 @@ class CongratsTexts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+      children: <Widget>[
         const SizedBox(height: 10),
         Text('Well done!', style: AppTextStyles.extraBold24.copyWith(fontSize: 30)),
         const SizedBox(height: 20),
@@ -18,7 +18,7 @@ class CongratsTexts extends StatelessWidget {
           child: RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              children: [
+              children: <InlineSpan>[
                 TextSpan(text: 'You\'re the ', style: AppTextStyles.regular14),
                 TextSpan(text: '$rank° ', style: AppTextStyles.extraBold12),
                 TextSpan(

@@ -24,5 +24,5 @@ class UserBadge extends Equatable {
   }
 
   @override
-  List<Object?> get props => [userId, badgeId, earnedDate];
+  List<Object?> get props => <Object?>[userId, badgeId, earnedDate];
 }

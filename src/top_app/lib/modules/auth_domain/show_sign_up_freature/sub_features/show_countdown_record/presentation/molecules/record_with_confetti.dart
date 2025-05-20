@@ -41,7 +41,7 @@ class _RecordWithConfettiState extends State<RecordWithConfetti> {
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
-      children: [
+      children: <Widget>[
         // Position the confetti controller at the number
         Positioned(
           child: ConfettiWidget(
@@ -53,7 +53,7 @@ class _RecordWithConfettiState extends State<RecordWithConfetti> {
             minBlastForce: 10,
             gravity: 0.1, // Slower falling confetti
             shouldLoop: false,
-            colors: const [
+            colors: const <Color>[
               AppColors.whitePrimary,
             ],
           ),

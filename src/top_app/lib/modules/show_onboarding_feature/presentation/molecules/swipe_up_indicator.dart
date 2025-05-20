@@ -47,7 +47,7 @@ class _SwipeUpIndicatorState extends State<SwipeUpIndicator> with SingleTickerPr
         position: _animation,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             const Icon(
               CupertinoIcons.chevron_up,
               color: Colors.white,

@@ -29,7 +29,7 @@ class PersonGrid extends StatelessWidget {
         mainAxisSpacing: 10,
       ),
       itemCount: totalIcons,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         switch (mode) {
           case PersonGridMode.sequentialFadeIn:
             return _buildSequentialFadeInItem(index);
@@ -42,7 +42,7 @@ class PersonGrid extends StatelessWidget {
 
   Widget _buildSequentialFadeInItem(int index) {
     // Calculate delay based on index (left to right, top to bottom)
-    final delay = Duration(milliseconds: 100 * index);
+    final Duration delay = Duration(milliseconds: 100 * index);
 
     return DelayedFadeIn(
       delay: delay,

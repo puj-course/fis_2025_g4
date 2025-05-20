@@ -2,6 +2,7 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:top_app/modules/add_2fa/widgets/screens/add_2fa_screen.dart';
 import 'package:top_app/modules/home/presentation/pages/home_screen.dart';
 import 'package:top_app/modules/navigation_bar/presentation/widgets/organisms/navigation_screen.dart';
 import 'package:top_app/modules/challenges/sub_features/challenge_detail/presentation/widgets/screens/challenge_detail_screen.dart';
@@ -152,6 +153,10 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               page: ChallengesListRoute.page,
               path: AppRouteNames.challengesList,
+            ),
+            AutoRoute(
+              page: Add2faRoute.page,
+              path: AppRouteNames.add2fa,
             ),
           ],
         ),

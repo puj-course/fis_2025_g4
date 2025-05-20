@@ -36,7 +36,7 @@ class _SecondsCounterState extends State<SecondsCounter> with SingleTickerProvid
     );
 
     // Create a bounce animation that goes from 1.0 to 1.2 and back to 1.0
-    _scaleAnimation = TweenSequence<double>([
+    _scaleAnimation = TweenSequence<double>(<TweenSequenceItem<double>>[
       TweenSequenceItem(tween: Tween<double>(begin: 1.0, end: 1.2), weight: 1),
       TweenSequenceItem(tween: Tween<double>(begin: 1.2, end: 1.0), weight: 1),
     ]).animate(CurvedAnimation(
@@ -48,7 +48,7 @@ class _SecondsCounterState extends State<SecondsCounter> with SingleTickerProvid
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       setState(() {
         if (_secondsRemaining > 0) {
           _secondsRemaining--;
@@ -76,7 +76,7 @@ class _SecondsCounterState extends State<SecondsCounter> with SingleTickerProvid
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _animationController,
-      builder: (context, child) {
+      builder: (BuildContext context, Widget? child) {
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: Text(

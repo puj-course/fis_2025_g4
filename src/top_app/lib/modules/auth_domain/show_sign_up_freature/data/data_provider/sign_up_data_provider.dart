@@ -9,7 +9,7 @@ class SignUpDataProvider {
 
   Future<User?> signUp(String email, String password) async {
     try {
-      final userCredential = await _firebaseProvider.firebaseAuth
+      final UserCredential userCredential = await _firebaseProvider.firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
     } catch (e) {

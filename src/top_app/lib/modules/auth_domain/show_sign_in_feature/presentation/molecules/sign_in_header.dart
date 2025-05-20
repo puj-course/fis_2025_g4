@@ -10,7 +10,7 @@ class SignInHeader extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
-        children: [
+        children: <Widget>[
           Text('Enter your account', style: AppTextStyles.bold22),
           const SizedBox(height: 5),
           Text(

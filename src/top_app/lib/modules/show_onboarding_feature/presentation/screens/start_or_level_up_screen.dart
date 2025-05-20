@@ -15,7 +15,7 @@ class StartOrLevelUpScreen extends StatefulWidget {
 }
 
 class _StartOrLevelUpScreenState extends State<StartOrLevelUpScreen> {
-  bool _showFirstText = true;
+  final bool _showFirstText = true;
   bool _showSecondText = false;
   bool _switchIcons = false;
 
@@ -49,7 +49,7 @@ class _StartOrLevelUpScreenState extends State<StartOrLevelUpScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 35),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               // First section: Text then Dumbbell
               _showFirstText
                   ? TypeWriter.text(

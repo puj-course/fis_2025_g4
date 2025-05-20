@@ -56,7 +56,7 @@ class PostModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    return <String, dynamic>{
       'uid': userId,
       'date': date.toIso8601String(),
       'fires': fires,

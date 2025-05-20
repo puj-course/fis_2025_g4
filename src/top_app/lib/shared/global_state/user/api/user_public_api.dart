@@ -10,7 +10,7 @@ class UserPublicApi {
   UserPublicApi({required this.userCubit});
 
   Future<UserEntity?> getUser() async {
-    final user = await userCubit.getUser();
+    final UserEntity? user = await userCubit.getUser();
     return user;
   }
 

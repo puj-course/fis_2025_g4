@@ -12,4 +12,5 @@ class AppRouteNames {
   static const String home = 'home';
   static const String navigation = '/';
   static const String submitActivityProof = '/submit-activity-proof';
+  static const String add2fa = 'add-2fa';
 }

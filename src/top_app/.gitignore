@@ -55,3 +55,6 @@ firebase_options.dart
 GoogleService-Info.plist
 google-services.json
 service-account-key.json
+
+# Utilities
+genhtml.perl

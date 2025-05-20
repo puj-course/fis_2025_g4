@@ -23,7 +23,7 @@ class NavigationItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             Icon(
               icon,
               color: isSelected ? AppColors.whitePrimary : AppColors.grayNeutral,

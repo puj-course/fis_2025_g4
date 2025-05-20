@@ -18,12 +18,12 @@ class GetUserChallengesUsecase {
 
   Future<List<Challenge>> call(List<String> challengeIds) async {
     if (challengeIds.isEmpty) {
-      return [];
+      return <Challenge>[];
     }
 
     final List<ChallengeModel> modelChallenges =
         await _homeRepository.getUserChallenges(challengeIds);
 
-    return modelChallenges.map((model) => model.toEntity()).toList();
+    return modelChallenges.map((ChallengeModel model) => model.toEntity()).toList();
   }
 }

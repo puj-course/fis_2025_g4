@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_app/core/theme/app_texts_styles.dart';
+import 'package:top_app/shared/entities/templates/activity.dart';
 import 'package:top_app/shared/widgets/tiles/proof_tile.dart';
 import 'package:top_app/shared/entities/templates/challenge.dart';
 
@@ -15,7 +16,7 @@ class ProofsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Text(
           'Proof of completion',
           style: AppTextStyles.bold18,
@@ -26,9 +27,9 @@ class ProofsList extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: challenge.activities.length,
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
-          itemBuilder: (context, index) {
-            final activity = challenge.activities[index];
+          separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
+          itemBuilder: (BuildContext context, int index) {
+            final Activity activity = challenge.activities[index];
             return ProofTile(
               name: activity.proof[0].name,
               icon: activity.proof[0].icon,

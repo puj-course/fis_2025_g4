@@ -26,5 +26,5 @@ class UserActivityProgress extends Equatable {
   }
 
   @override
-  List<Object?> get props => [activityId, currentStreak, dailyProofs];
+  List<Object?> get props => <Object?>[activityId, currentStreak, dailyProofs];
 }
