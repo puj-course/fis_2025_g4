@@ -105,7 +105,7 @@ class CustomSnackBar {
     overlay.insert(snackBar._entry);
 
     // Auto-dismiss after 3 seconds
-    Future.delayed(const Duration(seconds: 2), () {
+    Future<void>.delayed(const Duration(seconds: 5), () {
       if (!snackBar._removed) {
         // Use the dismiss method to ensure animation plays
         snackBar._key.currentState?.dismiss();
