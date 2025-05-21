@@ -90,7 +90,7 @@ class ChallengeHeader extends StatelessWidget {
                       size: 20,
                     ),
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    textStyle: AppTextStyles.regular14.copyWith(color: AppColors.blackPrimary),
+                    textStyle: AppTextStyles.bold14.copyWith(color: AppColors.blackPrimary),
                   );
                 },
               ),
